@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="AutoCapturer.UserControls.ColorThemeButt"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoCapturer.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="120" d:DesignWidth="90">
+    <Grid>
+        <Rectangle Fill="#FFF4F4F5" Stroke="Black" RadiusY="7.75" RadiusX="7.75" Margin="0,0,-0.4,0"/>
+        <Border x:Name="Rect_Surf" BorderBrush="Black" BorderThickness="1" CornerRadius="8,0,0,0" Margin="16,22,-0.4,24" Background="#FFFFE3E3"/>
+        <Rectangle x:Name="Rect_Inner" Fill="#FFF9EDEE" Stroke="Black" Margin="21,42,-0.4,24"/>
+        <Border BorderThickness="1,0.1,1,1" Height="25" Margin="0,0,-0.4,0" VerticalAlignment="Bottom" Background="Silver" Padding="0" RenderTransformOrigin="0,0" CornerRadius="0,0,8,8" BorderBrush="Black">
+            <TextBlock x:Name="tbThemeName" TextWrapping="Wrap" Text="연한 핑크 테마" TextAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <Image x:Name="Checked" Margin="0,0,4.6,28" Source="/AutoCapturer;component/Icons/CheckedImg.png" Stretch="Fill" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="34"/>
+        <Rectangle x:Name="Rect_Click" Fill="#00F9EDEE" HorizontalAlignment="Left" Height="120" Margin="0,0,-0.4,0" VerticalAlignment="Top" Width="90" MouseDown="Rect_Click_MouseDown"/>
+
+
+    </Grid>
+</UserControl>

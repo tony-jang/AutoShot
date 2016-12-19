@@ -1,0 +1,24 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoCapturer"
+        xmlns:UserControls="clr-namespace:AutoCapturer.UserControls" x:Class="AutoCapturer.MainWindow"
+        mc:Ignorable="d"
+        Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" Margin="0">
+    <Grid Margin="10" Background="#FFCAD7FF">
+        <Grid.Effect>
+            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#FF696E7F"/>
+        </Grid.Effect>
+        <Button x:Name="BtnEnAutoSave" Content="자동 저장 (F2)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="83" Height="28" Background="#FFB5C1E5" Click="BtnEnAutoSave_Click"/>
+        <Button x:Name="BtnAllCapture" Content="전체 캡처 (F3)" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="83" Height="21" Background="#FFB5C1E5" Click="BtnAllCapture_Click"/>
+        <Button x:Name="BtnSelCapture" Content="선택 캡처 (F4)" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="83" Height="21" Background="#FFB5C1E5" Click="BtnSelCapture_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="105,10,0,0">
+            남은 장 수 : <Run Foreground="#FF29257A" FontSize="18" FontWeight="Bold">99999+</Run>개
+        </TextBlock>
+        <Button x:Name="button" Content="1" HorizontalAlignment="Left" Margin="105,49,0,0" VerticalAlignment="Top" Width="36" Height="32" Click="button_Click"/>
+        <Button x:Name="button_Copy" Content="2" HorizontalAlignment="Left" Margin="141,49,0,0" VerticalAlignment="Top" Width="36" Height="32" Click="button_Copy_Click"/>
+        <Button x:Name="button_Copy1" Content="3" HorizontalAlignment="Left" Margin="177,49,0,0" VerticalAlignment="Top" Width="36" Height="32" Click="button_Copy1_Click"/>
+    </Grid>
+</Window>
