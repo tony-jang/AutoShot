@@ -7,6 +7,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# 사용 안하는 것들
+*.baml
+*.exe
+*.g.resources
+*.lref
+
 # User-specific files
 *.suo
 *.user
