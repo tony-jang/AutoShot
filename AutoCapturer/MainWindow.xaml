@@ -7,10 +7,14 @@
         xmlns:UserControls="clr-namespace:AutoCapturer.UserControls" x:Class="AutoCapturer.MainWindow"
         mc:Ignorable="d"
         Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" Margin="0">
-    <Grid Margin="10" Background="#FFCAD7FF">
-        <Grid.Effect>
-            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#FF696E7F"/>
-        </Grid.Effect>
+    <Grid Margin="10" >
+
+
+        <Rectangle Fill="#FFCAD7FF" RadiusY="5" RadiusX="5">
+            <Rectangle.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#FF696E7F"/>
+            </Rectangle.Effect>
+        </Rectangle>
         <Button x:Name="BtnEnAutoSave" Content="자동 저장 (F2)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="83" Height="28" Background="#FFB5C1E5" Click="BtnEnAutoSave_Click"/>
         <Button x:Name="BtnAllCapture" Content="전체 캡처 (F3)" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="83" Height="21" Background="#FFB5C1E5" Click="BtnAllCapture_Click"/>
         <Button x:Name="BtnSelCapture" Content="선택 캡처 (F4)" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="83" Height="21" Background="#FFB5C1E5" Click="BtnSelCapture_Click"/>

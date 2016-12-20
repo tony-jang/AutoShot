@@ -4,19 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
 using System.Windows.Media.Animation;
 using System.IO;
+using static AutoCapturer.Sounds.NotificationSounds;
+using AutoCapturer.PopUps;
 
 namespace AutoCapturer
 {
@@ -114,7 +108,26 @@ namespace AutoCapturer
 
         }
 
+        bool AuCaEnabled = false;
         private void BtnEnAutoSave_Click(object sender, RoutedEventArgs e)
+        {
+            PopUpWdw pw;
+            if (!AuCaEnabled)
+            {
+                pw = new PopUpWdw("자동 캡쳐 활성화", "지금부터 캡쳐되는 내용은 자동으로 저장됩니다.");
+                PlayNotificationSound(SoundType.AuCaModeOn);
+            }
+            else
+            {
+                pw = new PopUps.PopUpWdw("자동 캡쳐 비활성화", "지금부터 캡쳐되는 내용은 클립보드에 저장됩니다.");
+                PlayNotificationSound(SoundType.AuCaModeOff);
+            }
+            pw.ShowTime(5000);
+            AuCaEnabled = !AuCaEnabled;
+        }
+
+
+        public void DisAppear()
         {
             OpaAni.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
@@ -136,20 +149,21 @@ namespace AutoCapturer
             this.BeginAnimation(Window.OpacityProperty, OpaAni);
         }
 
-        int counter = 0;
+
         private void BtnAllCapture_Click(object sender, RoutedEventArgs e)
         {
             //sw.ShowDialog();
-            Effectors.BaseEffector RtEff = new Effectors.RotateEffector();
+            //Effectors.BaseEffector RtEff = new Effectors.RotateEffector();
 
-            RtEff.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\시험 일정표.jpg"));
+            //RtEff.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\시험 일정표.jpg"));
 
-            
-            BitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(RtEff.ApplyEffect()));
-            using (var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\Rotate Test.jpg", FileMode.Create)){
-                encoder.Save(filestream);
-            }
+
+            //BitmapEncoder encoder = new PngBitmapEncoder();
+            //encoder.Frames.Add(BitmapFrame.Create(RtEff.ApplyEffect()));
+            //using (var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\Rotate Test.jpg", FileMode.Create))
+            //{
+            //    encoder.Save(filestream);
+            //}
             //System.Media.SoundPlayer player = new System.Media.SoundPlayer($"snd{++counter}.wav");
             //player.Play();
             //if (counter == 3) counter = 0;
@@ -157,7 +171,7 @@ namespace AutoCapturer
 
         private void BtnSelCapture_Click(object sender, RoutedEventArgs e)
         {
-
+            // 선택 캡처
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

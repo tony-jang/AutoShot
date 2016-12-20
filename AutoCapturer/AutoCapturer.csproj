@@ -56,10 +56,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -83,9 +85,13 @@
     </Compile>
     <Compile Include="Effectors\BaseEffector.cs" />
     <Compile Include="Effectors\RotateEffector.cs" />
+    <Compile Include="PopUps\PopUpWdw.xaml.cs">
+      <DependentUpon>PopUpWdw.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingWdw.xaml.cs">
       <DependentUpon>SettingWdw.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sounds\NotificationSounds.cs" />
     <Compile Include="UserControls\ColorThemeButt.xaml.cs">
       <DependentUpon>ColorThemeButt.xaml</DependentUpon>
     </Compile>
@@ -105,6 +111,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PopUps\PopUpWdw.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SettingWdw.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,6 +175,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\ImgSound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AuCaOff.png" />
+    <Resource Include="Icons\AuCaOn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
