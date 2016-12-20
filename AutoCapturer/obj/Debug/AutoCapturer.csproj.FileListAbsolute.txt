@@ -23,3 +23,5 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Au
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csproj.GenerateResource.Cache
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.exe
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.pdb
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\PopUps\PopUpWdw.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\PopUps\PopUpWdw.baml
