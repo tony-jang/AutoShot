@@ -11,6 +11,12 @@ using System.Windows.Media.Animation;
 using System.IO;
 using static AutoCapturer.Sounds.NotificationSounds;
 using AutoCapturer.PopUps;
+using System.Drawing;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Effects;
+using Microsoft.Win32;
+using AutoCapturer.Observer;
 
 namespace AutoCapturer
 {
@@ -26,6 +32,7 @@ namespace AutoCapturer
 
         SettingWdw sw = new SettingWdw();
 
+        AutoCapturer.Observer.PrtScrObserver obs = new Observer.PrtScrObserver();
 
         public MainWindow()
         {
@@ -67,7 +74,7 @@ namespace AutoCapturer
             this.BeginAnimation(Window.LeftProperty, da);
             this.BeginAnimation(Window.TopProperty, da2);
             this.BeginAnimation(Window.OpacityProperty, OpaAni);
-
+            
 
 
 
@@ -112,15 +119,20 @@ namespace AutoCapturer
         private void BtnEnAutoSave_Click(object sender, RoutedEventArgs e)
         {
             PopUpWdw pw;
+            DropShadowEffect eff = (DropShadowEffect)MainRect.Effect;
             if (!AuCaEnabled)
             {
                 pw = new PopUpWdw("자동 캡쳐 활성화", "지금부터 캡쳐되는 내용은 자동으로 저장됩니다.");
                 PlayNotificationSound(SoundType.AuCaModeOn);
+
+                eff.Color = Colors.Red;
             }
             else
             {
                 pw = new PopUps.PopUpWdw("자동 캡쳐 비활성화", "지금부터 캡쳐되는 내용은 클립보드에 저장됩니다.");
                 PlayNotificationSound(SoundType.AuCaModeOff);
+
+                eff.Color = Colors.Black;
             }
             pw.ShowTime(5000);
             AuCaEnabled = !AuCaEnabled;
@@ -152,25 +164,54 @@ namespace AutoCapturer
 
         private void BtnAllCapture_Click(object sender, RoutedEventArgs e)
         {
+            
+
+            obs.DetectPrtScr += Obs_A;
+            obs.TestMtd();
             //sw.ShowDialog();
             //Effectors.BaseEffector RtEff = new Effectors.RotateEffector();
 
             //RtEff.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\시험 일정표.jpg"));
-
-
             //BitmapEncoder encoder = new PngBitmapEncoder();
             //encoder.Frames.Add(BitmapFrame.Create(RtEff.ApplyEffect()));
             //using (var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\Rotate Test.jpg", FileMode.Create))
             //{
             //    encoder.Save(filestream);
             //}
-            //System.Media.SoundPlayer player = new System.Media.SoundPlayer($"snd{++counter}.wav");
-            //player.Play();
-            //if (counter == 3) counter = 0;
+        }
+
+        int ctr = 0;
+        private void Obs_A(ImageSource Img)
+        {
+            if (AuCaEnabled)
+            {
+                PlayNotificationSound(SoundType.Captured);
+                var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + $"\\Test{++ctr}.jpg", FileMode.Create);
+
+                var encoder = new PngBitmapEncoder();
+
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Img));
+                encoder.Save(filestream);
+
+                filestream.Dispose();
+
+            }
+
+
+            //BitmapEncoder encoder = new PngBitmapEncoder();
+
+            //using (var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\Rotate Test.jpg", FileMode.Create))
+            //{
+            //    encoder.Frames.Add(BitmapFrame.Create(filestream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad));
+
+
+            //    encoder.Save(filestream);
+            //}
         }
 
         private void BtnSelCapture_Click(object sender, RoutedEventArgs e)
         {
+
             // 선택 캡처
         }
 
@@ -190,6 +231,15 @@ namespace AutoCapturer
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer($"snd3.wav");
             player.Play();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+
+            VisAreaObserver vo = new VisAreaObserver();
+            
+
         }
     }
 }

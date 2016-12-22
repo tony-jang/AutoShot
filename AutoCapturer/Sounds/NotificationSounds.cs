@@ -10,21 +10,27 @@ namespace AutoCapturer.Sounds
     {
         public static void PlayNotificationSound(SoundType soundtype)
         {
-            if (soundtype == SoundType.AuCaModeOn)
+            System.Media.SoundPlayer player;
+            switch (soundtype)
             {
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer($"snd2.wav");
-                player.Play();
-            }
-            else if (soundtype == SoundType.AuCaModeOff)
-            {
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer($"snd1.wav");
-                player.Play();
+                case SoundType.AuCaModeOn:
+                    player = new System.Media.SoundPlayer($"snd2.wav");
+                    player.Play();
+                    break;
+                case SoundType.AuCaModeOff:
+                    player = new System.Media.SoundPlayer($"snd1.wav");
+                    player.Play();
+                    break;
+                case SoundType.Captured:
+                    player = new System.Media.SoundPlayer("CamSound.wav");
+                    player.Play();
+                    break;
             }
         }
         
         public enum SoundType
         {
-            AuCaModeOn, AuCaModeOff
+            AuCaModeOn, AuCaModeOff, Captured
         }
     }
 }

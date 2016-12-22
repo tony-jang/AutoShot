@@ -85,6 +85,8 @@
     </Compile>
     <Compile Include="Effectors\BaseEffector.cs" />
     <Compile Include="Effectors\RotateEffector.cs" />
+    <Compile Include="Observer\PrtScrObserver.cs" />
+    <Compile Include="Observer\VisAreaObserver.cs" />
     <Compile Include="PopUps\PopUpWdw.xaml.cs">
       <DependentUpon>PopUpWdw.xaml</DependentUpon>
     </Compile>
