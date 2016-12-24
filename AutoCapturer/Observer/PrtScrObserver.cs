@@ -48,7 +48,7 @@ namespace AutoCapturer.Observer
                                     {
                                         System.Drawing.Bitmap bitmap = (System.Drawing.Bitmap)clipboardData.GetData(System.Windows.Forms.DataFormats.Bitmap);
                                         DetectPrtScr( System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()));
-                                        Console.WriteLine("Clipboard copied to UIElement");
+                                        
                                         break;
                                     }
                                 }

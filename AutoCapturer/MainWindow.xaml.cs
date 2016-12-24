@@ -33,51 +33,26 @@ namespace AutoCapturer
         SettingWdw sw = new SettingWdw();
 
         AutoCapturer.Observer.PrtScrObserver obs = new Observer.PrtScrObserver();
+        AutoCapturer.Observer.VisAreaObserver vis = new Observer.VisAreaObserver();
 
         public MainWindow()
         {
             InitializeComponent();
             this.Topmost = true;
 
+            vis.ShowStateChanged += ShowStateChanged;
 
-
-            da.From = -this.Width;
-            da2.From = -this.Height;
-            OpaAni.From = 0;
-
-
-
-            da.To = 0;
-            da2.To = 0;
-            OpaAni.To = 1.0;
-
-            da.AccelerationRatio = 0;
+            
             da.Duration = new Duration(TimeSpan.FromMilliseconds(800));
-            //애니메이션 효과를 적용한 후에는 속성 값을 변경하기
             da.FillBehavior = FillBehavior.Stop;
 
-            da2.AccelerationRatio = 0;
             da2.Duration = new Duration(TimeSpan.FromMilliseconds(800));
-            //애니메이션 효과를 적용한 후에는 속성 값을 변경하기
             da2.FillBehavior = FillBehavior.Stop;
 
-            OpaAni.AccelerationRatio = 0;
             OpaAni.Duration = new Duration(TimeSpan.FromMilliseconds(800));
-            //애니메이션 효과를 적용한 후에는 속성 값을 변경하기
             OpaAni.FillBehavior = FillBehavior.Stop;
 
-
-            da.EasingFunction = new CircleEase();
-            da2.EasingFunction = new CircleEase();
-
-
-            this.BeginAnimation(Window.LeftProperty, da);
-            this.BeginAnimation(Window.TopProperty, da2);
-            this.BeginAnimation(Window.OpacityProperty, OpaAni);
             
-
-
-
 
 
             //HttpClient client = new HttpClient();
@@ -115,6 +90,13 @@ namespace AutoCapturer
 
         }
 
+        private void ShowStateChanged(bool IsShowed)
+        {
+
+            if (IsShowed) Dispatcher.Invoke(new Action(() => { Appear(); }));
+            else if (!IsShowed) Dispatcher.Invoke(new Action(() => { DisAppear(); }));
+        }
+
         bool AuCaEnabled = false;
         private void BtnEnAutoSave_Click(object sender, RoutedEventArgs e)
         {
@@ -141,6 +123,7 @@ namespace AutoCapturer
 
         public void DisAppear()
         {
+            this.Opacity = 1.0;
             OpaAni.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
 
@@ -159,8 +142,37 @@ namespace AutoCapturer
             this.BeginAnimation(Window.LeftProperty, da);
             this.BeginAnimation(Window.TopProperty, da2);
             this.BeginAnimation(Window.OpacityProperty, OpaAni);
+
+            this.Opacity = 0.0;
         }
 
+        public void Appear()
+        {
+            this.Opacity = 0.0;
+            da.To = 0;
+            da2.To = 0;
+            OpaAni.To = 1.0;
+
+
+            da.From = -this.Width;
+            da2.From = -this.Height;
+            OpaAni.From = 0;
+            
+            da.AccelerationRatio = 0;
+            da2.AccelerationRatio = 0;
+            OpaAni.AccelerationRatio = 0;
+
+
+            da.EasingFunction = new CircleEase();
+            da2.EasingFunction = new CircleEase();
+
+
+            this.BeginAnimation(Window.LeftProperty, da);
+            this.BeginAnimation(Window.TopProperty, da2);
+            this.BeginAnimation(Window.OpacityProperty, OpaAni);
+
+            this.Opacity = 1.0;
+        }
 
         private void BtnAllCapture_Click(object sender, RoutedEventArgs e)
         {
@@ -168,6 +180,7 @@ namespace AutoCapturer
 
             obs.DetectPrtScr += Obs_A;
             obs.TestMtd();
+            vis.StartObserving();
             //sw.ShowDialog();
             //Effectors.BaseEffector RtEff = new Effectors.RotateEffector();
 
@@ -236,10 +249,6 @@ namespace AutoCapturer
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();
-
-            VisAreaObserver vo = new VisAreaObserver();
-            
-
         }
     }
 }
