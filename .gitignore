@@ -12,6 +12,9 @@
 *.exe
 *.g.resources
 *.lref
+*.exe.manifest
+*.exe.config
+*.pdb
 
 # User-specific files
 *.suo
