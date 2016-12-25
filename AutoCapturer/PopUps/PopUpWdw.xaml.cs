@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -8,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
+using wf = System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using static AutoCapturer.Sounds.NotificationSounds;
+using static AutoCapturer.Globals.Globals;
 
 namespace AutoCapturer.PopUps
 {
@@ -28,7 +30,7 @@ namespace AutoCapturer.PopUps
         public static Stack<PopUpWdw> puw = new Stack<PopUpWdw>();
 
 
-        Point StartPosition;
+        System.Windows.Point StartPosition;
 
 
         public PopUpWdw(string MainMsg, string InnerMsg)
@@ -46,12 +48,16 @@ namespace AutoCapturer.PopUps
 
             this.Opacity = 0;
 
-            StartPosition.X = Screen.PrimaryScreen.Bounds.Width - this.Width - 5;
-            StartPosition.Y = Screen.PrimaryScreen.Bounds.Height - this.Height - 40;
+            var area = wf.Screen.PrimaryScreen.WorkingArea;
+
+            StartPosition.X = area.Width - this.Width;
+            StartPosition.Y = area.Height - this.Height;
+
 
             this.Left = StartPosition.X; this.Top = StartPosition.Y;
 
             this.Topmost = true;
+            
         }
         
 
@@ -79,7 +85,6 @@ namespace AutoCapturer.PopUps
                 Dispatcher.Invoke(new Action(delegate {AppearWindow();}));
 
                 Thread.Sleep(VisibleTime);
-
 
                 Dispatcher.Invoke(new Action(delegate { DisAppearWindow(); }));
 

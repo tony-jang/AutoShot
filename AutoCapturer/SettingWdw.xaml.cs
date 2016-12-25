@@ -21,6 +21,7 @@ namespace AutoCapturer
     /// </summary>
     public partial class SettingWdw : Window
     {
+        
         public SettingWdw()
         {
             InitializeComponent();

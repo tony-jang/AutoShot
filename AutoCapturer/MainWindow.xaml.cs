@@ -38,6 +38,7 @@ namespace AutoCapturer
         public MainWindow()
         {
             InitializeComponent();
+            
             this.Topmost = true;
 
             vis.ShowStateChanged += ShowStateChanged;
@@ -92,7 +93,6 @@ namespace AutoCapturer
 
         private void ShowStateChanged(bool IsShowed)
         {
-
             if (IsShowed) Dispatcher.Invoke(new Action(() => { Appear(); }));
             else if (!IsShowed) Dispatcher.Invoke(new Action(() => { DisAppear(); }));
         }
@@ -248,7 +248,7 @@ namespace AutoCapturer
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoCapturer"
         xmlns:UserControls="clr-namespace:AutoCapturer.UserControls" x:Class="AutoCapturer.MainWindow"
         mc:Ignorable="d"
-        Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" Margin="0" Closing="Window_Closing">
+        Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" Margin="0" Closing="Window_Closing" ShowInTaskbar="False">
     <Grid Margin="10" >
 
 
