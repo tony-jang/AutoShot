@@ -88,13 +88,13 @@
     <Compile Include="Globals\Globals.cs" />
     <Compile Include="Observer\PrtScrObserver.cs" />
     <Compile Include="Observer\VisAreaObserver.cs" />
-    <Compile Include="PopUps\PopUpWdw.xaml.cs">
+    <Compile Include="Windows\PopUpWdw.xaml.cs">
       <DependentUpon>PopUpWdw.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingWdw.xaml.cs">
       <DependentUpon>SettingWdw.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sounds\NotificationSounds.cs" />
+    <Compile Include="Resources\Sounds\NotificationSounds.cs" />
     <Compile Include="UserControls\ColorThemeButt.xaml.cs">
       <DependentUpon>ColorThemeButt.xaml</DependentUpon>
     </Compile>
@@ -114,7 +114,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PopUps\PopUpWdw.xaml">
+    <Page Include="Windows\PopUpWdw.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,10 +156,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\checkedImg.png" />
+    <Resource Include="Resources\Icons\checkedImg.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Icon.png" />
+    <Resource Include="Resources\Icons\Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -174,14 +174,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\CloseImg.png" />
+    <Resource Include="Resources\Icons\CloseImg.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\ImgSound.png" />
+    <Resource Include="Resources\Icons\ImgSound.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\AuCaOff.png" />
-    <Resource Include="Icons\AuCaOn.png" />
+    <Resource Include="Resources\Icons\AuCaOff.png" />
+    <Resource Include="Resources\Icons\AuCaOn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
