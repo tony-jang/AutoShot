@@ -91,6 +91,16 @@ namespace AutoCapturer
 
         }
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            var compositionTarget = PresentationSource.FromVisual(this).CompositionTarget;
+
+            Globals.Globals.RatioX = compositionTarget.TransformToDevice.M11;
+            Globals.Globals.RatioY = compositionTarget.TransformToDevice.M22;
+        }
+
         private void ShowStateChanged(bool IsShowed)
         {
             if (IsShowed) Dispatcher.Invoke(new Action(() => { Appear(); }));

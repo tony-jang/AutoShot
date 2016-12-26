@@ -42,42 +42,11 @@ namespace AutoCapturer.Observer
                     int PosY = 0;
 
                     GetCursorPos(out pos);
-                    Dispatcher.CurrentDispatcher.Invoke(new Action(()=>{
-                        double ratioX = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice.M11;
-                        double ratioY = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice.M22;
 
-                        PosX = (int)(pos.X * ratioX);
-                        PosY = (int)(pos.Y * ratioY);
-                    }));
+                    PosX = (int)(pos.X * Globals.Globals.RatioX);
+                    PosY = (int)(pos.Y * Globals.Globals.RatioY);
 
 
-
-
-
-
-                if (!IsVisibled && PosX == 0 && PosY == 0) {
-                        ShowStateChanged(true);
-                        IsVisibled = true;
-                        continue;
-                    }
-
-
-                    if ((PosX >= 0 && PosX <= 300) && (PosY >= 0 && PosY <= 130))
-                    {
-                        if (IsVisibled)
-                        {
-                            continue;
-                        }
-                        
-                    }
-                    else
-                    {
-                        if (IsVisibled)
-                        {
-                            ShowStateChanged(false);
-                            IsVisibled = false;
-                        }
-                    }
                     Thread.Sleep(10);
                 } while (true);
             });

@@ -9,6 +9,9 @@ namespace AutoCapturer.Globals
 {
     static class Globals
     {
+        public static double RatioX { get; set; }
+        public static double RatioY { get; set; }
+
         public static int GetLocationDpi(int pt, bool IsX = true)
         {
             int loc;

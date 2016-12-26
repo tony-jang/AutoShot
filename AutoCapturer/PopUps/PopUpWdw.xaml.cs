@@ -29,7 +29,7 @@ namespace AutoCapturer.PopUps
 
         public static Stack<PopUpWdw> puw = new Stack<PopUpWdw>();
 
-
+        
         System.Windows.Point StartPosition;
 
 
@@ -40,9 +40,7 @@ namespace AutoCapturer.PopUps
             puw.Push(this);
             MainTB.Text = MainMsg;
             InnerTB.Text = InnerMsg;
-
-
-
+            
             ClickRect.MouseDown += Rect_MD;
             ClickRect.MouseUp += Rect_MU;
 
