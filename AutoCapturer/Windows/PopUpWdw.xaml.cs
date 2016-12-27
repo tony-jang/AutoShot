@@ -114,11 +114,11 @@ namespace AutoCapturer.PopUps
             TopDa = new DoubleAnimation(); OpacityDa = new DoubleAnimation();
 
             TopDa.From = StartPosition.Y + 50; TopDa.To = StartPosition.Y;
-            TopDa.Duration = new Duration(new TimeSpan(5000000));
+            TopDa.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             TopDa.AccelerationRatio = 1;
 
             OpacityDa.From = 0.0; OpacityDa.To = 1.0;
-            OpacityDa.Duration = new Duration(new TimeSpan(5000000));
+            OpacityDa.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             OpacityDa.AccelerationRatio = 1;
             
             BeginAnimation(Window.TopProperty, TopDa);
@@ -133,11 +133,11 @@ namespace AutoCapturer.PopUps
             TopDa = new DoubleAnimation(); OpacityDa = new DoubleAnimation();
 
             TopDa.From = this.Top; TopDa.To = this.Top += 50;
-            TopDa.Duration = new Duration(new TimeSpan(5000000));
+            TopDa.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             TopDa.AccelerationRatio = 1;
 
             OpacityDa.From = 1.0; OpacityDa.To = 0.0;
-            OpacityDa.Duration = new Duration(new TimeSpan(5000000));
+            OpacityDa.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             OpacityDa.AccelerationRatio = 1;
             
             BeginAnimation(Window.TopProperty, TopDa);

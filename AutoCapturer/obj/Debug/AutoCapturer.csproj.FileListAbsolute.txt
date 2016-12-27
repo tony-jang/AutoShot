@@ -23,8 +23,6 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Au
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csproj.GenerateResource.Cache
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.exe
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.pdb
-F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\PopUps\PopUpWdw.g.cs
-F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\PopUps\PopUpWdw.baml
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\bin\Debug\AutoCapturer.exe.config
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\bin\Debug\AutoCapturer.exe
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\bin\Debug\AutoCapturer.pdb
@@ -52,3 +50,5 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.P
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csproj.GenerateResource.Cache
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.exe
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.pdb
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PopUpWdw.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PopUpWdw.baml

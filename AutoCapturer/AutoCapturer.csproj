@@ -87,7 +87,6 @@
     <Compile Include="Effectors\RotateEffector.cs" />
     <Compile Include="Globals\Globals.cs" />
     <Compile Include="Observer\PrtScrObserver.cs" />
-    <Compile Include="Observer\VisAreaObserver.cs" />
     <Compile Include="Windows\PopUpWdw.xaml.cs">
       <DependentUpon>PopUpWdw.xaml</DependentUpon>
     </Compile>

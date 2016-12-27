@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Effects;
 using Microsoft.Win32;
 using AutoCapturer.Observer;
+using System.Windows.Controls;
 
 namespace AutoCapturer
 {
@@ -26,35 +27,35 @@ namespace AutoCapturer
     public partial class MainWindow : Window
     {
 
-        DoubleAnimation da = new DoubleAnimation();
-        DoubleAnimation da2 = new DoubleAnimation();
+        bool Visibled = true;
+
+        ThicknessAnimation da = new ThicknessAnimation();
         DoubleAnimation OpaAni = new DoubleAnimation();
 
         SettingWdw sw = new SettingWdw();
 
         AutoCapturer.Observer.PrtScrObserver obs = new Observer.PrtScrObserver();
-        AutoCapturer.Observer.VisAreaObserver vis = new Observer.VisAreaObserver();
 
         public MainWindow()
         {
             InitializeComponent();
             
             this.Topmost = true;
-
-            vis.ShowStateChanged += ShowStateChanged;
-
+            
             
             da.Duration = new Duration(TimeSpan.FromMilliseconds(800));
             da.FillBehavior = FillBehavior.Stop;
 
-            da2.Duration = new Duration(TimeSpan.FromMilliseconds(800));
-            da2.FillBehavior = FillBehavior.Stop;
-
             OpaAni.Duration = new Duration(TimeSpan.FromMilliseconds(800));
             OpaAni.FillBehavior = FillBehavior.Stop;
 
-            
+            this.Left = 0;  this.Top = 0;
 
+            this.MouseMove += FrmAppear;
+            this.MouseLeave += FrmDisappear;
+
+            obs.DetectPrtScr += Obs_A;
+            obs.TestMtd();
 
             //HttpClient client = new HttpClient();
             //client.BaseAddress = new Uri("http://localhost:52899/");
@@ -87,8 +88,24 @@ namespace AutoCapturer
             //{
             //    MessageBox.Show($"{(int)response.StatusCode} ({response.ReasonPhrase})");
             //}
+        }
 
+        private void FrmAppear(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (!Visibled)
+            {
+                Visibled = true;
+                Appear();
+            }
+        }
 
+        private void FrmDisappear(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (Visibled)
+            {
+                Visibled = false;
+                DisAppear();
+            }
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -126,71 +143,71 @@ namespace AutoCapturer
 
                 eff.Color = Colors.Black;
             }
-            pw.ShowTime(5000);
+            pw.ShowTime(1500);
             AuCaEnabled = !AuCaEnabled;
         }
 
 
         public void DisAppear()
         {
-            this.Opacity = 1.0;
+            DetectGrid.Width = 1;
+            DetectGrid.Height = 1;
+
+            MainGrid.Opacity = 1.0;
             OpaAni.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
+            Thickness ToThickness = new Thickness(-this.Width, -this.Height, 0, 0);
+            Thickness FromThickness = new Thickness(MainGrid.Margin.Left, MainGrid.Margin.Top, 0, 0);
 
-            da.To = -this.Width;
-            da2.To = -this.Height;
+            da.To = ToThickness; MainGrid.Margin = ToThickness;
+
             OpaAni.To = 0;
 
-            da.From = 0;
-            da2.From = 0;
+            da.From = FromThickness;
             OpaAni.From = 1.0;
 
             da.AccelerationRatio = 1;
-            da2.AccelerationRatio = 1;
+            
             OpaAni.AccelerationRatio = 1;
 
-            this.BeginAnimation(Window.LeftProperty, da);
-            this.BeginAnimation(Window.TopProperty, da2);
-            this.BeginAnimation(Window.OpacityProperty, OpaAni);
+            MainGrid.BeginAnimation(Grid.MarginProperty, da);
 
-            this.Opacity = 0.0;
+            MainGrid.BeginAnimation(Grid.OpacityProperty, OpaAni);
+
+            MainGrid.Opacity = 0.0;
         }
 
         public void Appear()
         {
-            this.Opacity = 0.0;
-            da.To = 0;
-            da2.To = 0;
+            DetectGrid.Width = this.Width;
+            DetectGrid.Height = this.Height;
+
+            MainGrid.Opacity = 0.0;
+
+            Thickness ToThickness = new Thickness(0, 0, 0, 0);
+            Thickness FromThickness = new Thickness(MainGrid.Margin.Left, MainGrid.Margin.Top, 0, 0);
+
+            da.To = ToThickness; MainGrid.Margin = ToThickness;
             OpaAni.To = 1.0;
 
 
-            da.From = -this.Width;
-            da2.From = -this.Height;
+            da.From = FromThickness;
             OpaAni.From = 0;
-            
+
             da.AccelerationRatio = 0;
-            da2.AccelerationRatio = 0;
             OpaAni.AccelerationRatio = 0;
 
 
             da.EasingFunction = new CircleEase();
-            da2.EasingFunction = new CircleEase();
 
-
-            this.BeginAnimation(Window.LeftProperty, da);
-            this.BeginAnimation(Window.TopProperty, da2);
-            this.BeginAnimation(Window.OpacityProperty, OpaAni);
-
-            this.Opacity = 1.0;
+            MainGrid.BeginAnimation(Grid.MarginProperty, da);
+            MainGrid.BeginAnimation(Grid.OpacityProperty, OpaAni);
+            
+            MainGrid.Opacity = 1.0;
         }
 
         private void BtnAllCapture_Click(object sender, RoutedEventArgs e)
         {
-            
-
-            obs.DetectPrtScr += Obs_A;
-            obs.TestMtd();
-            vis.StartObserving();
             //sw.ShowDialog();
             //Effectors.BaseEffector RtEff = new Effectors.RotateEffector();
 
@@ -260,5 +277,6 @@ namespace AutoCapturer
         {
             Environment.Exit(0);
         }
+
     }
 }
