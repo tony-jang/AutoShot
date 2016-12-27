@@ -5,23 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoCapturer.PopUps"
         mc:Ignorable="d"
-        Title="PopUpWdw" Height="90" Width="320" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Background="{x:Null}" ShowInTaskbar="False">
-    <Grid Margin="10">
-        <Rectangle x:Name="ClickRect" RadiusX="10" RadiusY="10">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF8193C5" Offset="0"/>
-                    <GradientStop Color="White" Offset="1"/>
-                    <GradientStop Color="#FFCAD4F0" Offset="0.362"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-            <Rectangle.Effect>
-                <DropShadowEffect></DropShadowEffect>
-            </Rectangle.Effect>
-        </Rectangle>
-        <Image HorizontalAlignment="Left" Height="50" Margin="10,10,0,-10" VerticalAlignment="Top" Width="50" Source="/AutoCapturer;component/Resources/Icons/AuCaOn.png" IsHitTestVisible="False"/>
-        <TextBlock x:Name="MainTB" HorizontalAlignment="Left" Margin="65,10,0,0" TextWrapping="Wrap" Text="메인 안내 메시지" VerticalAlignment="Top" FontSize="20" IsHitTestVisible="False"/>
-        <TextBlock x:Name="InnerTB" HorizontalAlignment="Left" Margin="65,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="10" Height="27" Width="225" Text="세부 안내 메시지" IsHitTestVisible="False"/>
+        Title="PopUpWdw" Height="90" Width="320" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Background="{x:Null}" ShowInTaskbar="False"
+        Foreground="White">
+    
+    <Border  BorderBrush="#FF9800" Background="#263248" BorderThickness="4,0,0,0" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="4" ShadowDepth="2" Opacity="0.18" Direction="270"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-    </Grid>
+            <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="8" Width="46" Height="46" Source="/AutoCapturer;component/Resources/Icons/AuCaOn.png" IsHitTestVisible="False"/>
+            
+            <TextBlock x:Name="MainTB" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="메인 안내 메시지" VerticalAlignment="Bottom" FontSize="18" IsHitTestVisible="False"/>
+            <TextBlock x:Name="InnerTB" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Top"  Margin="0,4,0,0" FontSize="12" Text="세부 안내 메시지" IsHitTestVisible="False"/>
+
+        </Grid>
+    </Border>
 </Window>

@@ -41,8 +41,8 @@ namespace AutoCapturer.PopUps
             MainTB.Text = MainMsg;
             InnerTB.Text = InnerMsg;
             
-            ClickRect.MouseDown += Rect_MD;
-            ClickRect.MouseUp += Rect_MU;
+            //ClickRect.MouseDown += Rect_MD;
+            //ClickRect.MouseUp += Rect_MU;
 
             this.Opacity = 0;
 

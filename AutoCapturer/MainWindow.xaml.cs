@@ -128,20 +128,20 @@ namespace AutoCapturer
         private void BtnEnAutoSave_Click(object sender, RoutedEventArgs e)
         {
             PopUpWdw pw;
-            DropShadowEffect eff = (DropShadowEffect)MainRect.Effect;
+            //DropShadowEffect eff = (DropShadowEffect)MainRect.Effect;
             if (!AuCaEnabled)
             {
-                pw = new PopUpWdw("자동 캡쳐 활성화", "지금부터 캡쳐되는 내용은 자동으로 저장됩니다.");
+                pw = new PopUpWdw("자동 캡쳐 활성화", "파일로 자동 저장합니다.");
                 PlayNotificationSound(SoundType.AuCaModeOn);
 
-                eff.Color = Colors.Red;
+                //eff.Color = Colors.Red;
             }
             else
             {
-                pw = new PopUps.PopUpWdw("자동 캡쳐 비활성화", "지금부터 캡쳐되는 내용은 클립보드에 저장됩니다.");
+                pw = new PopUps.PopUpWdw("자동 캡쳐 비활성화", "더 이상 저장하지 않습니다.");
                 PlayNotificationSound(SoundType.AuCaModeOff);
 
-                eff.Color = Colors.Black;
+                //eff.Color = Colors.Black;
             }
             pw.ShowTime(1500);
             AuCaEnabled = !AuCaEnabled;
