@@ -33,8 +33,6 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\bin\Debug\System.Net.Htt
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csprojResolveAssemblyReference.cache
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\CornerSelecter.g.cs
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\MainWindow.g.cs
-D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\PopUps\PopUpWdw.g.cs
-D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\SettingWdw.g.cs
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\UserControls\ColorThemeButt.g.cs
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\App.g.cs
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -42,8 +40,6 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer_M
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer_MarkupCompile.lref
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\CornerSelecter.baml
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\MainWindow.baml
-D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\PopUps\PopUpWdw.baml
-D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\SettingWdw.baml
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\UserControls\ColorThemeButt.baml
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.g.resources
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.Properties.Resources.resources
@@ -52,3 +48,7 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.e
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.pdb
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PopUpWdw.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PopUpWdw.baml
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PopUpWdw.g.cs
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PopUpWdw.baml
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\SettingWdw.g.cs
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\SettingWdw.baml

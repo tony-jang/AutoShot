@@ -90,7 +90,7 @@
     <Compile Include="Windows\PopUpWdw.xaml.cs">
       <DependentUpon>PopUpWdw.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingWdw.xaml.cs">
+    <Compile Include="Windows\SettingWdw.xaml.cs">
       <DependentUpon>SettingWdw.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Sounds\NotificationSounds.cs" />
@@ -117,7 +117,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingWdw.xaml">
+    <Page Include="Windows\SettingWdw.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
