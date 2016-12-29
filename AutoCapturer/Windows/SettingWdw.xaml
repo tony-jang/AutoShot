@@ -11,9 +11,172 @@
         Title="SettingWdw" MinHeight="500" Height="500" MinWidth="700" Width="700" ResizeMode="CanResizeWithGrip" MaxWidth="1000" MaxHeight="700">
 
     <Window.Resources>
-        
+        <StreamGeometry x:Key="CheckPath">M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z</StreamGeometry>
+        <Style x:Key="BasicTabControlStyle"  TargetType="{x:Type TabControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid x:Name="templateRoot" ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="ColumnDefinition0"/>
+                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TabPanel x:Name="headerPanel" Background="Transparent" Grid.Column="0" IsItemsHost="true" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                            <Border x:Name="contentPanel" BorderThickness="0" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TabStripPlacement" Value="Bottom">
+                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="1"/>
+                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+                                <Setter Property="Margin" TargetName="headerPanel" Value="2,0,2,2"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Left">
+                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
+                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="1"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                                <Setter Property="Margin" TargetName="headerPanel" Value="2,2,0,2"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Right">
+                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
+                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="1"/>
+                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="0"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
+                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
+                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                                <Setter Property="Margin" TargetName="headerPanel" Value="0,2,2,2"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="BasicTabItemStyle"  TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="Border"
+                            BorderThickness="4,0,0,0"
+                            BorderBrush="#2172B1"
+                            CornerRadius="0">
+                            <ContentPresenter x:Name="ContentSite"
+                                            ContentSource="Header"
+                                            HorizontalAlignment="Stretch"  VerticalAlignment="Center"
+                                            Margin="20,4,20,5"
+                                            RecognizesAccessKey="True"
+                                            TextBlock.FontSize="12" TextBlock.Foreground="Black"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background"      Value="White" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,0" />
+                            </Trigger>
+                            <Trigger Property="TabItem.IsMouseOver" Value="True" SourceName="Border">
+                                <Setter TargetName="Border" Property="Background"      Value="Gray" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,0" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background"                Value="#FFE5E5E5" />
+                                <Setter TargetName="Border" Property="BorderThickness"           Value="0,4,0,0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+
+                        <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="30"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="MainBorder" CornerRadius="5" Background="{TemplateBinding Background}" Grid.ColumnSpan="2">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="2" Direction="280" ShadowDepth="3" Opacity="0.1"></DropShadowEffect>
+                                </Border.Effect>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Content="{TemplateBinding Content}"
+                                              Grid.Column="0"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              Focusable="False"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="Center"/>
+
+                            <Path x:Name="CheckPth" Grid.Column="1" Data="{StaticResource CheckPath}" Margin="1" Fill="White" Opacity="0"></Path>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="True">
+                                <Setter Property="FocusVisualStyle">
+                                    <Setter.Value>
+                                        <Style>
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="4,-1,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray" TargetName="MainBorder"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.50" TargetName="contentPresenter"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFBFBFBF" TargetName="MainBorder"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Background" Value="#7E8AA2" TargetName="MainBorder"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Opacity" Value="1.0" TargetName="CheckPth"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Rectangle Stroke="Black"/>
 
@@ -22,21 +185,18 @@
                 <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Auto Capturer Settings" VerticalAlignment="Center" FontSize="13" IsHitTestVisible="False" Foreground="White" Margin="10,0,0,0"/>
             </Grid>
         </Border>
-        
-        <TabControl x:Name="tabControl" Margin="10,51,10,10">
-            <TabItem Header="캡처 설정" Background="White" BorderBrush="#FF17FF00">
+
+        <TabControl x:Name="tabControl" Margin="10,51,10,10" Style="{StaticResource BasicTabControlStyle}">
+            <TabItem Header="캡처 설정" Style="{StaticResource BasicTabItemStyle}">
                 <Grid Background="#FFE5E5E5">
-                    <Image x:Name="image" HorizontalAlignment="Left" Height="22" Margin="147,68,0,0" VerticalAlignment="Top" Width="22" Source="Resources/Icons/ImgSound.png"/>
                     <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="15,17,0,0" TextWrapping="Wrap" Text="자동 캡쳐 저장 시작 알림 방법" VerticalAlignment="Top"/>
-                    <RadioButton x:Name="radioButton2" Content="알림 없음 (권장하지 않음)" HorizontalAlignment="Left" Margin="29,225,0,0" VerticalAlignment="Top"/>
-                    <RadioButton x:Name="radioButton2_Copy" Content="소리 재생" HorizontalAlignment="Left" Margin="29,48,0,0" VerticalAlignment="Top"/>
-                    <RadioButton x:Name="radioButton2_Copy1" Content="팝업으로 띄우기" HorizontalAlignment="Left" Margin="29,116,0,0" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="49,71,0,0" TextWrapping="Wrap" Text="자동 캡쳐 활성화" VerticalAlignment="Top"/>
+                    <RadioButton x:Name="radioButton2" Content="알림 없음 (권장하지 않음)" Margin="29,222,10,0" VerticalAlignment="Top" Height="28"/>
+                    <RadioButton x:Name="radioButton2_Copy" Content="소리 재생" Margin="29,48,10,0" VerticalAlignment="Top" Height="28"/>
+                    <RadioButton x:Name="radioButton2_Copy1" Content="팝업으로 띄우기" Margin="29,150,10,0" VerticalAlignment="Top" Height="28"/>
                     <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="22" Margin="303,68,0,0" VerticalAlignment="Top" Width="22" Source="Resources/Icons/ImgSound.png"/>
-                    <TextBlock x:Name="textBlock7_Copy" HorizontalAlignment="Left" Margin="193,71,0,0" TextWrapping="Wrap" Text="자동 캡쳐 비활성화" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="패턴 관리">
+            <TabItem Header="패턴 관리" Style="{StaticResource BasicTabItemStyle}">
                 <Grid Background="#FFE5E5E5" Margin="0,-1,0.4,0.4">
                     <ListView x:Name="listView" HorizontalAlignment="Left" Height="122" VerticalAlignment="Top" Width="623" Margin="26,35,0,0" ScrollViewer.CanContentScroll="False"/>
                     <RadioButton x:Name="radioButton1" Content="기본 설정 위치 (C:\Users\User\Dekstop\)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,174,0,0" GroupName="PtrnSaveLocation"/>
@@ -52,7 +212,7 @@
                     <TextBlock x:Name="textBlock4_Copy" HorizontalAlignment="Left" Margin="55,316,0,0" TextWrapping="Wrap" Text="예) C:\Users\User\Desktop\" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="개인 설정">
+            <TabItem Header="개인 설정" Style="{StaticResource BasicTabItemStyle}">
                 <Grid Background="#FFE5E5E5">
                     <UserControls:ColorThemeButt HorizontalAlignment="Left" Margin="32,51,0,0" VerticalAlignment="Top"/>
                     <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" TextWrapping="Wrap" Text="색 설정" VerticalAlignment="Top" Margin="10,10,0,0"/>
@@ -61,7 +221,7 @@
                     <local:CornerSelecter HorizontalAlignment="Left" Margin="32,257,0,0" VerticalAlignment="Top" Height="108" Width="192"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="로고 설정">
+            <TabItem Header="로고 설정" Style="{StaticResource BasicTabItemStyle}">
                 <Grid Background="#FFE5E5E5">
                     <CheckBox x:Name="checkBox" Content="전체 화면 캡처에서 로고 삽입 사용하기" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="34,11,0,0"/>
                     <CheckBox x:Name="checkBox_Copy" Content="영역 선택 캡처에서 로고 삽입 사용하기" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="34,208,0,0"/>
@@ -95,9 +255,9 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="효과 설정">
+            <TabItem Header="효과 설정" Style="{StaticResource BasicTabItemStyle}">
                 <Grid Background="#FFE5E5E5">
-                    
+
                 </Grid>
             </TabItem>
         </TabControl>

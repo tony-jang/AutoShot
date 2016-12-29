@@ -27,6 +27,9 @@ namespace AutoCapturer
     public partial class MainWindow : Window
     {
 
+
+
+
         bool Visibled = true;
 
         ThicknessAnimation da = new ThicknessAnimation();
@@ -39,6 +42,9 @@ namespace AutoCapturer
         public MainWindow()
         {
             InitializeComponent();
+
+
+
             
             this.Topmost = true;
             
@@ -278,5 +284,9 @@ namespace AutoCapturer
             Environment.Exit(0);
         }
 
+        private void button_Click_1(object sender, RoutedEventArgs e)
+        {
+            sw.ShowDialog();
+        }
     }
 }
