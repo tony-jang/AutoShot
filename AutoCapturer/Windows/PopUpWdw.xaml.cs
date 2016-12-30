@@ -57,7 +57,6 @@ namespace AutoCapturer.PopUps
             this.Topmost = true;
             
         }
-        
 
 
         /// <summary>

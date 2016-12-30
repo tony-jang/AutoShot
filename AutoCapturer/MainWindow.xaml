@@ -7,24 +7,6 @@
         xmlns:UserControls="clr-namespace:AutoCapturer.UserControls" x:Class="AutoCapturer.MainWindow"
         mc:Ignorable="d"
         Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" Margin="0" Closing="Window_Closing" ShowInTaskbar="False" AllowsTransparency="True" >
-    <Window.Resources>
-        <Style TargetType="{x:Type ToolTip}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToolTip}">
-                        <ContentPresenter/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="#263248"/>
-            <Setter Property="Background" Value="#FFF"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="6,0"/>
-        </Style>
-    </Window.Resources>
 
     <Grid>
         <Grid x:Name="DetectGrid" Background="#02000000" Width="1" Height="1" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -61,6 +43,7 @@
                         </TextBlock>
                     </Grid>
                     <Button x:Name="button" Content="!" Grid.Column="1" HorizontalAlignment="Left" Margin="128,75,0,0" VerticalAlignment="Top" Width="20" Height="18" Click="button_Click_1"/>
+                    <Button x:Name="button1" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="16,69,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
                 </Grid>
             </Border>
         </Grid>

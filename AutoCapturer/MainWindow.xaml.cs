@@ -43,7 +43,7 @@ namespace AutoCapturer
         {
             InitializeComponent();
 
-
+            
 
             
             this.Topmost = true;
@@ -286,7 +286,13 @@ namespace AutoCapturer
 
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
-            sw.ShowDialog();
+            sw = new SettingWdw();
+            sw.Show();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            WindowSystemCommand.CloseCommand.Execute(null,sw);
         }
     }
 }

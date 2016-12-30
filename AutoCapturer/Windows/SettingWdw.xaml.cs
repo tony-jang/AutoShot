@@ -19,38 +19,27 @@ namespace AutoCapturer
     /// <summary>
     /// SettingWdw.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SettingWdw : Window
+    public partial class SettingWdw : Windows.ChromeWindow
     {
         
         public SettingWdw()
         {
             InitializeComponent();
 
-            DragBorder.MouseDown += DragBrder_MD;
-            DragBorder.MouseUp += DragBrder_MU;
+            ShowPopupGrid.IsEnabled = false;
+            
+            AuCaRingType2.Unchecked += PopupStateChange;
+            AuCaRingType2.Checked += PopupStateChange;
         }
+
+        private void PopupStateChange(object sender, RoutedEventArgs e)
+        {
+            ShowPopupGrid.IsEnabled = (bool)AuCaRingType2.IsChecked;
+        }
+
         void DragBrder_MD(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (this.ResizeMode != System.Windows.ResizeMode.NoResize)
-                {
-                    this.ResizeMode = System.Windows.ResizeMode.NoResize;
-                    this.UpdateLayout();
-                }
-
-                DragMove();
-                if (this.ResizeMode == System.Windows.ResizeMode.NoResize)
-                {
-                    this.ResizeMode = System.Windows.ResizeMode.CanResizeWithGrip;
-                    this.UpdateLayout();
-                }
-            }
-        }
-
-        void DragBrder_MU(object sender, MouseButtonEventArgs e)
-        {
-
+            DragMove();
         }
         
         private void CloseBtn_MouseDown(object sender, MouseButtonEventArgs e)
@@ -61,6 +50,11 @@ namespace AutoCapturer
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             OpacityFullScr.Opacity = 1 - OpacityFullScr.Value / 100;
+        }
+
+        private void EndButt_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
         }
     }
 }
