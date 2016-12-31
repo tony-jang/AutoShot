@@ -9,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
 using System.Windows.Media.Animation;
 using System.IO;
-using static AutoCapturer.Sounds.NotificationSounds;
 using AutoCapturer.PopUps;
 using System.Drawing;
 using System.Windows.Media;
@@ -18,6 +17,8 @@ using System.Windows.Media.Effects;
 using Microsoft.Win32;
 using AutoCapturer.Observer;
 using System.Windows.Controls;
+using static AutoCapturer.Sounds.NotificationSounds;
+using static AutoCapturer.Converter.VariableConverter;
 
 namespace AutoCapturer
 {
@@ -43,9 +44,17 @@ namespace AutoCapturer
         {
             InitializeComponent();
 
-            
+            //TODO: 변수 변환 테스트
+            //string Test;
 
+            //Convert("%t", out Test);
+
+            //MessageBox.Show(Test);
+
+            //return;
             
+            //TODO: ImageEditor 띄워보기
+
             this.Topmost = true;
             
             

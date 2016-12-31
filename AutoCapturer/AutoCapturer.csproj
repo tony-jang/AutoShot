@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\VariableConverter.cs" />
     <Compile Include="CornerSelecter.xaml.cs">
       <DependentUpon>CornerSelecter.xaml</DependentUpon>
     </Compile>
@@ -98,6 +99,9 @@
     <Compile Include="UserControls\PatternItem.cs" />
     <Compile Include="WindowSystemCommand.cs" />
     <Compile Include="Windows\ChromeWindow.cs" />
+    <Compile Include="Windows\ImageEditor.xaml.cs">
+      <DependentUpon>ImageEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\PopUpWdw.xaml.cs">
       <DependentUpon>PopUpWdw.xaml</DependentUpon>
     </Compile>
@@ -124,6 +128,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\ImageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\PopUpWdw.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

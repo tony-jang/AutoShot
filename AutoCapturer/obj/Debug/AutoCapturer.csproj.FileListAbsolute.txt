@@ -53,3 +53,6 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.P
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csproj.GenerateResource.Cache
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.exe
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.pdb
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csprojResolveAssemblyReference.cache
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\ImageEditor.g.cs
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\ImageEditor.baml

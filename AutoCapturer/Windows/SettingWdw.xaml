@@ -15,7 +15,9 @@
     <Window.Resources>
         <StreamGeometry x:Key="CheckPath">M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z</StreamGeometry>
         <StreamGeometry x:Key="EndPath">M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z</StreamGeometry>
-
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
 
     </Window.Resources>
 
@@ -43,7 +45,30 @@
                             </Grid>
                         </Grid>
                         <RadioButton x:Name="AuCaRingType3" Content="알림 없음 (권장하지 않음)" Margin="20,185,20,0" VerticalAlignment="Top" Height="30" GroupName="AuCaRingType"/>
-
+                        <TextBlock x:Name="textBlock6_Copy" HorizontalAlignment="Left" Margin="15,233,0,0" Text="수동 전체 캡쳐 시 카운트 다운" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="15"/>
+                        <Grid x:Name="AllCaCountDown" VerticalAlignment="Top" Margin="20,260,20,0" Height="45" Background="#FFF7F7F7">
+                            <Grid Margin="10,10,10,0"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <RadioButton Content="1초" Grid.Column="0" IsChecked="True"/>
+                                <RadioButton Content="2초" Grid.Column="2"/>
+                                <RadioButton Content="3초" Grid.Column="4"/>
+                                <RadioButton Content="4초" Grid.Column="6"/>
+                                <RadioButton Content="5초" Grid.Column="8"/>
+                                <RadioButton Content="6초" Grid.Column="10"/>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="패턴 관리" Style="{StaticResource BasicTabItemStyle}">
@@ -91,8 +116,8 @@
                                 <TextBlock Text="강의용 (1230)" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5,0"/>
 
                                 <TextBlock Margin="5,0" Grid.Row="3" Grid.ColumnSpan="2">
-                                - %n : 현재 시간을 가져옵니다. (5:00PM)<LineBreak/>
-                                - %N : 현재 시간을 24시 기준으로 가져옵니다. (17:00)<LineBreak/>
+                                - %t : 현재 시간을 가져옵니다. (5:00PM)<LineBreak/>
+                                - %T : 현재 시간을 24시 기준으로 가져옵니다. (17:00)<LineBreak/>
                                 - %D : 현재 날짜를 가져옵니다. (20161230)<LineBreak/>
                                 - %d : 년도를 제외한 날짜를 가져옵니다. (1230)<LineBreak/>
                                 - %a : 자동 포맷 입니다. 단, 자동 포맷 사용시 다른 변수는 사용 할 수 없습니다. (20161230 5:00:00)
@@ -138,11 +163,6 @@
                 </TabItem>
                 <TabItem Header="로고 설정" Style="{StaticResource BasicTabItemStyle}">
                     <Grid Background="#FFE5E5E5">
-                        <Grid Margin="518,251,10,10">
-                            <TextBlock x:Name="textBlock1" HorizontalAlignment="Right" Margin="0,0,30,0" TextWrapping="Wrap" Text="이미지 미리보기" VerticalAlignment="Top"/>
-                            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="150" Margin="0,29,0,0" Stroke="Black" VerticalAlignment="Top" Width="150"/>
-                            <Image x:Name="FullScrImgPreview" HorizontalAlignment="Right" Height="150" VerticalAlignment="Top" Width="150" Margin="0,29,0,0"/>
-                        </Grid>
 
                         <RadioButton x:Name="SetLogo1" Content="로컬 파일 사용" VerticalAlignment="Top" Margin="20,50,20,0" GroupName="SetLogo" Height="30" IsChecked="True"/>
                         <RadioButton x:Name="SetLogo2" Content="미리 등록된 파일 사용" VerticalAlignment="Top" Margin="20,120,20,0" GroupName="SetLogo" Height="30"/>
