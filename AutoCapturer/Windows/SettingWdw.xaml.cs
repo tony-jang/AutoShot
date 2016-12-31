@@ -24,6 +24,7 @@ namespace AutoCapturer
         
         public SettingWdw()
         {
+            
             InitializeComponent();
 
             ShowPopupGrid.IsEnabled = false;

@@ -8,7 +8,6 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\bin\Debug\Sy
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csprojResolveAssemblyReference.cache
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\CornerSelecter.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\MainWindow.g.cs
-F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\SettingWdw.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\UserControls\ColorThemeButt.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\App.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -16,7 +15,6 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Au
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer_MarkupCompile.lref
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\CornerSelecter.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\MainWindow.baml
-F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\SettingWdw.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\UserControls\ColorThemeButt.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.g.resources
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.Properties.Resources.resources
@@ -56,3 +54,8 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.p
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csprojResolveAssemblyReference.cache
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\ImageEditor.g.cs
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\ImageEditor.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\ImageEditor.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\SettingWdw.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\App.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\ImageEditor.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\SettingWdw.baml

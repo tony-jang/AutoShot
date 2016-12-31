@@ -1,28 +1,48 @@
-﻿<Window x:Class="AutoCapturer.Windows.ImageEditor"
+﻿<w:ChromeWindow x:Class="AutoCapturer.Windows.ImageEditor"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:w="clr-namespace:AutoCapturer.Windows"   
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoCapturer.Windows"
         mc:Ignorable="d"
-        Title="ImageEditor" Height="500" Width="700">
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Title="Auto Capturer Image Editor" d:DesignHeight="500" d:DesignWidth="700" WindowStartupLocation="CenterScreen" Height="500" Width="700">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="20,0,0,0" FontSize="15"  VerticalAlignment="Center">현재 편집 중인 파일 : C:\Users\User\Desktop</TextBlock>
+        </Grid>
+
+
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <RadioButton x:Name="EditBtn1" Margin="5" Grid.Row="1" Content="선택"/>
-            <RadioButton x:Name="EditBtn2" Margin="5" Grid.Row="2" Content="자르기"/>
-            <RadioButton x:Name="EditBtn3" Margin="5" Grid.Row="3" Content="펜"/>
+            
+            <RadioButton x:Name="EditBtn1" Margin="6" Grid.Row="1" Content="선택" GroupName="EditMode"/>
+            <RadioButton x:Name="EditBtn2" Margin="6" Grid.Row="2" Content="자르기" GroupName="EditMode"/>
+            <RadioButton x:Name="EditBtn3" Margin="6" Grid.Row="3" Content="펜" GroupName="EditMode"/>
+            <RadioButton x:Name="EditBtn4" Margin="6" Grid.Row="4" Content="크기/비율" GroupName="EditMode"/>
         </Grid>
         
     </Grid>
-</Window>
+</w:ChromeWindow>
