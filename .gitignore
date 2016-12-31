@@ -12,6 +12,7 @@
 *.exe
 *.g.resources
 *.lref
+*.vshost.exe
 *.exe.manifest
 *.exe.config
 *.pdb
