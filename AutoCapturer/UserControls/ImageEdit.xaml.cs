@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
+using f=System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -88,8 +88,9 @@ namespace AutoCapturer.UserControls
 
         private void Tmr_Tick(object sender, EventArgs e)
         {
-            if (System.Windows.Forms.Control.MouseButtons == MouseButtons.Left)
+            if (System.Windows.Forms.Control.MouseButtons == f.MouseButtons.Left)
             {
+
                 WIN32POINT NowPosition;
                 GetCursorPos(out NowPosition);
                 double Width, Height;
@@ -110,8 +111,11 @@ namespace AutoCapturer.UserControls
             else
             {
                 PreviewRect.Opacity = 0.0;
-                MainGrid.Width = ReservePoint.Width;
-                MainGrid.Height = ReservePoint.Height;
+                if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth) { MainGrid.Width = ReservePoint.Width; }
+                if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight){MainGrid.Height = ReservePoint.Height; }
+                
+                
+                this.Cursor = null;
                 tmr.Stop();
             }
         }
@@ -120,6 +124,7 @@ namespace AutoCapturer.UserControls
         {
             Mode = DragMode.Wait;
             StartPoint.X = 0; StartPoint.Y = 0;
+            this.Cursor = null;
             tmr.Stop();
         }
 
@@ -131,10 +136,11 @@ namespace AutoCapturer.UserControls
         WIN32POINT StartPoint;
         DragMode Mode = DragMode.Wait;
 
-        Timer tmr = new Timer();
+        f.Timer tmr = new f.Timer();
 
         private void Drager_Process(object sender, MouseButtonEventArgs e)
         {
+            this.Cursor = ((Rectangle)sender).Cursor;
             GetCursorPos(out StartPoint);
             BoardSize = new Size(MainGrid.Width, MainGrid.Height);
             PreviewRect.Opacity = 1.0;

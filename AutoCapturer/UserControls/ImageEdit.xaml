@@ -8,6 +8,9 @@
              d:DesignHeight="700" d:DesignWidth="700">
     <Grid Background="White">
         <Grid x:Name="MainGrid" HorizontalAlignment="Left" Height="310"  VerticalAlignment="Top" Width="310" Margin="0">
+            <Rectangle x:Name="RD_Drager" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
+            <Rectangle x:Name="RC_Drager" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
+            <Rectangle x:Name="RUC_Drager" VerticalAlignment="Center" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
             
             <Border x:Name="ImageRect" Margin="5" BorderBrush="Black" BorderThickness="1">
                 <Border.Background>
@@ -16,9 +19,6 @@
                 <Image VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="InnerImg" Stretch="Fill"/>
             </Border>
             
-            <Rectangle x:Name="RD_Drager" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
-            <Rectangle x:Name="RC_Drager" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
-            <Rectangle x:Name="RUC_Drager" VerticalAlignment="Center" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
         </Grid>
         <Rectangle x:Name="PreviewRect" Margin="5" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="300" Opacity="0"/>
 
