@@ -23,5 +23,10 @@ namespace AutoCapturer.Windows
         {
             InitializeComponent();
         }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Editor.ImageStretchMode = (Stretch)comboBox.SelectedIndex;
+        }
     }
 }

@@ -95,6 +95,9 @@
     <Compile Include="Interop\NativeMethods.cs" />
     <Compile Include="Interop\UnsafeNativeMethods.cs" />
     <Compile Include="Observer\PrtScrObserver.cs" />
+    <Compile Include="UserControls\ImageEdit.xaml.cs">
+      <DependentUpon>ImageEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PathButton.cs" />
     <Compile Include="UserControls\PatternItem.cs" />
     <Compile Include="WindowSystemCommand.cs" />
@@ -128,6 +131,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\ImageEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\ImageEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +210,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Setting\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\스공 86.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
