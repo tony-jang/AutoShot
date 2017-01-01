@@ -22,5 +22,24 @@
         </Grid>
         <Rectangle x:Name="PreviewRect" Margin="5" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="300" Opacity="0"/>
 
+        <Grid x:Name="CropGrid" Width="310" Height="310" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Rectangle Margin="5"  Fill="#7F000000"/>
+            <Grid x:Name="DragGrid">
+                <Rectangle x:Name="CropRect" Margin="5" Stroke="Black"/>
+
+                <Rectangle x:Name="DR_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
+                <Rectangle x:Name="DC_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
+                <Rectangle x:Name="CR_Cropper" VerticalAlignment="Center" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
+                <Rectangle x:Name="DL_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNESW" ></Rectangle>
+                <Rectangle x:Name="CL_Cropper" VerticalAlignment="Center" HorizontalAlignment="Left" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeWE" ></Rectangle>
+                <Rectangle x:Name="UL_Cropper" VerticalAlignment="Top" HorizontalAlignment="Left" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeNWSE" ></Rectangle>
+                <Rectangle x:Name="UC_Cropper" VerticalAlignment="Top" HorizontalAlignment="Center" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNS" ></Rectangle>
+                <Rectangle x:Name="UR_Cropper" VerticalAlignment="Top" HorizontalAlignment="Right" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNESW" ></Rectangle>
+            </Grid>
+           
+            
+
+
+        </Grid>
     </Grid>
 </UserControl>
