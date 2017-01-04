@@ -44,6 +44,13 @@ namespace AutoCapturer.UserControls
                         RC_Drager.Visibility = Visibility.Visible;
                         RUC_Drager.Visibility = Visibility.Visible;
                         RD_Drager.Visibility = Visibility.Visible;
+                        CropGrid.Visibility = Visibility.Hidden;
+                        break;
+                    case EditMode.CropImage:
+                        RC_Drager.Visibility = Visibility.Hidden;
+                        RUC_Drager.Visibility = Visibility.Hidden;
+                        RD_Drager.Visibility = Visibility.Hidden;
+                        CropGrid.Visibility = Visibility.Visible;
                         break;
                 }
             }
@@ -73,10 +80,20 @@ namespace AutoCapturer.UserControls
             RUC_Drager.MouseDown += Drager_Process;
             RD_Drager.MouseDown += Drager_Process;
 
+            UL_Cropper.MouseDown += Cropper_Process;
+            UC_Cropper.MouseDown += Cropper_Process;
+            UR_Cropper.MouseDown += Cropper_Process;
+            CL_Cropper.MouseDown += Cropper_Process;
+            CR_Cropper.MouseDown += Cropper_Process;
+            DL_Cropper.MouseDown += Cropper_Process;
+            DC_Cropper.MouseDown += Cropper_Process;
+            DR_Cropper.MouseDown += Cropper_Process;
+
+
             RD_Drager.MouseUp += DragerEnd_Process;
 
-            tmr.Tick += Tmr_Tick;
-            tmr.Interval = 50;
+            tmr.Tick += Tick_SizeChange;
+            tmr.Interval = 10;
 
             BitmapImage img = new BitmapImage(new Uri(@"pack://application:,,,/AutoCapturer;component/Resources/Icons/CloseImg.png"));
 
@@ -86,11 +103,10 @@ namespace AutoCapturer.UserControls
         }
 
 
-        private void Tmr_Tick(object sender, EventArgs e)
+        private void Tick_SizeChange(object sender, EventArgs e)
         {
             if (System.Windows.Forms.Control.MouseButtons == f.MouseButtons.Left)
             {
-
                 WIN32POINT NowPosition;
                 GetCursorPos(out NowPosition);
                 double Width, Height;
@@ -113,7 +129,6 @@ namespace AutoCapturer.UserControls
                 PreviewRect.Opacity = 0.0;
                 if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth) { MainGrid.Width = ReservePoint.Width; }
                 if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight){MainGrid.Height = ReservePoint.Height; }
-                
                 
                 this.Cursor = null;
                 tmr.Stop();
@@ -157,6 +172,21 @@ namespace AutoCapturer.UserControls
                     break;
             }
             tmr.Start();
+        }
+
+        private void Cropper_Process(object sender, MouseButtonEventArgs e)
+        {
+            this.Cursor = ((Rectangle)sender).Cursor;
+            GetCursorPos(out StartPoint);
+            BoardSize = new Size(MainGrid.Width, MainGrid.Height);
+            
+
+            switch (((Rectangle)sender).Name.Substring(0,2))
+            {
+                case "UL":
+
+                    break;
+            }
         }
 
     }

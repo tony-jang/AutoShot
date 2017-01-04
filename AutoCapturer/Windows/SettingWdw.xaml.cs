@@ -31,6 +31,20 @@ namespace AutoCapturer
             
             AuCaRingType2.Unchecked += PopupStateChange;
             AuCaRingType2.Checked += PopupStateChange;
+
+            TBPtnName.TextChanged += TBPtnNamechange;
+        }
+
+        private void TBPtnNamechange(object sender, TextChangedEventArgs e)
+        {
+            string Data;
+
+            Converter.VariableConverter.ConvertAll(TBPtnName.Text, out Data);
+
+            PtnPreview.Text = Data;
+
+            return;
+
         }
 
         private void PopupStateChange(object sender, RoutedEventArgs e)

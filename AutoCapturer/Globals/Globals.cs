@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace AutoCapturer.Globals
 {
@@ -33,5 +34,8 @@ namespace AutoCapturer.Globals
                 return (int)dpiX;
             }
         }
+
+        public static Dispatcher MainDispatcher { get; set; }
+
     }
 }

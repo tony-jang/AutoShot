@@ -90,7 +90,7 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                         <Grid Background="#FFE5E5E5">
-                            <ListView x:Name="listView" Height="122" VerticalAlignment="Top" Margin="26,35,0,0" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Left">
+                            <ListView x:Name="listView" Height="122" VerticalAlignment="Top" Margin="26,35,4,0" ScrollViewer.CanContentScroll="False">
                                 <UserControls:PatternItem x:Name="patternItem" Content="기본 저장" HorizontalAlignment="Left" VerticalAlignment="Top" SavePattern="C:\Users\uutak\Desktop\%d" Width="613"/>
                                 <UserControls:PatternItem x:Name="patternItem_Copy" Content="강의용 캡처" HorizontalAlignment="Left" VerticalAlignment="Top" SavePattern="C:\Users\uutak\Desktop\%d" Width="613"/>
                             </ListView>
@@ -110,10 +110,10 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="패턴 이름" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
-                                <TextBox Margin="5,0" Grid.Column="1"/>
+                                <TextBox x:Name="TBPtnName" Margin="5,0" Grid.Column="1"/>
 
                                 <TextBlock Text="저장될 이름"  Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
-                                <TextBlock Text="강의용 (1230)" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock x:Name="PtnPreview" Text="강의용 (1230)" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5,0"/>
 
                                 <TextBlock Margin="5,0" Grid.Row="3" Grid.ColumnSpan="2">
                                 - %t : 현재 시간을 가져옵니다. (5:00PM)<LineBreak/>
@@ -136,7 +136,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="저장될 위치" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
-                                <TextBox Margin="5,0" Grid.Column="1"/>
+                                <TextBox x:Name="TBSaveLoc" Margin="5,0" Grid.Column="1"/>
 
                                 <TextBlock Text="미리보기"  Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
                                 <TextBlock Text="C:\Users\User\Desktop" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="3,0"/>

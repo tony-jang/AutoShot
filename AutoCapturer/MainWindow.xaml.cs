@@ -18,7 +18,6 @@ using Microsoft.Win32;
 using AutoCapturer.Observer;
 using System.Windows.Controls;
 using static AutoCapturer.Sounds.NotificationSounds;
-using static AutoCapturer.Converter.VariableConverter;
 
 namespace AutoCapturer
 {
@@ -40,23 +39,19 @@ namespace AutoCapturer
 
         AutoCapturer.Observer.PrtScrObserver obs = new Observer.PrtScrObserver();
 
+        
+
         public MainWindow()
         {
             InitializeComponent();
 
-            //TODO: 변수 변환 테스트
-            //string Test;
-
-            //Convert("%t", out Test);
-
-            //MessageBox.Show(Test);
-
-            //return;
-            
             //TODO: ImageEditor 띄워보기
 
+
+
+            Globals.Globals.MainDispatcher = Dispatcher;
+
             this.Topmost = true;
-            
             
             da.Duration = new Duration(TimeSpan.FromMilliseconds(800));
             da.FillBehavior = FillBehavior.Stop;
@@ -70,7 +65,7 @@ namespace AutoCapturer
             this.MouseLeave += FrmDisappear;
 
             obs.DetectPrtScr += Obs_A;
-            obs.TestMtd();
+            obs.StartObserving();
 
             //HttpClient client = new HttpClient();
             //client.BaseAddress = new Uri("http://localhost:52899/");
