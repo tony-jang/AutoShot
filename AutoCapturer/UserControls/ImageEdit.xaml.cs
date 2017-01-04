@@ -41,15 +41,15 @@ namespace AutoCapturer.UserControls
                 switch (_ImageEditMode)
                 {
                     case EditMode.SizeChange:
-                        RC_Drager.Visibility = Visibility.Visible;
-                        RUC_Drager.Visibility = Visibility.Visible;
-                        RD_Drager.Visibility = Visibility.Visible;
+                        RC_Dragger.Visibility = Visibility.Visible;
+                        RUC_Dragger.Visibility = Visibility.Visible;
+                        RD_Dragger.Visibility = Visibility.Visible;
                         CropGrid.Visibility = Visibility.Hidden;
                         break;
                     case EditMode.CropImage:
-                        RC_Drager.Visibility = Visibility.Hidden;
-                        RUC_Drager.Visibility = Visibility.Hidden;
-                        RD_Drager.Visibility = Visibility.Hidden;
+                        RC_Dragger.Visibility = Visibility.Hidden;
+                        RUC_Dragger.Visibility = Visibility.Hidden;
+                        RD_Dragger.Visibility = Visibility.Hidden;
                         CropGrid.Visibility = Visibility.Visible;
                         break;
                 }
@@ -75,25 +75,39 @@ namespace AutoCapturer.UserControls
         public ImageEdit()
         {
             InitializeComponent();
+            
 
-            RC_Drager.MouseDown += Drager_Process;
-            RUC_Drager.MouseDown += Drager_Process;
-            RD_Drager.MouseDown += Drager_Process;
-
-            UL_Cropper.MouseDown += Cropper_Process;
-            UC_Cropper.MouseDown += Cropper_Process;
-            UR_Cropper.MouseDown += Cropper_Process;
-            CL_Cropper.MouseDown += Cropper_Process;
-            CR_Cropper.MouseDown += Cropper_Process;
-            DL_Cropper.MouseDown += Cropper_Process;
-            DC_Cropper.MouseDown += Cropper_Process;
-            DR_Cropper.MouseDown += Cropper_Process;
+            Rectangle[] CropRects = { UL_Cropper, UC_Cropper, UR_Cropper,
+                                     CL_Cropper, CR_Cropper,
+                                     DL_Cropper, DC_Cropper, DR_Cropper};
 
 
-            RD_Drager.MouseUp += DragerEnd_Process;
 
-            tmr.Tick += Tick_SizeChange;
-            tmr.Interval = 10;
+            foreach (Rectangle CropRect in CropRects)
+            {
+                CropRect.MouseDown += Cropper_Process;
+            }
+
+            foreach (Rectangle CropRect in CropRects)
+            {
+                CropRect.MouseUp += CropperEnd_Process;
+            }
+
+
+            Rectangle[] DragRects = { RC_Dragger, RUC_Dragger, RD_Dragger };
+
+
+            foreach (Rectangle DragRect in DragRects)
+            {
+                DragRect.MouseDown += Dragger_Process;
+            }
+
+            foreach (Rectangle DragRect in DragRects)
+            {
+                DragRect.MouseUp += DraggerEnd_Process;
+            }
+            
+            Dragtmr.Interval = 10;
 
             BitmapImage img = new BitmapImage(new Uri(@"pack://application:,,,/AutoCapturer;component/Resources/Icons/CloseImg.png"));
 
@@ -129,31 +143,23 @@ namespace AutoCapturer.UserControls
                 PreviewRect.Opacity = 0.0;
                 if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth) { MainGrid.Width = ReservePoint.Width; }
                 if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight){MainGrid.Height = ReservePoint.Height; }
+
                 
+
                 this.Cursor = null;
-                tmr.Stop();
+                Dragtmr.Stop();
             }
         }
 
-        private void DragerEnd_Process(object sender, MouseButtonEventArgs e)
+        private void DraggerEnd_Process(object sender, MouseButtonEventArgs e)
         {
             Mode = DragMode.Wait;
             StartPoint.X = 0; StartPoint.Y = 0;
             this.Cursor = null;
-            tmr.Stop();
+            Dragtmr.Stop();
         }
 
-        Size BoardSize;
-        Size ReservePoint;
-
-
-
-        WIN32POINT StartPoint;
-        DragMode Mode = DragMode.Wait;
-
-        f.Timer tmr = new f.Timer();
-
-        private void Drager_Process(object sender, MouseButtonEventArgs e)
+        private void Dragger_Process(object sender, MouseButtonEventArgs e)
         {
             this.Cursor = ((Rectangle)sender).Cursor;
             GetCursorPos(out StartPoint);
@@ -171,7 +177,8 @@ namespace AutoCapturer.UserControls
                     Mode = DragMode.Both;
                     break;
             }
-            tmr.Start();
+            Dragtmr.Tick += Tick_SizeChange;
+            Dragtmr.Start();
         }
 
         private void Cropper_Process(object sender, MouseButtonEventArgs e)
@@ -179,20 +186,71 @@ namespace AutoCapturer.UserControls
             this.Cursor = ((Rectangle)sender).Cursor;
             GetCursorPos(out StartPoint);
             BoardSize = new Size(MainGrid.Width, MainGrid.Height);
-            
 
-            switch (((Rectangle)sender).Name.Substring(0,2))
+
+            switch (((Rectangle)sender).Name.Substring(0, 2))
             {
                 case "UL":
-
+                    IncMode = IncreaseMode.RightIncrease | IncreaseMode.UpIncrease;
+                    break;
+                case "UC":
+                    IncMode = IncreaseMode.UpIncrease;
+                    break;
+                case "UR":
+                    IncMode = IncreaseMode.LeftIncrease | IncreaseMode.UpIncrease;
+                    break;
+                case "CL":
+                    IncMode = IncreaseMode.RightIncrease;
+                    break;
+                case "CR":
+                    IncMode = IncreaseMode.LeftIncrease;
+                    break;
+                case "DL":
+                    IncMode = IncreaseMode.LeftIncrease | IncreaseMode.DownIncrease;
+                    break;
+                case "DC":
+                    IncMode = IncreaseMode.DownIncrease;
+                    break;
+                case "DR":
+                    IncMode = IncreaseMode.RightIncrease | IncreaseMode.DownIncrease;
                     break;
             }
         }
+        private void CropperEnd_Process(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+
+        Size BoardSize;
+        Size ReservePoint;
+
+        WIN32POINT StartPoint;
+        DragMode Mode = DragMode.Wait;
+        IncreaseMode IncMode = IncreaseMode.LeftIncrease;
+
+        f.Timer Dragtmr = new f.Timer();
+        f.Timer Croptmr = new f.Timer();
+
+        
+
+
+        
 
     }
     public enum DragMode
     {
         OnlyWidth, OnlyHeight, Both, Wait
+    }
+
+    [Flags]
+    public enum IncreaseMode
+    {
+        None = 0,
+        LeftIncrease = 1,
+        RightIncrease = 2,
+        DownIncrease = 3,
+        UpIncrease = 4
     }
 
     public enum EditMode

@@ -51,7 +51,7 @@ namespace AutoCapturer.UserControls {
         
         #line 11 "..\..\..\UserControls\ImageEdit.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Shapes.Rectangle RD_Drager;
+        internal System.Windows.Shapes.Rectangle RD_Dragger;
         
         #line default
         #line hidden
@@ -59,7 +59,7 @@ namespace AutoCapturer.UserControls {
         
         #line 12 "..\..\..\UserControls\ImageEdit.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Shapes.Rectangle RC_Drager;
+        internal System.Windows.Shapes.Rectangle RC_Dragger;
         
         #line default
         #line hidden
@@ -67,7 +67,7 @@ namespace AutoCapturer.UserControls {
         
         #line 13 "..\..\..\UserControls\ImageEdit.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Shapes.Rectangle RUC_Drager;
+        internal System.Windows.Shapes.Rectangle RUC_Dragger;
         
         #line default
         #line hidden
@@ -218,13 +218,13 @@ namespace AutoCapturer.UserControls {
             this.MainGrid = ((System.Windows.Controls.Grid)(target));
             return;
             case 2:
-            this.RD_Drager = ((System.Windows.Shapes.Rectangle)(target));
+            this.RD_Dragger = ((System.Windows.Shapes.Rectangle)(target));
             return;
             case 3:
-            this.RC_Drager = ((System.Windows.Shapes.Rectangle)(target));
+            this.RC_Dragger = ((System.Windows.Shapes.Rectangle)(target));
             return;
             case 4:
-            this.RUC_Drager = ((System.Windows.Shapes.Rectangle)(target));
+            this.RUC_Dragger = ((System.Windows.Shapes.Rectangle)(target));
             return;
             case 5:
             this.ImageRect = ((System.Windows.Controls.Border)(target));
