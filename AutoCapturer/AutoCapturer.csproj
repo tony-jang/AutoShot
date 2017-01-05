@@ -83,7 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converter\VariableConverter.cs" />
+    <Compile Include="Converter\PatternConverter.cs" />
     <Compile Include="CornerSelecter.xaml.cs">
       <DependentUpon>CornerSelecter.xaml</DependentUpon>
     </Compile>

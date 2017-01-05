@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace AutoCapturer.Converter
 {
-    public static class VariableConverter
+    public static class PatternConverter
     {
+        /// <summary>
+        /// 사용 할 수 없는 String 모음
+        /// </summary>
         private static string NotAccessStr = @"\/:*?""<>|";
         public static bool Convert(string Variable, out string Output)
         {
@@ -22,14 +25,8 @@ namespace AutoCapturer.Converter
                     Output = string.Format("{0:yyyyMMdd}", dt);
                     break;
                 case "%t":
-                    if (dt.Hour >= 12)
-                    {
-                        Output = string.Format("{0:hh:mm}PM", dt);
-                    }
-                    else
-                    {
-                        Output = string.Format("{0:hh:mm}AM",dt);
-                    }
+                    if (dt.Hour >= 12){ Output = string.Format("{0:hh:mm}PM", dt); }
+                    else { Output = string.Format("{0:hh:mm}AM",dt); }
                     break;
                 case "%T":
                     Output = string.Format("{0:HH:mm}", dt);
@@ -103,7 +100,12 @@ namespace AutoCapturer.Converter
             /// <summary>
             /// 파일 이름에 사용하지 못하는 문자가 포함되어 있습니다.
             /// </summary>
-            CannotAccessString = 1
+            CannotAccessString = 1,
+            /// <summary>
+            /// 알 수 없는 변수를 사용하였습니다.
+            /// </summary>
+            UnknownVariable = 2,
+            
         }
 
     }

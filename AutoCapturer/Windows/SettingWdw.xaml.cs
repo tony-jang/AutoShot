@@ -39,7 +39,7 @@ namespace AutoCapturer
         {
             string Data;
 
-            Converter.VariableConverter.ConvertAll(TBPtnName.Text, out Data);
+            Converter.PatternConverter.ConvertAll(TBPtnName.Text, out Data);
 
             PtnPreview.Text = Data;
 

@@ -22,7 +22,7 @@ namespace AutoCapturer.Windows
         public ImageEditor()
         {
             InitializeComponent();
-            Editor.ImageEditMode = UserControls.EditMode.Select;
+            Editor.ImageEditMode = UserControls.EditMode.SizeChange;
         }
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

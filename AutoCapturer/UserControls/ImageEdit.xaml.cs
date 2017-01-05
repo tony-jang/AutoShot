@@ -23,8 +23,27 @@ namespace AutoCapturer.UserControls
     /// </summary>
     public partial class ImageEdit : System.Windows.Controls.UserControl
     {
-        // 외부 공개용 속성
 
+        public struct WIN32POINT
+        {
+            public int X;
+            public int Y;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetCursorPos(out WIN32POINT lpPoint);
+
+
+        
+        static Rectangle[] CropRects;
+
+        static Rectangle[] DragRects;
+
+        #region 외부 노출 속성
+        /// <summary>
+        /// 이미지를 늘리는 모드를 의미합니다.
+        /// </summary>
         public Stretch ImageStretchMode
         {
             get { return InnerImg.Stretch; }
@@ -32,6 +51,10 @@ namespace AutoCapturer.UserControls
         }
 
         private EditMode _ImageEditMode;
+
+        /// <summary>
+        /// 이미지 변경하는 모드를 의미합니다.
+        /// </summary>
         public EditMode ImageEditMode
         {
             get { return _ImageEditMode; }
@@ -41,74 +64,46 @@ namespace AutoCapturer.UserControls
                 switch (_ImageEditMode)
                 {
                     case EditMode.SizeChange:
-                        RC_Dragger.Visibility = Visibility.Visible;
-                        RUC_Dragger.Visibility = Visibility.Visible;
-                        RD_Dragger.Visibility = Visibility.Visible;
+                        foreach (Rectangle rect in DragRects) rect.Visibility = Visibility.Visible;
                         CropGrid.Visibility = Visibility.Hidden;
                         break;
                     case EditMode.CropImage:
-                        RC_Dragger.Visibility = Visibility.Hidden;
-                        RUC_Dragger.Visibility = Visibility.Hidden;
-                        RD_Dragger.Visibility = Visibility.Hidden;
+                        foreach (Rectangle rect in DragRects) rect.Visibility = Visibility.Hidden;
                         CropGrid.Visibility = Visibility.Visible;
                         break;
                 }
             }
-
         }
-
-        public struct WIN32POINT
-        {
-            public int X;
-            public int Y;
-        }
+        #endregion
 
 
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetCursorPos(out WIN32POINT lpPoint);
-
-
-
-        float Ratio = 1.0F;
 
         public ImageEdit()
         {
             InitializeComponent();
-            
 
-            Rectangle[] CropRects = { UL_Cropper, UC_Cropper, UR_Cropper,
+            CropRects = new Rectangle[]{UL_Cropper, UC_Cropper, UR_Cropper,
                                      CL_Cropper, CR_Cropper,
                                      DL_Cropper, DC_Cropper, DR_Cropper};
 
+            DragRects = new Rectangle[]{ RC_Dragger, RUC_Dragger, RD_Dragger };
 
 
             foreach (Rectangle CropRect in CropRects)
-            {
                 CropRect.MouseDown += Cropper_Process;
-            }
-
             foreach (Rectangle CropRect in CropRects)
-            {
                 CropRect.MouseUp += CropperEnd_Process;
-            }
-
-
-            Rectangle[] DragRects = { RC_Dragger, RUC_Dragger, RD_Dragger };
-
-
-            foreach (Rectangle DragRect in DragRects)
-            {
-                DragRect.MouseDown += Dragger_Process;
-            }
-
-            foreach (Rectangle DragRect in DragRects)
-            {
-                DragRect.MouseUp += DraggerEnd_Process;
-            }
             
+
+            foreach (Rectangle DragRect in DragRects)
+                DragRect.MouseDown += Dragger_Process;
+            
+            
+
             Dragtmr.Interval = 10;
 
+
+            // 디버깅용 코드
             BitmapImage img = new BitmapImage(new Uri(@"pack://application:,,,/AutoCapturer;component/Resources/Icons/CloseImg.png"));
 
             CroppedBitmap CropImg = new CroppedBitmap(img, new Int32Rect(20, 20, 30, 30));
@@ -117,9 +112,22 @@ namespace AutoCapturer.UserControls
         }
 
 
+        private void Tick_CropChange(object sender, EventArgs e)
+        {
+            if (f.Control.MouseButtons == f.MouseButtons.Left)
+            {
+                WIN32POINT NowPosition;
+                GetCursorPos(out NowPosition);
+                double Width, Height;
+                if (IncMode.HasFlag(IncreaseMode.DownIncrease){
+
+                }
+            }
+        }
+
         private void Tick_SizeChange(object sender, EventArgs e)
         {
-            if (System.Windows.Forms.Control.MouseButtons == f.MouseButtons.Left)
+            if (f.Control.MouseButtons == f.MouseButtons.Left)
             {
                 WIN32POINT NowPosition;
                 GetCursorPos(out NowPosition);
@@ -140,19 +148,15 @@ namespace AutoCapturer.UserControls
             }
             else
             {
-                PreviewRect.Opacity = 0.0;
-                if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth) { MainGrid.Width = ReservePoint.Width; }
-                if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight){MainGrid.Height = ReservePoint.Height; }
-
-                
-
-                this.Cursor = null;
-                Dragtmr.Stop();
+                DragUpProcess();
             }
         }
 
-        private void DraggerEnd_Process(object sender, MouseButtonEventArgs e)
+        public void DragUpProcess()
         {
+            PreviewRect.Opacity = 0.0;
+            if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth) { MainGrid.Width = ReservePoint.Width; }
+            if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight) { MainGrid.Height = ReservePoint.Height; }
             Mode = DragMode.Wait;
             StartPoint.X = 0; StartPoint.Y = 0;
             this.Cursor = null;
@@ -185,8 +189,8 @@ namespace AutoCapturer.UserControls
         {
             this.Cursor = ((Rectangle)sender).Cursor;
             GetCursorPos(out StartPoint);
-            BoardSize = new Size(MainGrid.Width, MainGrid.Height);
 
+            BoardSize = new Size(MainGrid.Width, MainGrid.Height);
 
             switch (((Rectangle)sender).Name.Substring(0, 2))
             {
