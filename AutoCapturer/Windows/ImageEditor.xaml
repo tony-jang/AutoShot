@@ -22,16 +22,17 @@
 
         <Grid Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="10*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="20,0,0,0" FontSize="15"  VerticalAlignment="Center"><Run Text="현재 편집 중인 파일 : C:\Users\User\Desktop"/></TextBlock>
+            <TextBlock x:Name="EditTB" Margin="20,0,0,0" FontSize="15"  VerticalAlignment="Center"><Run Text="현재 편집 중인 파일 : C:\Users\User\Desktop"/></TextBlock>
         </Grid>
 
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
@@ -43,14 +44,24 @@
             <RadioButton x:Name="EditBtn2" Margin="6" Grid.Row="2" Content="자르기" GroupName="EditMode"/>
             <RadioButton x:Name="EditBtn3" Margin="6" Grid.Row="3" Content="펜" GroupName="EditMode"/>
             <RadioButton x:Name="EditBtn4" Margin="6" Grid.Row="4" Content="크기/비율" GroupName="EditMode"/>
+            <TextBlock Margin="4" Grid.Row="5" TextWrapping="Wrap">
+                잘라내기를 끝내려면<LineBreak/>
+                오른쪽 버튼을 누르세요.
+            </TextBlock>
         </Grid>
 
         <UserControls:ImageEdit x:Name="Editor" Grid.Column="1" Grid.Row="1"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="9,174,0,0" Grid.Row="1" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="9,245,0,0" Grid.Row="1" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
             <ComboBoxItem Content="원본 사이즈 유지"/>
             <ComboBoxItem Content="늘리기"/>
             <ComboBoxItem Content="비율 유지 늘리기"/>
         </ComboBox>
+        <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="9,282,0,0" Grid.Row="1" SelectedIndex="0" SelectionChanged="comboBox_Copy_SelectionChanged">
+            <ComboBoxItem Content="사이즈 조정"/>
+            <ComboBoxItem Content="선택 (미완성)"/>
+            <ComboBoxItem Content="자르기"/>
+        </ComboBox>
+        <Button x:Name="button" Content="재설정" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,320,0,0" Grid.Row="1" Height="25" Click="button_Click"/>
 
     </Grid>
 </local:ChromeWindow>

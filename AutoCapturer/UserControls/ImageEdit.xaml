@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AutoCapturer.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="700">
-    <Grid Background="White">
+    <Grid x:Name="BgGrid" Background="White" MouseDown="BgGrid_MouseDown">
         <Grid x:Name="MainGrid" HorizontalAlignment="Left" Height="310"  VerticalAlignment="Top" Width="310" Margin="0">
             <Rectangle x:Name="RD_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
             <Rectangle x:Name="RC_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
@@ -23,9 +23,9 @@
         <Rectangle x:Name="PreviewRect" Margin="5" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="300" Opacity="0"/>
 
         <Grid x:Name="CropGrid" Width="310" Height="310" HorizontalAlignment="Left" VerticalAlignment="Top" >
-            <Rectangle Margin="5"  Fill="#7F000000"/>
-            <Grid x:Name="DragGrid">
-                <Rectangle x:Name="CropRect" Margin="5" Stroke="Black"/>
+            
+            <Grid x:Name="DragGrid" Margin="0,0,0,0">
+                <Rectangle x:Name="CropRect" Fill="#7F000000" Margin="5" Stroke="Black"/>
 
                 <Rectangle x:Name="DR_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
                 <Rectangle x:Name="DC_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>

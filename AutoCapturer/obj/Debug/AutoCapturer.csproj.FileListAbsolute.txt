@@ -65,3 +65,5 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\UserControls\I
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\UserControls\ImageEdit.baml
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PatternWdw.g.cs
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PatternWdw.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PatternWdw.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PatternWdw.baml
