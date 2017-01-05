@@ -37,6 +37,9 @@ namespace AutoCapturer.Converter
                 case "%a":
                     Output = string.Format("{0:yyyyMMdd HH:mm:ss}",dt);
                     break;
+                case "%%":
+                    Output = "%";
+                    break;
                 default:
                     Output = string.Empty;
                     return false;
@@ -59,7 +62,7 @@ namespace AutoCapturer.Converter
                 if (i + 2 > MultiVariable.Length) s = MultiVariable.Substring(i);
                 else s = MultiVariable.Substring(i, 2);
 
-                string[] checkStr = {"%d","%D", "%t","%T","%a"};
+                string[] checkStr = {"%d","%D", "%t","%T","%a","%%"};
                 bool flag = false;
                 foreach (string str in checkStr)
                 {
@@ -89,5 +92,19 @@ namespace AutoCapturer.Converter
             
             return true;
         }
+
+        [Flags]
+        public enum ErrorList
+        {
+            /// <summary>
+            /// 이미 %a 변수가 사용되었으므로 더이상 사용하지 못합니다.
+            /// </summary>
+            AlreadyAutoUsed = 0,
+            /// <summary>
+            /// 파일 이름에 사용하지 못하는 문자가 포함되어 있습니다.
+            /// </summary>
+            CannotAccessString = 1
+        }
+
     }
 }

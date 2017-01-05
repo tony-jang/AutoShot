@@ -105,6 +105,9 @@
     <Compile Include="Windows\ImageEditor.xaml.cs">
       <DependentUpon>ImageEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\PatternWdw.xaml.cs">
+      <DependentUpon>PatternWdw.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\PopUpWdw.xaml.cs">
       <DependentUpon>PopUpWdw.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ImageEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PatternWdw.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
