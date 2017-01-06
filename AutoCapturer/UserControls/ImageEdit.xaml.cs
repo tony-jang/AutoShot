@@ -62,6 +62,14 @@ namespace AutoCapturer.UserControls
             }
         }
 
+
+        public Size VisibleSize
+        {
+            get { return new Size(MainGrid.Width - 10, MainGrid.Height - 10); }
+        }
+
+
+
         /// <summary>
         /// 이미지를 늘리는 모드를 의미합니다.
         /// </summary>

@@ -44,10 +44,19 @@
             <RadioButton x:Name="EditBtn2" Margin="6" Grid.Row="2" Content="자르기" GroupName="EditMode"/>
             <RadioButton x:Name="EditBtn3" Margin="6" Grid.Row="3" Content="펜" GroupName="EditMode"/>
             <RadioButton x:Name="EditBtn4" Margin="6" Grid.Row="4" Content="크기/비율" GroupName="EditMode"/>
+
+            <Border Grid.Row="1" Grid.RowSpan="4" Background="#CCFFFFFF">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="미완성된 기능" FontSize="20"/>
+            </Border>
+
             <TextBlock Margin="4" Grid.Row="5" TextWrapping="Wrap">
                 잘라내기를 끝내려면<LineBreak/>
                 오른쪽 버튼을 누르세요.
             </TextBlock>
+            <TextBox x:Name="TBWidth" HorizontalAlignment="Left" Height="23" Margin="85,150,0,0" Grid.Row="6" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="53" IsHitTestVisible="False"/>
+            <TextBox x:Name="TBHeight" HorizontalAlignment="Left" Height="23" Margin="85,180,0,0" Grid.Row="6" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="53" IsHitTestVisible="False"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="13,153,0,0" Grid.Row="6" TextWrapping="Wrap" Text="너비(Width)" VerticalAlignment="Top"/>
+            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="13,183,0,0" Grid.Row="6" TextWrapping="Wrap" Text="높이(Height)" VerticalAlignment="Top"/>
         </Grid>
 
         <UserControls:ImageEdit x:Name="Editor" Grid.Column="1" Grid.Row="1"/>
@@ -61,7 +70,7 @@
             <ComboBoxItem Content="선택 (미완성)"/>
             <ComboBoxItem Content="자르기"/>
         </ComboBox>
-        <Button x:Name="button" Content="재설정" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,320,0,0" Grid.Row="1" Height="25" Click="button_Click"/>
+        <Button x:Name="button" Content="파일 설정/재설정" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,320,0,0" Grid.Row="1" Height="25" Click="button_Click" Background="#FFEBEBEB"/>
 
     </Grid>
 </local:ChromeWindow>

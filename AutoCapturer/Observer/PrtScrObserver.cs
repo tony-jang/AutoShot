@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
+using f=System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -30,32 +30,29 @@ namespace AutoCapturer.Observer
             {
                 do
                 {
-                    if (DetectPrtScr != null && GetAsyncKeyState((int)Keys.PrintScreen) == -32767)
+                    if (DetectPrtScr != null && GetAsyncKeyState((int)f.Keys.PrintScreen) == -32767)
                     {
                         do
                         {
-                            if (System.Windows.Clipboard.ContainsImage())
+                            if (Clipboard.ContainsImage())
                             {
-                                // ImageUIElement.Source = Clipboard.GetImage(); // does not work
-
-
+                                Thread.Sleep(200);
                                 BitmapSource bmp = null;
 
                                 do { } while (!GetClipboardImage(ref bmp));
 
-                                System.Windows.Forms.IDataObject clipboardData = System.Windows.Forms.Clipboard.GetDataObject();
+                                f.IDataObject clipboardData = f.Clipboard.GetDataObject();
                                 if (clipboardData != null)
                                 {
-                                    if (clipboardData.GetDataPresent(System.Windows.Forms.DataFormats.Bitmap))
+                                    if (clipboardData.GetDataPresent(f.DataFormats.Bitmap))
                                     {
-                                        System.Drawing.Bitmap bitmap = (System.Drawing.Bitmap)clipboardData.GetData(System.Windows.Forms.DataFormats.Bitmap);
-
-
+                                        Bitmap bitmap = (Bitmap)clipboardData.GetData(f.DataFormats.Bitmap);
+                                        
                                         try
                                         {
                                             DetectPrtScr(System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()));
                                         }
-                                        catch (NullReferenceException e)
+                                        catch (NullReferenceException)
                                         {
                                             
                                             Globals.Globals.MainDispatcher.Invoke(new Action(() =>
@@ -89,7 +86,7 @@ namespace AutoCapturer.Observer
             
             try
             {
-                img = System.Windows.Clipboard.GetImage();   
+                img = Clipboard.GetImage();   
             }
             catch
             {

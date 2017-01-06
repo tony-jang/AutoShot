@@ -20,10 +20,21 @@ namespace AutoCapturer.Windows
     /// </summary>
     public partial class ImageEditor : Windows.ChromeWindow
     {
+        Timer tmr = new Timer();
         public ImageEditor()
         {
             InitializeComponent();
             Editor.ImageEditMode = UserControls.EditMode.SizeChange;
+
+            tmr.Interval = 20;
+            tmr.Tick += ForDebugChangeSize;
+            tmr.Start();
+        }
+
+        private void ForDebugChangeSize(object sender, EventArgs e)
+        {
+            TBWidth.Text = Editor.VisibleSize.Width.ToString();
+            TBHeight.Text = Editor.VisibleSize.Height.ToString();
         }
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
