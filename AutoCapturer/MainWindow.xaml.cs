@@ -67,6 +67,8 @@ namespace AutoCapturer
             obs.DetectPrtScr += Obs_A;
             obs.StartObserving();
 
+            FrmDisappear(this,null);
+
             //HttpClient client = new HttpClient();
             //client.BaseAddress = new Uri("http://localhost:52899/");
 
@@ -137,24 +139,33 @@ namespace AutoCapturer
         bool AuCaEnabled = false;
         private void BtnEnAutoSave_Click(object sender, RoutedEventArgs e)
         {
-            PopUpWdw pw;
-            //DropShadowEffect eff = (DropShadowEffect)MainRect.Effect;
-            if (!AuCaEnabled)
+            try
             {
-                pw = new PopUpWdw("자동 캡쳐 활성화", "파일로 자동 저장합니다.");
-                PlayNotificationSound(SoundType.AuCaModeOn);
+                PopUpWdw pw;
+                //DropShadowEffect eff = (DropShadowEffect)MainRect.Effect;
+                if (!AuCaEnabled)
+                {
+                    pw = new PopUpWdw("자동 캡쳐 활성화", "파일로 자동 저장합니다.");
+                    PlayNotificationSound(SoundType.AuCaModeOn);
 
-                //eff.Color = Colors.Red;
+                    //eff.Color = Colors.Red;
+                }
+                else
+                {
+                    pw = new PopUps.PopUpWdw("자동 캡쳐 비활성화", "더 이상 저장하지 않습니다.");
+                    PlayNotificationSound(SoundType.AuCaModeOff);
+
+                    //eff.Color = Colors.Black;
+                }
+                pw.ShowTime(1500);
+                AuCaEnabled = !AuCaEnabled;
             }
-            else
+            catch (Exception ex)
             {
-                pw = new PopUps.PopUpWdw("자동 캡쳐 비활성화", "더 이상 저장하지 않습니다.");
-                PlayNotificationSound(SoundType.AuCaModeOff);
-
-                //eff.Color = Colors.Black;
+                MessageBox.Show(ex.ToString());
+                throw;
             }
-            pw.ShowTime(1500);
-            AuCaEnabled = !AuCaEnabled;
+            
         }
 
 

@@ -138,10 +138,12 @@ namespace AutoCapturer.PopUps
             OpacityDa.From = 1.0; OpacityDa.To = 0.0;
             OpacityDa.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             OpacityDa.AccelerationRatio = 1;
-            
+
             BeginAnimation(Window.TopProperty, TopDa);
             BeginAnimation(Window.OpacityProperty, OpacityDa);
-            
+
+            Thread thr = new Thread(() => { Thread.Sleep(500); Dispatcher.Invoke(new Action(() => { this.Hide(); })); });
+            thr.Start();
 
         }
 

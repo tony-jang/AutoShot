@@ -13,6 +13,14 @@ namespace AutoCapturer.Globals
 {
     static class Globals
     {
+
+        /// <summary>
+        /// 사용 할 수 없는 String 모음
+        /// </summary>
+        public static string NotAccessStr = @"\/:*?""<>|";
+
+
+
         public static double RatioX { get; set; }
         public static double RatioY { get; set; }
 

@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static AutoCapturer.Globals.Globals;
 
+
 namespace AutoCapturer.Converter
 {
-    public static class PatternConverter
+    public static class LocationConverter
     {
         public static string Convert(string Variable)
         {
@@ -16,23 +17,14 @@ namespace AutoCapturer.Converter
             switch (Variable)
             {
                 case "%d":
-                    Output = string.Format("{0:MMdd}", dt);
+                    Output = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                     break;
-                case "%D":
-                    Output = string.Format("{0:yyyyMMdd}", dt);
+                case "%m":
+                    Output = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                     break;
-                case "%t":
-                    if (dt.Hour >= 12) { Output = string.Format("{0:hh:mm}PM", dt); }
-                    else { Output = string.Format("{0:hh:mm}AM", dt); }
-                    break;
-                case "%T":
-                    Output = string.Format("{0:HH:mm}", dt);
-                    break;
+                case "":
                 case "%a":
-                    Output = string.Format("{0:yyyyMMdd HH:mm:ss}", dt);
-                    break;
-                case "%s":
-                    Output = string.Format("{0:HH:mm:ss}", dt);
+                    Output = AppDomain.CurrentDomain.BaseDirectory;
                     break;
                 case "%%":
                     Output = "%";
@@ -51,18 +43,14 @@ namespace AutoCapturer.Converter
             if (string.IsNullOrEmpty(Output)) { return false; } else { return true; }
         }
 
-
-
         public static ErrorList ConvertAll(string MultiVariable, out string Output)
         {
             ErrorList Err = ErrorList.NoError;
 
             Output = "";
 
-            if (string.IsNullOrEmpty(MultiVariable)) { Err = ErrorList.BlankString; return Err; }
+            if (string.IsNullOrEmpty(MultiVariable)) { Output = Convert("%a"); return Err; }
 
-
-            bool AutoUsed = false;
 
             for (int i = 0; i <= MultiVariable.Length - 1; i++)
             {
@@ -71,19 +59,18 @@ namespace AutoCapturer.Converter
                 if (i + 2 > MultiVariable.Length) VribleCheckStr = MultiVariable.Substring(i);
                 else VribleCheckStr = MultiVariable.Substring(i, 2);
 
-                string[] checkStr = { "%d", "%D", "%s", "%t", "%T", "%a", "%%" };
+                string[] checkStr = { "%d", "%m", "%a", "%%" };
                 bool flag = false;
 
                 foreach (string str in checkStr)
-                    if (VribleCheckStr == str) {
-                        if (AutoUsed == true) { Err = ErrorList.AlreadyAutoUsed; return Err; }
-                        if (VribleCheckStr == "%a") AutoUsed = true; 
+                    if (VribleCheckStr == str)
+                    {
                         flag = true;
                         break;
                     }
 
                 foreach (string CheckAccstr in NotAccessStr.ToCharArray().Select((elem) => elem.ToString()))
-                    if (CheckChar == CheckAccstr) { Err = ErrorList.CannotAccessString; return Err; }
+                    if (CheckChar == CheckAccstr && CheckAccstr != "\\") { Err = ErrorList.CannotAccessString; return Err; }
 
                 if (flag)
                 {
@@ -102,38 +89,10 @@ namespace AutoCapturer.Converter
                     continue;
                 }
             }
-            
+
             return Err;
         }
         
-
-
     }
-}
-namespace AutoCapturer
-{
-    public enum ErrorList
-    {
-        /// <summary>
-        /// 오류가 포함되어 있지 않습니다.
-        /// </summary>
-        NoError = 0,
-        /// <summary>
-        /// 이미 %a 변수가 사용되었으므로 더이상 사용하지 못합니다.
-        /// </summary>
-        AlreadyAutoUsed = 1,
-        /// <summary>
-        /// 파일 이름에 사용하지 못하는 문자가 포함되어 있습니다.
-        /// </summary>
-        CannotAccessString = 2,
-        /// <summary>
-        /// 파일 이름이 빈칸을 사용하고 있습니다.
-        /// </summary>
-        BlankString = 3,
-        /// <summary>
-        /// 알 수 없는 변수를 사용하였습니다.
-        /// </summary>
-        UnknownVariable = 4
 
-    }
 }
