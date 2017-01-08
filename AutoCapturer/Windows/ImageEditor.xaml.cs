@@ -29,15 +29,12 @@ namespace AutoCapturer.Windows
             tmr.Interval = 20;
             tmr.Tick += ForDebugChangeSize;
             tmr.Start();
-
-            this.Activate();
-            this.Topmost = true;
         }
 
         private void ForDebugChangeSize(object sender, EventArgs e)
         {
-            TBWidth.Text = ((int)Editor.VisibleSize.Width).ToString();
-            TBHeight.Text = ((int)Editor.VisibleSize.Height).ToString();
+            TBWidth.Text = Editor.VisibleSize.Width.ToString();
+            TBHeight.Text = Editor.VisibleSize.Height.ToString();
         }
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
