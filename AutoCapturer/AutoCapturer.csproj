@@ -85,9 +85,6 @@
     </ApplicationDefinition>
     <Compile Include="Converter\LocationConverter.cs" />
     <Compile Include="Converter\PatternConverter.cs" />
-    <Compile Include="CornerSelecter.xaml.cs">
-      <DependentUpon>CornerSelecter.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Effectors\BaseEffector.cs" />
     <Compile Include="Effectors\RotateEffector.cs" />
     <Compile Include="Globals\Globals.cs" />
@@ -96,33 +93,31 @@
     <Compile Include="Interop\NativeMethods.cs" />
     <Compile Include="Interop\UnsafeNativeMethods.cs" />
     <Compile Include="Observer\PrtScrObserver.cs" />
+    <Compile Include="SpaceCalculator.cs" />
     <Compile Include="UserControls\ImageEdit.xaml.cs">
       <DependentUpon>ImageEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PathButton.cs" />
     <Compile Include="UserControls\PatternItem.cs" />
+    <Compile Include="UserControls\Switch.cs" />
     <Compile Include="WindowSystemCommand.cs" />
     <Compile Include="Windows\ChromeWindow.cs" />
     <Compile Include="Windows\ImageEditor.xaml.cs">
       <DependentUpon>ImageEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\PatternWdw.xaml.cs">
-      <DependentUpon>PatternWdw.xaml</DependentUpon>
+    <Compile Include="Windows\ImageEffector.xaml.cs">
+      <DependentUpon>ImageEffector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\PopUpWdw.xaml.cs">
-      <DependentUpon>PopUpWdw.xaml</DependentUpon>
+    <Compile Include="Windows\PatternWindow.xaml.cs">
+      <DependentUpon>PatternWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\SettingWdw.xaml.cs">
-      <DependentUpon>SettingWdw.xaml</DependentUpon>
+    <Compile Include="Windows\PopUpWindow.xaml.cs">
+      <DependentUpon>PopUpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Sounds\NotificationSounds.cs" />
-    <Compile Include="UserControls\ColorThemeButt.xaml.cs">
-      <DependentUpon>ColorThemeButt.xaml</DependentUpon>
-    </Compile>
-    <Page Include="CornerSelecter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -143,19 +138,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\PatternWdw.xaml">
+    <Page Include="Windows\ImageEffector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\PopUpWdw.xaml">
+    <Page Include="Windows\PatternWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\SettingWdw.xaml">
+    <Page Include="Windows\PopUpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\ColorThemeButt.xaml">
+    <Page Include="Windows\SettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

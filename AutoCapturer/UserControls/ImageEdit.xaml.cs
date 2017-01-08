@@ -56,7 +56,12 @@ namespace AutoCapturer.UserControls
             set
             {
                 InnerImg.Source = value;
+
+                
+
                 SourceSize = new Size(value.Width, value.Height);
+                PreviewRect.Width = value.Width;
+                PreviewRect.Height = value.Height;
                 ImageStretchMode = Stretch.None;
                 DragGrid.Margin = new Thickness(0, 0, 0, 0);
             }
@@ -79,14 +84,20 @@ namespace AutoCapturer.UserControls
             set
             {
                 InnerImg.Stretch = value;
+                
                 switch (value)
                 {
                     case Stretch.None:
                         MaximumSize = new Size(SourceSize.Width + 11, SourceSize.Height + 11);
-                        MainGrid.Width = MaximumSize.Width;
-                        MainGrid.Height = MaximumSize.Height;
-                        CropGrid.Width = MaximumSize.Width;
-                        CropGrid.Height = MaximumSize.Height;
+
+                        double w = MaximumSize.Width, h = MaximumSize.Height;
+
+                        PreviewRect.Width = w;
+                        PreviewRect.Height = h;
+                        MainGrid.Width = w;
+                        MainGrid.Height = h;
+                        CropGrid.Width = w;
+                        CropGrid.Height = h;
                         break;
                     case Stretch.Fill:
                         MaximumSize = new Size(0, 0);
@@ -205,10 +216,10 @@ namespace AutoCapturer.UserControls
                 if (IncMode.HasFlag(IncreaseMode.DownIncrease))
                     DragGrid.Margin = GetMargin(DragGrid.Margin, ThickPos.Bottom,
                         AddedHeight + StartMargin.Bottom, CropGrid.ActualHeight - DragGrid.Margin.Top - 11);
-                
                 else if (IncMode.HasFlag(IncreaseMode.UpIncrease))
                     DragGrid.Margin = GetMargin(DragGrid.Margin, ThickPos.Top,
                         -AddedHeight + StartMargin.Top, CropGrid.ActualHeight - DragGrid.Margin.Bottom - 11); 
+
                 if (IncMode.HasFlag(IncreaseMode.LeftIncrease))
                     DragGrid.Margin = GetMargin(DragGrid.Margin, ThickPos.Left,
                         -AddedWidth + StartMargin.Left, CropGrid.ActualWidth - DragGrid.Margin.Right - 11);

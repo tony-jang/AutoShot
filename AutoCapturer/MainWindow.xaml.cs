@@ -18,6 +18,7 @@ using Microsoft.Win32;
 using AutoCapturer.Observer;
 using System.Windows.Controls;
 using static AutoCapturer.Sounds.NotificationSounds;
+using System.Net;
 
 namespace AutoCapturer
 {
@@ -45,9 +46,20 @@ namespace AutoCapturer
         {
             InitializeComponent();
 
-            //TODO: ImageEditor 띄워보기
 
+#if DEBUG
+            WebClient wc = new WebClient();
 
+            wc.Encoding = Encoding.UTF8;
+
+            MessageBox.Show(wc.DownloadString("http://amprog.tistory.com/1"));
+#endif
+
+            SpaceCalculator sc = new SpaceCalculator("D:\\", 1, 99999);
+            
+            
+
+            RemainSpaceRun.Text = sc.RemainPicNumText;
 
             Globals.Globals.MainDispatcher = Dispatcher;
 
@@ -64,42 +76,11 @@ namespace AutoCapturer
             this.MouseMove += FrmAppear;
             this.MouseLeave += FrmDisappear;
 
-            obs.DetectPrtScr += Obs_A;
+            obs.DetectPrtScr += DetectPrtscr;
             obs.StartObserving();
 
             FrmDisappear(this,null);
 
-            //HttpClient client = new HttpClient();
-            //client.BaseAddress = new Uri("http://localhost:52899/");
-
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-
-            ////TODO : 이 부분에 발생한 오류 처리
-            //var str = new string[] { "uutak2000", "uutkk" };
-
-            //MediaTypeFormatter frmter = new JsonMediaTypeFormatter();
-
-            //HttpContent cont = new ObjectContent<string[]>(str, frmter);
-
-            //var resp = client.PostAsync("api/world/Create", cont).Result;
-
-
-
-            //// 모든 제품들의 목록.
-            //HttpResponseMessage response = client.GetAsync("api/world/name").Result;  // 호출 블록킹!
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    // 응답 본문 파싱. 블록킹!
-            //    var products = response.Content.ReadAsAsync<string>().Result;
-            //    MessageBox.Show(products);
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show($"{(int)response.StatusCode} ({response.ReasonPhrase})");
-            //}
         }
 
         private void FrmAppear(object sender, System.Windows.Input.MouseEventArgs e)
@@ -242,16 +223,23 @@ namespace AutoCapturer
         }
 
         int ctr = 0;
-        private void Obs_A(ImageSource Img)
+        private void DetectPrtscr(ImageSource Img)
         {
             if (AuCaEnabled)
             {
                 PlayNotificationSound(SoundType.Captured);
+
+                Windows.ImageEditor ie = new Windows.ImageEditor();
+
+                ie.Editor.image = (BitmapSource)Img;
+
+                ie.ShowDialog();
+
                 var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + $"\\Test{++ctr}.jpg", FileMode.Create);
 
                 var encoder = new PngBitmapEncoder();
 
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Img));
+                encoder.Frames.Add(BitmapFrame.Create(ie.Editor.image));
                 encoder.Save(filestream);
 
                 filestream.Dispose();
@@ -307,7 +295,9 @@ namespace AutoCapturer
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            WindowSystemCommand.CloseCommand.Execute(null,sw);
+            Windows.ImageEditor ie = new Windows.ImageEditor();
+
+            ie.Show();
         }
     }
 }

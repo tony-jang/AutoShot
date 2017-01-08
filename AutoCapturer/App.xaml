@@ -5,8 +5,11 @@
              xmlns:c="clr-namespace:AutoCapturer.Windows"
              xmlns:UserControls="clr-namespace:AutoCapturer.UserControls"
              xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
-             StartupUri="Windows/PatternWdw.xaml">
+             StartupUri="MainWindow.xaml">
     <!--Windows/ImageEditor-->
+    <!--Windows/PatternWdw-->
+    <!--Windows/ImageEffector-->
+    <!--MainWindow-->
     <Application.Resources>
         <ResourceDictionary>
             <StreamGeometry x:Key="EndPath">M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z</StreamGeometry>
@@ -59,6 +62,7 @@
 
             <Style x:Key="PatternItemStyle" TargetType="{x:Type UserControls:PatternItem}">
                 <Setter Property="FontSize" Value="15"></Setter>
+                <Setter Property="Height" Value="30"></Setter>
                 
                 <Setter Property="Template">
                     <Setter.Value>
@@ -66,27 +70,34 @@
                             <Border x:Name="MainBorder">
                                 <Grid Margin="0,0,3,0">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="5"/>
                                         <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="20"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="ContentTB" Text="{TemplateBinding Content}"
-                                               Foreground="{TemplateBinding Foreground}"
-                                               FontSize="{TemplateBinding FontSize}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                                    
-                                    <TextBlock x:Name="SavePtnTB" Grid.Column="2" Text="{TemplateBinding SavePattern}"
-                                               Foreground="{TemplateBinding Foreground}"
+                                    <TextBlock x:Name="ContentTB" Grid.Column="1"
+                                               Text="{TemplateBinding Content}"
+                                               Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
                                                FontSize="{TemplateBinding FontSize}" TextTrimming="CharacterEllipsis"/>
 
-                                    <Path x:Name="CheckPth" Opacity="0" Grid.Column="3" Margin="3,5" Stretch="Fill"  Data="{StaticResource CheckPath}" Fill="Black"/>
+                                    <TextBlock x:Name="SavePtnTB" Grid.Column="3"
+                                               Text="{TemplateBinding SavePattern}"
+                                               Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
+                                               FontSize="{TemplateBinding FontSize}"  TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                                    </TextBlock>
+
+                                    <Path x:Name="CheckPth" Opacity="0" Grid.Column="4" Margin="3,5" Height="15" Stretch="Fill"  Data="{StaticResource CheckPath}" Fill="Black"/>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsChecked" Value="True">
+                                <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="ContentTB" Property="FontWeight" Value="Bold"/>
                                     <Setter TargetName="SavePtnTB" Property="FontWeight" Value="Bold"/>
                                     <Setter TargetName="CheckPth" Property="Opacity" Value="1"/>
+                                </Trigger>
+                                <Trigger Property="SavePattern" Value="">
+                                    <Setter Property="TextBlock.Text" Value="(프로그램 실행 위치)" TargetName="SavePtnTB"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -174,7 +185,11 @@
             
             <Style x:Key="BasicTabItemStyle"  TargetType="{x:Type TabItem}">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Width" Value="130"/>
+                
+                <Setter Property="FontSize" Value="18"/>
+                
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type TabItem}">
@@ -187,7 +202,7 @@
                                             HorizontalAlignment="Stretch"  VerticalAlignment="Center"
                                             Margin="20,4,20,5"
                                             RecognizesAccessKey="True"
-                                            TextBlock.FontSize="12" TextBlock.Foreground="Black"/>
+                                            TextBlock.FontSize="{TemplateBinding FontSize}" TextBlock.Foreground="Black"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="False">
@@ -200,7 +215,7 @@
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="Border" Property="Background"                Value="#FFE5E5E5" />
-                                    <Setter TargetName="Border" Property="BorderThickness"           Value="0,4,0,0" />
+                                    <Setter TargetName="Border" Property="BorderThickness"           Value="4,0,0,0" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
 
@@ -217,11 +232,10 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type RadioButton}">
-
                             <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                    <ColumnDefinition Width="46"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Border x:Name="MainBorder" CornerRadius="5" Background="{TemplateBinding Background}" Grid.ColumnSpan="2">
                                     <Border.Effect>
@@ -235,13 +249,12 @@
                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                               Focusable="False"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}"
+                                              Margin="8"
                                               RecognizesAccessKey="True"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               VerticalAlignment="Center"/>
 
-                                <Path x:Name="CheckPth" Grid.Column="1" Data="{StaticResource CheckPath}" Margin="1" Fill="White" Opacity="0"></Path>
-
+                                <Path x:Name="CheckPth" Grid.Column="1" Data="{StaticResource CheckPath}" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White" Margin="0,0,0,4" Opacity="0"/>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="HasContent" Value="True">
@@ -299,15 +312,14 @@
                 <Setter Property="Background" Value="#FFF"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Padding" Value="6,0"/>
+
+
             </Style>
 
-            <SolidColorBrush x:Key="TextBox.Static.Border" Color="Black"/>
-            <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="Black"/>
-            <SolidColorBrush x:Key="TextBox.Focus.Border" Color="Black"/>
 
             <Style x:Key="SimpleTextBoxStyle" TargetType="{x:Type TextBox}">
-                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="BorderBrush" Value="{x:Null}"/>
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="FontSize" Value="16"/>
@@ -320,18 +332,12 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type TextBox}">
-                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            <Border x:Name="border" CornerRadius="8" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsEnabled" Value="false">
                                     <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                                </Trigger>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocused" Value="true">
-                                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -347,6 +353,120 @@
                     </MultiTrigger>
                 </Style.Triggers>
             </Style>
+
+            <Style x:Key="SimpleCheckBoxStyle" TargetType="{x:Type UserControls:Switch}">
+                <Setter Property="Width" Value="60"/>
+                <Setter Property="Height" Value="25"/>
+
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Fill" Value="#FFFF9800"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type UserControls:Switch}">
+                            <Border x:Name="PART_Border" CornerRadius="12.5" Background="{TemplateBinding Background}">
+                                <Ellipse x:Name="PART_Holder" Fill="{TemplateBinding Fill}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="{TemplateBinding Height}" Height="{TemplateBinding Height}"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Background" TargetName="PART_Border" Value="#FFFFD79C"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" TargetName="PART_Border" Value="#FFBBBBBB"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+
+            <Style x:Key="PatternToolTipStyle" TargetType="{x:Type ToolTip}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Border Background="#FFF1F2F7" BorderBrush="#FF8D8D8D" BorderThickness="1" />
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.ColumnSpan="2" TextAlignment="Center">
+                                        <Run FontWeight="Bold">사용 가능한 변수 목록</Run>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="2">
+                                        <Run FontWeight="Bold">%t</Run><LineBreak/>
+                                        <Run FontWeight="Bold">%s</Run><LineBreak/>
+                                        <Run FontWeight="Bold">%T</Run><LineBreak/>
+                                        <Run FontWeight="Bold">%d</Run><LineBreak/>
+                                        <Run FontWeight="Bold">%D</Run><LineBreak/>
+                                        <Run FontWeight="Bold">%a</Run>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="1">
+                                        　: 현재 시간 (분)<LineBreak/>
+                                        　: 현재 시간 (초)<LineBreak/>
+                                        　: 현재 시간 (24시간)<LineBreak/>
+                                        　: 현재 날짜 (4자)<LineBreak/>
+                                        　: 현재 날짜 (8자)<LineBreak/>
+                                        　: 자동 포맷 (%D + %s)
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SaveLocToolTipStyle" TargetType="{x:Type ToolTip}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Border Background="#FFF1F2F7" BorderBrush="#FF8D8D8D" BorderThickness="1" />
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.ColumnSpan="2" TextAlignment="Center">
+                                    <Run FontWeight="Bold">사용 가능한 변수 목록</Run>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="2">
+                                    <Run FontWeight="Bold">빈칸</Run><LineBreak/>
+                                    <Run FontWeight="Bold">%d</Run><LineBreak/>
+                                    <Run FontWeight="Bold">%m</Run><LineBreak/>
+                                    <Run FontWeight="Bold">%a</Run>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="1">
+                                     　: 프로그램이 실행되고 있는 위치<LineBreak/>
+                                     　: 바탕화면 위치<LineBreak/>
+                                     　: 내 문서 위치<LineBreak/>
+                                     　: 프로그램이 실행되고 있는 위치)
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                            
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

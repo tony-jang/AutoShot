@@ -39,7 +39,7 @@
 
                     <Grid Grid.Column="1" Margin="0,10">
                         <TextBlock x:Name="textBlock" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White">
-                    남은 장 수 : <Run FontSize="18" Foreground="#FF9800" FontWeight="Bold">99999+</Run>개
+                    남은 장 수 : <Run x:Name="RemainSpaceRun" FontSize="18" Foreground="#FF9800" FontWeight="Bold">99999+</Run>개
                         </TextBlock>
                     </Grid>
                     <Button x:Name="button" Content="!" Grid.Column="1" HorizontalAlignment="Left" Margin="128,75,0,0" VerticalAlignment="Top" Width="20" Height="18" Click="button_Click_1"/>
