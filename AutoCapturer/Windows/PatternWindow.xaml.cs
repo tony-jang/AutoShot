@@ -28,65 +28,109 @@ namespace AutoCapturer.Windows
         {
             InitializeComponent();
 
+            this.Closing += Frm_Closing;
+
             tmr.Interval = 100;
             tmr.Tick += PtnCheck;
             tmr.Start();
         }
 
+        private void Frm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!IsApply) ReturnFlag = false;
+        }
+
+        public bool ReturnFlag = false, IsApply = false;
+        
+        public new PatternInputResult ShowDialog()
+        {
+            base.ShowDialog();
+
+            return new PatternInputResult(TBPtnName.Text,TBSaveLoc.Text, ReturnFlag);
+
+        }
+
+        private void ApplyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            IsApply = true;
+            this.Close();
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void PtnCheck(object sender, EventArgs e)
         {
-            bool flag = false;
+            bool PtnFlag = false, LocFlag = false;
             switch (PatternConverter.ConvertAll(TBPtnName.Text, out Ptn))
             {
                 case ErrorList.AlreadyAutoUsed:
-                    flag = true;
+                    PtnFlag = true;
                     TBPtnPreview.Text = "이미 자동 변수가 사용되었습니다.";
                     break;
 
                 case ErrorList.CannotAccessString:
-                    flag = true;
+                    PtnFlag = false;
                     TBPtnPreview.Text = "파일명에 사용하지 못하는 문자가 포함되어 있습니다.";
                     break;
 
                 case ErrorList.UnknownVariable:
-                    flag = true;
+                    PtnFlag = false;
                     TBPtnPreview.Text = "알 수 없는 변수가 사용되었습니다.";
                     break;
 
                 case ErrorList.BlankString:
-                    flag = true;
+                    PtnFlag = false;
                     TBPtnPreview.Text = "빈 이름은 사용할 수 없습니다.";
                     break;
 
                 case ErrorList.NoError:
-                    flag = false;
+                    PtnFlag = true;
                     TBPtnPreview.Text = Ptn;
                     break;
             }
 
-            if (!flag) { TBPtnPreview.ToolTip = (new ToolTip().Content = Ptn); }
-            else { TBPtnPreview.ToolTip = null; }
+            if (PtnFlag) TBPtnPreview.ToolTip = (new ToolTip().Content = Ptn);
+            else TBPtnPreview.ToolTip = null;
 
             switch (LocationConverter.ConvertAll(TBSaveLoc.Text, out Loc))
             {
                 case ErrorList.CannotAccessString:
                     TBLocPreview.Text = "파일명에 사용하지 못하는 문자가 포함되어 있습니다.";
-                    TBLocPreview.ToolTip = null;
+                    LocFlag = false;
                     break;
 
                 case ErrorList.UnknownVariable:
-                    TBLocPreview.ToolTip = null;
+                    LocFlag = false;
                     break;
                 case ErrorList.NoError:
                     TBLocPreview.Text = Loc;
-                    TBLocPreview.ToolTip = (new ToolTip().Content = Loc);
+                    LocFlag = true;
                     break;
             }
+
+            if (LocFlag) TBLocPreview.ToolTip = (new ToolTip().Content = Loc); else TBLocPreview.ToolTip = null;
+
+            if (PtnFlag && LocFlag) ReturnFlag = true; else ReturnFlag = false;
+
         }
 
-        private void TBSaveLoc_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //switch(LocationConverter.Convert)
-        }
     }
+
+    public struct PatternInputResult
+    {
+        public PatternInputResult(string pattern, string saveloc, bool ReturnFlag)
+        {
+            Pattern = pattern;
+            SaveLocation = saveloc;
+            IsSuccessfulReturn = ReturnFlag;
+        }
+        public string Pattern;
+        public string SaveLocation;
+        public bool IsSuccessfulReturn;
+    }
+
+
 }
