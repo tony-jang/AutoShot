@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace AutoCapturer.UserControls
 {
-    class PatternItem : RadioButton
+    class PatternItem : ListViewItem
     {
 
         public PatternItem(){
