@@ -71,6 +71,7 @@
             <ComboBoxItem Content="자르기"/>
         </ComboBox>
         <Button x:Name="button" Content="파일 설정/재설정" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,320,0,0" Grid.Row="1" Height="25" Click="button_Click" Background="#FFEBEBEB"/>
+        <Button x:Name="button_Copy" Content="복사" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,422,0,0" Grid.Row="1" Height="25" Background="#FFEBEBEB"/>
 
     </Grid>
 </local:ChromeWindow>
