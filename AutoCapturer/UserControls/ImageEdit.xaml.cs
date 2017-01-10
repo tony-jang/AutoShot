@@ -141,6 +141,8 @@ namespace AutoCapturer.UserControls
         {
             InitializeComponent();
 
+            RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.HighQuality);
+
             CropRects = new Rectangle[]{UL_Cropper, UC_Cropper, UR_Cropper,
                                      CL_Cropper, CR_Cropper,
                                      DL_Cropper, DC_Cropper, DR_Cropper};

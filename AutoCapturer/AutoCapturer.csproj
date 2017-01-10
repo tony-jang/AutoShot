@@ -88,11 +88,12 @@
     <Compile Include="Effectors\BaseEffector.cs" />
     <Compile Include="Effectors\RotateEffector.cs" />
     <Compile Include="Globals\Globals.cs" />
+    <Compile Include="ImageWorker\BaseWorker.cs" />
     <Compile Include="Interop\Constats.cs" />
     <Compile Include="Interop\ExternDll.cs" />
     <Compile Include="Interop\NativeMethods.cs" />
     <Compile Include="Interop\UnsafeNativeMethods.cs" />
-    <Compile Include="Observer\PrtScrObserver.cs" />
+    <Compile Include="ImageWorker\PrintScreenWorker.cs" />
     <Compile Include="SpaceCalculator.cs" />
     <Compile Include="UserControls\ImageEdit.xaml.cs">
       <DependentUpon>ImageEdit.xaml</DependentUpon>
@@ -100,6 +101,7 @@
     <Compile Include="UserControls\PathButton.cs" />
     <Compile Include="UserControls\PatternItem.cs" />
     <Compile Include="UserControls\Switch.cs" />
+    <Compile Include="UserControls\UserItem.cs" />
     <Compile Include="WindowSystemCommand.cs" />
     <Compile Include="Windows\ChromeWindow.cs" />
     <Compile Include="Windows\ImageEditor.xaml.cs">

@@ -14,11 +14,14 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Effects;
+using System.Drawing.Imaging;
+using System.Windows.Interop;
 using Microsoft.Win32;
 using AutoCapturer.Observer;
 using System.Windows.Controls;
 using static AutoCapturer.Sounds.NotificationSounds;
 using System.Net;
+using static AutoCapturer.Interop.UnsafeNativeMethods;
 
 namespace AutoCapturer
 {
@@ -38,7 +41,7 @@ namespace AutoCapturer
 
         SettingWdw sw = new SettingWdw();
 
-        AutoCapturer.Observer.PrtScrObserver obs = new Observer.PrtScrObserver();
+        AutoCapturer.Observer.PrintScreenWorker obs = new Observer.PrintScreenWorker();
 
         
 
@@ -47,13 +50,13 @@ namespace AutoCapturer
             InitializeComponent();
 
 
-#if DEBUG
-            WebClient wc = new WebClient();
+//#if DEBUG
+//            WebClient wc = new WebClient();
 
-            wc.Encoding = Encoding.UTF8;
+//            wc.Encoding = Encoding.UTF8;
 
-            MessageBox.Show(wc.DownloadString("http://amprog.tistory.com/1"));
-#endif
+//            MessageBox.Show(wc.DownloadString("http://amprog.tistory.com/1"));
+//#endif
 
             SpaceCalculator sc = new SpaceCalculator("D:\\", 1, 99999);
             
@@ -210,16 +213,22 @@ namespace AutoCapturer
 
         private void BtnAllCapture_Click(object sender, RoutedEventArgs e)
         {
-            //sw.ShowDialog();
-            //Effectors.BaseEffector RtEff = new Effectors.RotateEffector();
+            PlayNotificationSound(SoundType.Captured);
 
-            //RtEff.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\시험 일정표.jpg"));
-            //BitmapEncoder encoder = new PngBitmapEncoder();
-            //encoder.Frames.Add(BitmapFrame.Create(RtEff.ApplyEffect()));
-            //using (var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\Rotate Test.jpg", FileMode.Create))
-            //{
-            //    encoder.Save(filestream);
-            //}
+            Windows.ImageEditor ie = new Windows.ImageEditor();
+
+            ie.Editor.image = CopyScreen();
+
+            ie.ShowDialog();
+
+            var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + $"\\Test{++ctr}.jpg", FileMode.Create);
+
+            var encoder = new PngBitmapEncoder();
+
+            encoder.Frames.Add(BitmapFrame.Create(ie.Editor.image));
+            encoder.Save(filestream);
+
+            filestream.Dispose();
         }
 
         int ctr = 0;
@@ -257,6 +266,28 @@ namespace AutoCapturer
             //    encoder.Save(filestream);
             //}
         }
+
+        // For Debug
+        private static BitmapSource CopyScreen()
+        {
+            using (var screenBmp = new Bitmap(
+                (int)SystemParameters.PrimaryScreenWidth,
+                (int)SystemParameters.PrimaryScreenHeight,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            {
+                using (var bmpGraphics = Graphics.FromImage(screenBmp))
+                {
+                    bmpGraphics.CopyFromScreen(0, 0, 0, 0, screenBmp.Size);
+                    return Imaging.CreateBitmapSourceFromHBitmap(
+                        screenBmp.GetHbitmap(),
+                        IntPtr.Zero,
+                        Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+                }
+            }
+        }
+
+
 
         private void BtnSelCapture_Click(object sender, RoutedEventArgs e)
         {
@@ -298,6 +329,17 @@ namespace AutoCapturer
             Windows.ImageEditor ie = new Windows.ImageEditor();
 
             ie.Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Hide From Alt+Tab (Tasklist)
+            WindowInteropHelper wndHelper = new WindowInteropHelper(this);
+
+            int exStyle = (int)GetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GWL_EXSTYLE);
+
+            exStyle |= (int)ExtendedWindowStyles.WS_EX_TOOLWINDOW;
+            SetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
         }
     }
 }

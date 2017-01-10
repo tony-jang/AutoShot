@@ -16,8 +16,8 @@
 
         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
             <DockPanel>
-                <Button Content="Rotate" Margin="0,0,10,0" Width="80" ></Button>
-                <Button Content="File" Margin="0,0,10,0" Width="80" Click="Button_Click" ></Button>
+                <Button Content="Rotate" Margin="0,0,10,0" Width="80" />
+                <Button Content="File" Margin="0,0,10,0" Width="80" Click="Button_Click" />
             </DockPanel>
         </ScrollViewer>
 

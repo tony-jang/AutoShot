@@ -12,13 +12,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using static AutoCapturer.Interop.UnsafeNativeMethods;
 
 namespace AutoCapturer.Observer
 {
-    class PrtScrObserver
+    class PrintScreenWorker
     {
-        [DllImport("user32")]
-        public static extern short GetAsyncKeyState(Int32 vKey);
+
 
         public event AEventHandler DetectPrtScr;
         public delegate void AEventHandler(ImageSource DetectedImage);

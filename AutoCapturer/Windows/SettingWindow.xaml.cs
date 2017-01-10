@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,15 +25,106 @@ namespace AutoCapturer
         
         public SettingWdw()
         {
-            
             InitializeComponent();
 
             ShowPopupGrid.IsEnabled = false;
             
             AuCaRingType2.Unchecked += PopupStateChange;
             AuCaRingType2.Checked += PopupStateChange;
-            
+
+            RecoWidthTB.PreviewTextInput += RecoRangeTBPreviewCheck;
+            RecoHeightTB.PreviewTextInput += RecoRangeTBPreviewCheck;
+
+            RecoWidthTB.TextChanged += RecoRangeTBChanged;
+            RecoHeightTB.TextChanged += RecoRangeTBChanged;
+
         }
+
+        private void RecoRangeTBChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            string t = tb.Name.Substring(4, 1);
+            try
+            {
+                switch (t)
+                {
+                    case "W":
+                        RecoWidth = int.Parse(tb.Text);
+                        break;
+                    case "H":
+                        RecoHeight = int.Parse(tb.Text);
+                        break;
+                }
+            }
+            catch (FormatException)
+            {
+                switch (t)
+                {
+                    case "W":
+                        RecoWidth = 1;
+                        break;
+                    case "H":
+                        RecoHeight = 1;
+                        break;
+                }
+            }
+        }
+
+        private void RecoRangeTBPreviewCheck(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsTextAllowed(e.Text);
+        }
+
+
+        // 환경 설정
+
+        // └ 마우스 인식 범위
+
+        private static bool IsTextAllowed(string text)
+        {
+            Regex reg = new Regex("[^0-9]");
+            return reg.IsMatch(text);
+        }
+
+        public int RecoWidth
+        {
+            get { return (int)(MouseRangeRect.Width / 16); }
+            set
+            {
+                bool f = false;
+                if (value <= 0) { value = 1; f = true; }
+                else if (value > 10) { value = 10; f = true; }
+                if (f)
+                {
+                    RecoWidthTB.Text = value.ToString();
+                    RecoHeightTB.Text = RecoHeight.ToString();
+                }
+
+                MouseRangeRect.Width = value * 16;
+            }
+        }
+
+        public int RecoHeight
+        {
+            get { return (int)(MouseRangeRect.Height / 16); }
+            set
+            {
+                bool f = false;
+                if (value <= 0) { value = 1; f = true; }
+                else if (value > 10) { value = 10; f = true; }
+                if (f)
+                {
+                    RecoWidthTB.Text = RecoHeight.ToString();
+                    RecoHeightTB.Text = value.ToString();
+                }
+
+                MouseRangeRect.Height = value * 16;
+            }
+        }
+
+
+
+
 
 
 
@@ -105,6 +197,7 @@ namespace AutoCapturer
         private void TBPtnName_TextChanged(object sender, TextChangedEventArgs e)
         {
             UserControls.PatternItem itm = (UserControls.PatternItem)listView.SelectedItem;
+            if (itm == null) return;
 
             itm.Content = TBPtnName.Text;
         }
@@ -112,8 +205,13 @@ namespace AutoCapturer
         private void TBSaveLoc_TextChanged(object sender, TextChangedEventArgs e)
         {
             UserControls.PatternItem itm = (UserControls.PatternItem)listView.SelectedItem;
+            if (itm == null) return;
 
             itm.SavePattern = TBSaveLoc.Text;
         }
+
+
+
+        
     }
 }

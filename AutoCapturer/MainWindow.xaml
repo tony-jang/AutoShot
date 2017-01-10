@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoCapturer"
         xmlns:UserControls="clr-namespace:AutoCapturer.UserControls" x:Class="AutoCapturer.MainWindow"
         mc:Ignorable="d"
-        Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" Margin="0" Closing="Window_Closing" ShowInTaskbar="False" AllowsTransparency="True" >
+        Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" Margin="0" Closing="Window_Closing" ShowInTaskbar="False" AllowsTransparency="True" Loaded="Window_Loaded" >
 
     <Grid>
         <Grid x:Name="DetectGrid" Background="#02000000" Width="1" Height="1" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -46,6 +46,7 @@
                     <Button x:Name="button1" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="16,69,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
                 </Grid>
             </Border>
+            
         </Grid>
     </Grid>
 </Window>
