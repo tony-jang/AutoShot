@@ -5,10 +5,11 @@
              xmlns:c="clr-namespace:AutoCapturer.Windows"
              xmlns:UserControls="clr-namespace:AutoCapturer.UserControls"
              xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Windows/SelDirectoryWindow.xaml">
     <!--Windows/ImageEditor-->
     <!--Windows/PatternWdw-->
     <!--Windows/ImageEffector-->
+    <!--Windows/SelDirectoryWindow-->
     <!--MainWindow-->
     <Application.Resources>
         <ResourceDictionary>
@@ -463,13 +464,13 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="UserItemStyle" TargetType="{x:Type UserControls:UserItem}">
+            <Style x:Key="UserItemStyle" TargetType="{x:Type UserControls:ImageItem}">
                 <Setter Property="FontSize" Value="15"></Setter>
                 <Setter Property="Height" Value="50"></Setter>
 
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type UserControls:UserItem}">
+                        <ControlTemplate TargetType="{x:Type UserControls:ImageItem}">
                             <Border x:Name="MainBorder" Background="#00000000">
                                 <Grid Margin="0,0,3,0">
                                     <Grid.ColumnDefinitions>
@@ -478,17 +479,17 @@
                                         <ColumnDefinition Width="20"/>
                                     </Grid.ColumnDefinitions>
                                     <Path Margin="20,10" Data="M173.307,273.34601 C193.296,291.52802 216.751,303.25699 242.60599,303.25699 268.49,303.25699 291.94199,291.529 311.90299,273.34601 322.451,291.17401 341.702,303.25699 363.908,303.25699 L394.23499,303.25699 C394.23499,303.25699 449.19901,318.41599 485.21101,394.236 L485.21101,454.88501 C485.21101,471.64899 471.64799,485.211 454.88901,485.211 L30.326997,485.211 C13.564,485.211 0,471.64899 0,454.88501 L0,394.236 C36.013999,318.41501 90.977996,303.25699 90.977996,303.25699 L121.304,303.25699 C143.529,303.25699 162.74799,291.17401 173.307,273.34601 z M242.60599,0 C333.58601,3.5400153E-06 348.745,62.681003 348.745,121.304 348.745,179.92501 301.24299,272.93 242.60599,272.93 183.997,272.93 136.465,179.92501 136.465,121.304 136.465,62.681003 151.628,3.5400153E-06 242.60599,0 z" Stretch="Fill" Fill="Black"/>
-                                    <Image x:Name="UserImage" Margin="5,0" Grid.Column="0"
-                                               Source="{TemplateBinding UserImage}"
+                                    <Image x:Name="Image" Margin="5,0" Grid.Column="0"
+                                               Source="{TemplateBinding MainImage}"
                                                Stretch="Fill"/>
-                        
+
                                     <TextBlock x:Name="SavePtnTB" Grid.Column="1"
                                                Text="{TemplateBinding Content}"
                                                Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
                                                FontSize="{TemplateBinding FontSize}"  TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
                                     </TextBlock>
 
-                                    
+
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -496,6 +497,91 @@
                                     <Setter Property="FontWeight" TargetName="SavePtnTB" Value="Bold"/>
                                 </Trigger>
                                 <!--TODO: UseImage가 없으면 Path Opacity = 1 아니면 0-->
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="DirItem" TargetType="{x:Type UserControls:ImageItem}">
+                <Setter Property="FontSize" Value="15"></Setter>
+                <Setter Property="Height" Value="30"></Setter>
+                <Setter Property="MainImage" Value="{x:Null}"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type UserControls:ImageItem}">
+                            <Border x:Name="MainBorder" Background="#00000000">
+                                <Grid Margin="0,0,3,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Image x:Name="Image" Margin="5" Grid.Column="0"
+                                               Source="{TemplateBinding MainImage}"
+                                               Stretch="Fill"/>
+
+                                    <TextBlock x:Name="SavePtnTB" Grid.Column="1"
+                                               Text="{TemplateBinding Content}"
+                                               Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
+                                               FontSize="{TemplateBinding FontSize}"  TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                                    </TextBlock>
+
+
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="FontWeight" TargetName="SavePtnTB" Value="Bold"/>
+                                </Trigger>
+                                <!--TODO: UseImage가 없으면 Path Opacity = 1 아니면 0-->
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="NoHScrollBarListViewStyle" TargetType="{x:Type ListView}">
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            </Style>
+
+            <Style x:Key="DirItmStyle" TargetType="{x:Type UserControls:ImageItem}">
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Height" Value="100"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type UserControls:ImageItem}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Image Source="{TemplateBinding MainImage}" />
+                                <TextBlock x:Name="location" Grid.Row="1" Text="{TemplateBinding Content}" TextAlignment="Center" VerticalAlignment="Center"
+                                    TextTrimming="CharacterEllipsis" ToolTip="{TemplateBinding Content}"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="FontWeight" Value="Bold" TargetName="location"/>
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>

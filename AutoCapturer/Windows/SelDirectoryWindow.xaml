@@ -1,0 +1,64 @@
+﻿<local:ChromeWindow x:Class="AutoCapturer.Windows.SelDirectoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:u="clr-namespace:AutoCapturer.UserControls"
+        xmlns:local="clr-namespace:AutoCapturer.Windows"
+        mc:Ignorable="d"
+        Title="Auto Capturer Folder Selection" WindowStartupLocation="CenterScreen" Height="700" Width="1000" AllowsTransparency="True" WindowStyle="None">
+    <Grid>
+        <Grid Margin="0,12,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="위치" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                <TextBox x:Name="locTB" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" Margin="0,0,10,0" KeyDown="locTB_KeyDown"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" MinWidth="100"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0">
+                    <ListView x:Name="PART_Drive" Style="{StaticResource NoHScrollBarListViewStyle}" SelectionChanged="PART_Drive_SelectionChanged">
+                        <ListViewItem Margin="5" Content="자주 쓰는 폴더 모음" FontSize="15" IsHitTestVisible="False"/>
+                        <Rectangle Margin="5,0" Fill="Black" Height="1"  IsHitTestVisible="False"/>
+                        <u:ImageItem x:Name="itm_Desk" Style="{StaticResource DirItem}" Content="바탕화면" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/DeskIcon.png"/>
+                        <u:ImageItem x:Name="itm_Dcu" Style="{StaticResource DirItem}" Content="내 문서" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/DocumentIcon.png"/>
+                        <u:ImageItem x:Name="itm_Music" Style="{StaticResource DirItem}" Content="내 음악" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/MusicIcon.png"/>
+                        <u:ImageItem x:Name="itm_Pic" Style="{StaticResource DirItem}" Content="내 사진" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/ImageIcon.png"/>
+                        <u:ImageItem x:Name="itm_Dwn" Style="{StaticResource DirItem}" Content="다운로드" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/DownloadIcon.png"/>
+                        <ListViewItem Margin="5" Content="내 컴퓨터" FontSize="15" IsHitTestVisible="False"/>
+                        <Rectangle Margin="5,0" Fill="Black" Height="1"  IsHitTestVisible="False"/>
+                    </ListView>
+                </Grid>
+                
+                <GridSplitter VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1"/>
+
+                <Grid Grid.Column="2">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView x:Name="PART_File" SelectionChanged="PART_File_SelectionChanged"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</local:ChromeWindow>

@@ -57,13 +57,15 @@ namespace AutoCapturer.UserControls
             {
                 InnerImg.Source = value;
 
-                
 
-                SourceSize = new Size(value.Width, value.Height);
+
+                //SourceSize = new Size(value.Width, value.Height);
+                SourceSize = new Size(1000, 800);
                 PreviewRect.Width = value.Width;
                 PreviewRect.Height = value.Height;
                 ImageStretchMode = Stretch.None;
                 DragGrid.Margin = new Thickness(0, 0, 0, 0);
+
             }
         }
 

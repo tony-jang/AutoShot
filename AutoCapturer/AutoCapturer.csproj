@@ -101,7 +101,7 @@
     <Compile Include="UserControls\PathButton.cs" />
     <Compile Include="UserControls\PatternItem.cs" />
     <Compile Include="UserControls\Switch.cs" />
-    <Compile Include="UserControls\UserItem.cs" />
+    <Compile Include="UserControls\ImageItem.cs" />
     <Compile Include="WindowSystemCommand.cs" />
     <Compile Include="Windows\ChromeWindow.cs" />
     <Compile Include="Windows\ImageEditor.xaml.cs">
@@ -115,6 +115,9 @@
     </Compile>
     <Compile Include="Windows\PopUpWindow.xaml.cs">
       <DependentUpon>PopUpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelDirectoryWindow.xaml.cs">
+      <DependentUpon>SelDirectoryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\PopUpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SelDirectoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,6 +225,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\DeskIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\FolderIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\DownloadIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\DocumentIcon.png" />
+    <Resource Include="Resources\Icons\SmallIcons\ImageIcon.png" />
+    <Resource Include="Resources\Icons\SmallIcons\MusicIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\FillFolderIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

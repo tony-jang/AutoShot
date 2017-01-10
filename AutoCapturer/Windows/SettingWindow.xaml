@@ -257,21 +257,9 @@
                                         <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <ListView x:Name="UserLV" Height="122" Margin="0,12,0,0" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="listView_SelectionChanged">
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ListBoxItem}">
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                                            <ContentPresenter/>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <UserControls:UserItem x:Name="pi" Content="기본 저장" UserImage="/AutoCapturer;component/Resources/Icons/AuCaOn.png"  />
-                                        <UserControls:UserItem x:Name="pi2" Content="강의용 캡처" UserImage="/AutoCapturer;component/Resources/Icons/ImgSound.png" />
+                                    <ListView x:Name="UserLV" Height="122" Margin="0,12,0,0" Style="{StaticResource NoHScrollBarListViewStyle}">
+                                        <UserControls:ImageItem x:Name="pi" Content="기본 저장" MainImage="/AutoCapturer;component/Resources/Icons/AuCaOn.png"  />
+                                        <UserControls:ImageItem x:Name="pi2" Content="강의용 캡처" MainImage="/AutoCapturer;component/Resources/Icons/ImgSound.png" />
                                     </ListView>
                                 </Grid>
                                 <TextBlock Text="개인 설정 저장" Margin="0,36,0,0"  FontSize="14"/>
@@ -393,19 +381,9 @@
                         <ScrollViewer VerticalScrollBarVisibility="Visible">
                             <StackPanel Margin="20">
                                 <TextBlock x:Name="TBPtnCount" TextWrapping="Wrap" Text="등록된 패턴 (0개)" FontSize="14"/>
-                                <ListView x:Name="listView" Height="122" Margin="0,12,0,0" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="listView_SelectionChanged">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListBoxItem}">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                                        <ContentPresenter/>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
+                                <ListView x:Name="listView" Height="150" Margin="0,12,0,0"
+                                          Style="{StaticResource NoHScrollBarListViewStyle}" SelectionChanged="listView_SelectionChanged">
+                                    
                                     <UserControls:PatternItem x:Name="patternItem" Content="기본 저장"  SavePattern="C:\Users\uutak\Desktop\%dasdfasdfasdfasdfasdfasdfdasfadsasdfasdfaasdfasdfasdfasdf" />
                                     <UserControls:PatternItem x:Name="patternItem_Copy" Content="강의용 캡처" SavePattern="C:\Users\uutak\Desktop\%d" />
                                 </ListView>

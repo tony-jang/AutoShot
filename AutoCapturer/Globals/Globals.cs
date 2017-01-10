@@ -68,5 +68,15 @@ namespace AutoCapturer.Globals
             return bytes;
         }
 
+
+
+        public static string GetDownloadPath()
+        {
+            string pathUser = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string pathDownload = System.IO.Path.Combine(pathUser, "Downloads");
+
+            return pathDownload;
+        }
+
     }
 }
