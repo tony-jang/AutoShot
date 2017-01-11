@@ -64,3 +64,4 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\PopUpW
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\SettingWindow.baml
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\SelDirectoryWindow.g.cs
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\SelDirectoryWindow.baml
+D:\YT's Files\C# Files\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csprojResolveAssemblyReference.cache

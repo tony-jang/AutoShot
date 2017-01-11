@@ -46,6 +46,9 @@ namespace AutoCapturer.Globals
             }
         }
 
+        /// <summary>
+        /// MainWindow의 Dispatcher를 나타냅니다. (MainWindow에서 초기화 할때 설정)
+        /// </summary>
         public static Dispatcher MainDispatcher { get; set; }
 
 
@@ -77,6 +80,11 @@ namespace AutoCapturer.Globals
 
             return pathDownload;
         }
+
+
+
+        
+
 
     }
 }

@@ -562,7 +562,7 @@
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
             </Style>
 
-            <Style x:Key="DirItmStyle" TargetType="{x:Type UserControls:ImageItem}">
+            <Style x:Key="FileItmStyle" TargetType="{x:Type UserControls:ImageItem}">
                 <Setter Property="Width" Value="80"/>
                 <Setter Property="Height" Value="100"/>
                 <Setter Property="Template">

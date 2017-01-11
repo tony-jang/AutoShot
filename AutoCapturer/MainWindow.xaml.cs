@@ -58,7 +58,7 @@ namespace AutoCapturer
 //            MessageBox.Show(wc.DownloadString("http://amprog.tistory.com/1"));
 //#endif
 
-            SpaceCalculator sc = new SpaceCalculator("D:\\", 1, 99999);
+            SpaceCalculator sc = new SpaceCalculator("C:\\", 2, 99999);
             
             
 

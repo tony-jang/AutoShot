@@ -15,13 +15,28 @@
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="위치" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
-                <TextBox x:Name="locTB" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" Margin="0,0,10,0" KeyDown="locTB_KeyDown"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="탐색 위치" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="locTB" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" Margin="0,0,10,0" KeyDown="locTB_KeyDown"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="검색" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="searchTB" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" Margin="0,0,10,0"/>
+                </Grid>
+                
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,12,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250" MinWidth="100"/>
                     <ColumnDefinition Width="5"/>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,17 +24,17 @@ namespace AutoCapturer.Windows
     {
         public SelDirectoryWindow()
         {
-
             InitializeComponent();
 
-
+            // 자주 사용하는 폴더 위치 초기화
             itm_Desk.Tag = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             itm_Dcu.Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             itm_Dwn.Tag = GetDownloadPath();
+            if (!(new DirectoryInfo(GetDownloadPath())).Exists) PART_Drive.Items.Remove(itm_Dwn);
             itm_Music.Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             itm_Pic.Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-
+            // 사용자의 드라이브 자동 추가
             foreach (System.IO.DriveInfo di in System.IO.DriveInfo.GetDrives())
             {
                 AddDriveItem(di.Name, ImageType.Drive);
@@ -41,71 +42,6 @@ namespace AutoCapturer.Windows
             }
         }
 
-        public void AddDriveItem(string Content, ImageType imagetype)
-        {
-            string FileName = "";
-
-            switch (imagetype)
-            {
-                case ImageType.Drive:
-                    FileName = "FillFolderIcon";
-                    break;
-                case ImageType.Desktop:
-                    FileName = "DeskIcon";
-                    break;
-                case ImageType.Document:
-                    FileName = "DocumentIcon";
-                    break;
-                case ImageType.Download:
-                    FileName = "DownloadIcon";
-                    break;
-                case ImageType.Folder:
-                    FileName = "FolderIcon";
-                    break;
-                case ImageType.Picture:
-                    FileName = "ImageIcon";
-                    break;
-                case ImageType.Music:
-                    FileName = "FillFolderIcon";
-                    break;
-            }
-
-            ImageItem itm = new ImageItem();
-
-            itm.Style = FindResource("DirItem") as Style;
-            itm.Content = Content;
-            itm.Tag = Content;
-            if (imagetype != ImageType.None)
-                itm.MainImage = new BitmapImage(new Uri($"/AutoCapturer;component/Resources/Icons/SmallIcons/{FileName}.png", UriKind.Relative));
-
-            PART_Drive.Items.Add(itm);
-        }
-
-
-        public void AddFolderItems(string Content, string Tag)
-        {
-            BitmapImage img = new BitmapImage(new Uri($"/AutoCapturer;component/Resources/Icons/SmallIcons/FolderIcon.png", UriKind.Relative));
-            ImageItem itm = new ImageItem();
-
-            itm.Style = FindResource("DirItmStyle") as Style;
-            itm.Content = Content;
-            itm.Tag = Tag;
-            itm.MainImage = img;
-
-            PART_File.Items.Add(itm);
-        }
-
-        public enum ImageType
-        {
-            None = 0,
-            Drive = 1,
-            Desktop = 2,
-            Document = 3,
-            Download = 4,
-            Folder = 5,
-            Picture = 6,
-            Music = 7
-        }
 
         public string ViewLocation = "AllDrives";
 
@@ -164,6 +100,8 @@ namespace AutoCapturer.Windows
 
                 AddItemByLocation(location);
                 SelectItemByLocation(location);
+
+                PART_File.Focus();
             }
         }
 
@@ -181,6 +119,68 @@ namespace AutoCapturer.Windows
 
             AddItemByLocation(location);
 
+        }
+
+        
+        /// <summary>
+        /// 만일 매개변수의 경로와 PART_Drive의 아이템이 동일할시 Select한 상태로 만들어줍니다.
+        /// </summary>
+        /// <param name="location"></param>
+        public void SelectItemByLocation(string location)
+        {
+            bool flag = false;
+
+            foreach (object itm in PART_Drive.Items)
+            {
+                ImageItem imageitm = null;
+                if (itm.GetType() == typeof(ImageItem)) imageitm = (ImageItem)itm;
+                else continue;
+
+                if ((string)imageitm.Tag == location) { flag = true; PART_Drive.SelectedItem = itm;}
+            }
+            if (!flag) PART_Drive.SelectedItem = null;
+        }
+
+        #region [  아이템 추가/제거  ]
+
+        string BaseIconLoc = "/AutoCapturer;component/Resources/Icons/SmallIcons/";
+
+        public void AddDriveItem(string Content, ImageType imagetype)
+        {
+            string FileName = "";
+
+            switch (imagetype)
+            {
+                case ImageType.Drive: FileName = "FillFolderIcon";  break;
+                case ImageType.Desktop: FileName = "DeskIcon";      break;
+                case ImageType.Document: FileName = "DocumentIcon"; break;
+                case ImageType.Download: FileName = "DownloadIcon"; break;
+                case ImageType.Folder: FileName = "FolderIcon";     break;
+                case ImageType.Picture: FileName = "ImageIcon";     break;
+                case ImageType.Music: FileName = "FillFolderIcon";  break;
+            }
+
+            ImageItem itm = new ImageItem();
+
+            itm.Style = FindResource("DirItem") as Style;
+            itm.Content = Content;
+            itm.Tag = Content;
+            if (imagetype != ImageType.None)
+                itm.MainImage = new BitmapImage(new Uri($"{BaseIconLoc}{FileName}.png", UriKind.Relative));
+
+            PART_Drive.Items.Add(itm);
+        }
+        public void AddFolderItems(string Content, string Tag)
+        {
+            BitmapImage img = new BitmapImage(new Uri($"{BaseIconLoc}FolderIcon.png", UriKind.Relative));
+            ImageItem itm = new ImageItem();
+
+            itm.Style = FindResource("FileItmStyle") as Style;
+            itm.Content = Content;
+            itm.Tag = Tag;
+            itm.MainImage = img;
+
+            PART_File.Items.Add(itm);
         }
 
         public void AddItemByLocation(string location)
@@ -208,22 +208,19 @@ namespace AutoCapturer.Windows
             catch
             { }
         }
-        public void SelectItemByLocation(string location)
-        {
-            bool flag = false;
 
-            foreach (object itm in PART_Drive.Items)
-            {
-                ImageItem imageitm = null;
-                if (itm.GetType() == typeof(ImageItem)) imageitm = (ImageItem)itm;
-                else continue;
-                if ((string)imageitm.Tag == location)
-                {
-                    flag = true;
-                    PART_Drive.SelectedItem = itm;
-                }
-            }
-            if (!flag) PART_Drive.SelectedItem = null;
+        public enum ImageType
+        {
+            None = 0,
+            Drive = 1,
+            Desktop = 2,
+            Document = 3,
+            Download = 4,
+            Folder = 5,
+            Picture = 6,
+            Music = 7
         }
+        #endregion
+
     }
 }
