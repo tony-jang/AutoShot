@@ -26,6 +26,9 @@ namespace AutoCapturer.Windows
         {
             InitializeComponent();
 
+            // 이벤트 핸들러 연결
+            PART_File.SelectionChanged += FileItmSelected;
+
             // 자주 사용하는 폴더 위치 초기화
             itm_Desk.Tag = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             itm_Dcu.Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -37,95 +40,16 @@ namespace AutoCapturer.Windows
             // 사용자의 드라이브 자동 추가
             foreach (System.IO.DriveInfo di in System.IO.DriveInfo.GetDrives())
             {
-                AddDriveItem(di.Name, ImageType.Drive);
-                AddFolderItems(di.Name, di.RootDirectory.FullName);
+                AddImageItem(di.Name, ImageType.Drive, PART_Drive, "DirItmStyle",string.Empty);
+                AddImageItem(di.Name, ImageType.Folder, PART_File, "FileItmStyle", di.RootDirectory.FullName);
             }
         }
 
-
-        public string ViewLocation = "AllDrives";
-
-        private void PART_File_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FileItmSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (PART_File.SelectedItem == null) return;
-            string location = (string)(PART_File.SelectedItem as ImageItem).Tag;
-
-            locTB.Text = location;
-
-            PART_File.Items.Clear();
-
-            if (location == "AllDrives")
-            {
-                foreach (System.IO.DriveInfo di in System.IO.DriveInfo.GetDrives())
-                {
-                    AddFolderItems(di.Name, di.RootDirectory.FullName);
-                }
-                PART_Drive.SelectedItem = null;
-                return;
-            }
-
-
-            AddItemByLocation(location);
-            SelectItemByLocation(location);
-
-
-
+            
         }
 
-        private void locTB_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                string location = locTB.Text;
-
-                locTB.Text = location;
-
-                PART_File.Items.Clear();
-
-                if (location == "AllDrives")
-                {
-                    foreach (System.IO.DriveInfo di in System.IO.DriveInfo.GetDrives())
-                    {
-                        AddFolderItems(di.Name, di.RootDirectory.FullName);
-                    }
-                    PART_Drive.SelectedItem = null;
-                    return;
-                }
-                
-                if (string.IsNullOrEmpty(location) || !(new System.IO.DirectoryInfo(location)).Exists)
-                {
-                    MessageBox.Show("사용할 수 없는 경로입니다!");
-                    return;
-                }
-
-                AddItemByLocation(location);
-                SelectItemByLocation(location);
-
-                PART_File.Focus();
-            }
-        }
-
-        private void PART_Drive_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ImageItem itm = (ImageItem)PART_Drive.SelectedItem;
-
-            if (itm == null) return;
-
-            string location = (string)itm.Tag;
-
-            locTB.Text = location;
-
-            PART_File.Items.Clear();
-
-            AddItemByLocation(location);
-
-        }
-
-        
-        /// <summary>
-        /// 만일 매개변수의 경로와 PART_Drive의 아이템이 동일할시 Select한 상태로 만들어줍니다.
-        /// </summary>
-        /// <param name="location"></param>
         public void SelectItemByLocation(string location)
         {
             bool flag = false;
@@ -145,80 +69,34 @@ namespace AutoCapturer.Windows
 
         string BaseIconLoc = "/AutoCapturer;component/Resources/Icons/SmallIcons/";
 
-        public void AddDriveItem(string Content, ImageType imagetype)
+        public void AddImageItem(string Content, ImageType imagetype, ListView Subject,string StyleName,string Tag)
         {
-            string FileName = "";
+            string ImgFile = "";
 
             switch (imagetype)
             {
-                case ImageType.Drive: FileName = "FillFolderIcon";  break;
-                case ImageType.Desktop: FileName = "DeskIcon";      break;
-                case ImageType.Document: FileName = "DocumentIcon"; break;
-                case ImageType.Download: FileName = "DownloadIcon"; break;
-                case ImageType.Folder: FileName = "FolderIcon";     break;
-                case ImageType.Picture: FileName = "ImageIcon";     break;
-                case ImageType.Music: FileName = "FillFolderIcon";  break;
+                case ImageType.Drive: ImgFile = "FillFolderIcon";  break;
+                case ImageType.Desktop: ImgFile = "DeskIcon";      break;
+                case ImageType.Document: ImgFile = "DocumentIcon"; break;
+                case ImageType.Download: ImgFile = "DownloadIcon"; break;
+                case ImageType.Folder: ImgFile = "FolderIcon";     break;
+                case ImageType.Picture: ImgFile = "ImageIcon";     break;
+                case ImageType.Music: ImgFile = "FillFolderIcon";  break;
             }
 
             ImageItem itm = new ImageItem();
 
-            itm.Style = FindResource("DirItem") as Style;
+            itm.Style = FindResource(StyleName) as Style;
             itm.Content = Content;
             itm.Tag = Content;
             if (imagetype != ImageType.None)
-                itm.MainImage = new BitmapImage(new Uri($"{BaseIconLoc}{FileName}.png", UriKind.Relative));
+                itm.MainImage = new BitmapImage(new Uri($"{BaseIconLoc}{ImgFile}.png", UriKind.Relative));
 
-            PART_Drive.Items.Add(itm);
+            Subject.Items.Add(itm);
         }
-        public void AddFolderItems(string Content, string Tag)
-        {
-            BitmapImage img = new BitmapImage(new Uri($"{BaseIconLoc}FolderIcon.png", UriKind.Relative));
-            ImageItem itm = new ImageItem();
-
-            itm.Style = FindResource("FileItmStyle") as Style;
-            itm.Content = Content;
-            itm.Tag = Tag;
-            itm.MainImage = img;
-
-            PART_File.Items.Add(itm);
-        }
-
-        public void AddItemByLocation(string location)
-        {
-            if (string.IsNullOrEmpty(location)) return;
-
-            if ((new System.IO.DirectoryInfo(location)).Parent != null)
-            {
-                ViewLocation = "AllDrives";
-                AddFolderItems(".. (상위 폴더)", (new System.IO.DirectoryInfo(location)).Parent.FullName);
-            }
-            else
-            {
-                AddFolderItems(".. (상위 폴더)", "AllDrives");
-            }
-            try
-            {
-                ViewLocation = location;
-                foreach (System.IO.DirectoryInfo di in new System.IO.DirectoryInfo(location).GetDirectories())
-                {
-                    if (!di.Attributes.HasFlag(System.IO.FileAttributes.Hidden))
-                        AddFolderItems(di.Name, di.FullName);
-                }
-            }
-            catch
-            { }
-        }
-
         public enum ImageType
         {
-            None = 0,
-            Drive = 1,
-            Desktop = 2,
-            Document = 3,
-            Download = 4,
-            Folder = 5,
-            Picture = 6,
-            Music = 7
+            None = 0, Drive = 1, Desktop = 2, Document = 3, Download = 4, Folder = 5, Picture = 6, Music = 7
         }
         #endregion
 
