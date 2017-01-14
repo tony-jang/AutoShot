@@ -1,27 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Http.Formatting;
 using System.Windows.Media.Animation;
 using System.IO;
 using AutoCapturer.PopUps;
 using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Effects;
-using System.Drawing.Imaging;
 using System.Windows.Interop;
-using Microsoft.Win32;
-using AutoCapturer.Observer;
 using System.Windows.Controls;
 using static AutoCapturer.Sounds.NotificationSounds;
-using System.Net;
 using static AutoCapturer.Interop.UnsafeNativeMethods;
+using static AutoCapturer.Interop.NativeMethods;
 
 namespace AutoCapturer
 {
@@ -30,10 +19,6 @@ namespace AutoCapturer
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
-
-
         bool Visibled = true;
 
         ThicknessAnimation da = new ThicknessAnimation();
@@ -43,26 +28,13 @@ namespace AutoCapturer
 
         AutoCapturer.Observer.PrintScreenWorker obs = new Observer.PrintScreenWorker();
 
-        
+        System.Windows.Forms.Timer tmr = new System.Windows.Forms.Timer();
 
         public MainWindow()
         {
             InitializeComponent();
 
 
-//#if DEBUG
-//            WebClient wc = new WebClient();
-
-//            wc.Encoding = Encoding.UTF8;
-
-//            MessageBox.Show(wc.DownloadString("http://amprog.tistory.com/1"));
-//#endif
-
-            SpaceCalculator sc = new SpaceCalculator("C:\\", 2, 99999);
-            
-            
-
-            RemainSpaceRun.Text = sc.RemainPicNumText;
 
             Globals.Globals.MainDispatcher = Dispatcher;
 
@@ -76,14 +48,33 @@ namespace AutoCapturer
 
             this.Left = 0;  this.Top = 0;
 
-            this.MouseMove += FrmAppear;
-            this.MouseLeave += FrmDisappear;
+            //tmr.Interval = 100;
+            //tmr.Tick += DebugTick;
+            //tmr.Start();
 
             obs.DetectPrtScr += DetectPrtscr;
             obs.StartObserving();
 
+            //return;
+            this.MouseMove += FrmAppear;
+            this.MouseLeave += FrmDisappear;
+
             FrmDisappear(this,null);
 
+        }
+
+        private void DebugTick(object sender, EventArgs e)
+        {
+            POINT pt;
+            GetCursorPos(out pt);
+            
+            RECT stRect = default(RECT);
+
+            int Ptr = WindowFromPoint(pt).ToInt32();
+
+            GetWindowRect(Ptr, ref stRect);
+
+            TBSpace.Text = "IntPtr : " + Ptr;
         }
 
         private void FrmAppear(object sender, System.Windows.Input.MouseEventArgs e)
@@ -180,6 +171,13 @@ namespace AutoCapturer
             MainGrid.BeginAnimation(Grid.OpacityProperty, OpaAni);
 
             MainGrid.Opacity = 0.0;
+        }
+
+        void updateSpace(string DriveName)
+        {
+            SpaceCalculator sc = new SpaceCalculator(DriveName, 2, 99999);
+
+            RemainSpaceRun.Text = sc.RemainPicNumText;
         }
 
         public void Appear()
@@ -340,6 +338,11 @@ namespace AutoCapturer
 
             exStyle |= (int)ExtendedWindowStyles.WS_EX_TOOLWINDOW;
             SetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
+        }
+
+        private void BtnSelCapture_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            MessageBox.Show("!");
         }
     }
 }

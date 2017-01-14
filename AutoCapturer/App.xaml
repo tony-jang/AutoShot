@@ -5,9 +5,9 @@
              xmlns:c="clr-namespace:AutoCapturer.Windows"
              xmlns:UserControls="clr-namespace:AutoCapturer.UserControls"
              xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
-             StartupUri="Windows/SelDirectoryWindow.xaml">
+             StartupUri="Windows/PatternWindow.xaml">
     <!--Windows/ImageEditor-->
-    <!--Windows/PatternWdw-->
+    <!--Windows/PatternWindow-->
     <!--Windows/ImageEffector-->
     <!--Windows/SelDirectoryWindow-->
     <!--MainWindow-->
@@ -568,7 +568,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type UserControls:ImageItem}">
-                            <Grid>
+                            <Grid x:Name="BackGrid" Background="Transparent">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition Height="20"/>
@@ -580,7 +580,8 @@
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="FontWeight" Value="Bold" TargetName="location"/>
+                                    <Setter Property="Background" TargetName="BackGrid" Value="#FFC9C9C9"/>
+                                    <!--<Setter Property="FontWeight" Value="Bold" TargetName="location"/>-->
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

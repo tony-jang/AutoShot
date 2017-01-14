@@ -94,6 +94,7 @@
     <Compile Include="Interop\NativeMethods.cs" />
     <Compile Include="Interop\UnsafeNativeMethods.cs" />
     <Compile Include="ImageWorker\PrintScreenWorker.cs" />
+    <Compile Include="Setting\Setting.cs" />
     <Compile Include="SpaceCalculator.cs" />
     <Compile Include="UserControls\ImageEdit.xaml.cs">
       <DependentUpon>ImageEdit.xaml</DependentUpon>
@@ -220,9 +221,7 @@
     <Resource Include="Resources\Icons\AuCaOff.png" />
     <Resource Include="Resources\Icons\AuCaOn.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Setting\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Icons\Tile.png" />
   </ItemGroup>

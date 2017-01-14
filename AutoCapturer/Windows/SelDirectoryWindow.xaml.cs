@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AutoCapturer.UserControls;
 using static AutoCapturer.Globals.Globals;
+using System.Windows.Controls.Primitives;
 
 namespace AutoCapturer.Windows
 {
@@ -28,7 +29,7 @@ namespace AutoCapturer.Windows
 
             // 이벤트 핸들러 연결
             PART_File.SelectionChanged += FileItmSelected;
-
+            PART_File.MouseDoubleClick += FileItmDoubleClick;
             // 자주 사용하는 폴더 위치 초기화
             itm_Desk.Tag = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             itm_Dcu.Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -45,9 +46,20 @@ namespace AutoCapturer.Windows
             }
         }
 
+        private void FileItmDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = PART_File.SelectedItem as Track;
+            if (item != null)
+            {
+                MessageBox.Show(item.ToString() + " Double Click handled!");
+            }
+        }
+
         private void FileItmSelected(object sender, SelectionChangedEventArgs e)
         {
-            
+            TB_FileName.Text = ((ImageItem)PART_File.SelectedItem).Content.ToString();
+            TB_FileType.Text = "파일 폴더";
+            Img_File.Source = ((ImageItem)PART_File.SelectedItem).MainImage;
         }
 
         public void SelectItemByLocation(string location)

@@ -114,19 +114,13 @@ namespace AutoCapturer
                 else if (value > 10) { value = 10; f = true; }
                 if (f)
                 {
-                    RecoWidthTB.Text = RecoHeight.ToString();
+                    RecoWidthTB.Text = RecoWidth.ToString();
                     RecoHeightTB.Text = value.ToString();
                 }
 
                 MouseRangeRect.Height = value * 16;
             }
         }
-
-
-
-
-
-
 
         private void PopupStateChange(object sender, RoutedEventArgs e)
         {
@@ -209,9 +203,5 @@ namespace AutoCapturer
 
             itm.SavePattern = TBSaveLoc.Text;
         }
-
-
-
-        
     }
 }

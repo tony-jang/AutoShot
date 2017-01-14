@@ -74,5 +74,17 @@ namespace AutoCapturer.Interop
             public Point ptMinTrackSize;
             public Point ptMaxTrackSize;
         }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public POINT(int X, int Y)
+            {
+                this.X = X;
+                this.Y = Y;
+            }
+            public int X;
+            public int Y;
+        }
     }
 }

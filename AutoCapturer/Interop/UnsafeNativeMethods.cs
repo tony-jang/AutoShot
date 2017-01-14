@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using static AutoCapturer.Interop.NativeMethods;
 
 namespace AutoCapturer.Interop
 {
@@ -13,6 +14,15 @@ namespace AutoCapturer.Interop
 
         [DllImport("user32")]
         public static extern short GetAsyncKeyState(int vKey);
+
+        [DllImport("user32")]
+        public static extern int GetWindowRect(int hwnd, ref RECT lpRect);
+
+        [DllImport("user32")]
+        public static extern int GetCursorPos(out POINT pt);
+
+        [DllImport("user32")]
+        public static extern IntPtr WindowFromPoint(POINT pt);
 
         #region Window styles
         [Flags]
