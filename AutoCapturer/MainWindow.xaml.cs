@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using static AutoCapturer.Sounds.NotificationSounds;
 using static AutoCapturer.Interop.UnsafeNativeMethods;
 using static AutoCapturer.Interop.NativeMethods;
+using static AutoCapturer.Globals.Globals;
 
 namespace AutoCapturer
 {
@@ -26,7 +27,7 @@ namespace AutoCapturer
 
         SettingWdw sw = new SettingWdw();
 
-        AutoCapturer.Observer.PrintScreenWorker obs = new Observer.PrintScreenWorker();
+        Worker.ImgFromPrtScrWorker ImgWorker = new Worker.ImgFromPrtScrWorker();
 
         System.Windows.Forms.Timer tmr = new System.Windows.Forms.Timer();
 
@@ -34,10 +35,13 @@ namespace AutoCapturer
         {
             InitializeComponent();
 
+            
 
+            MainDispatcher = Dispatcher;
+            CurrentSetting = new Setting.Setting();
 
-            Globals.Globals.MainDispatcher = Dispatcher;
-
+            CurrentSetting.SettingChange += SettingChange;
+            
             this.Topmost = true;
             
             da.Duration = new Duration(TimeSpan.FromMilliseconds(800));
@@ -52,8 +56,8 @@ namespace AutoCapturer
             //tmr.Tick += DebugTick;
             //tmr.Start();
 
-            obs.DetectPrtScr += DetectPrtscr;
-            obs.StartObserving();
+            ImgWorker.Find += DetectPrtscr;
+            ImgWorker.Work();
 
             //return;
             this.MouseMove += FrmAppear;
@@ -61,6 +65,12 @@ namespace AutoCapturer
 
             FrmDisappear(this,null);
 
+        }
+
+        private void SettingChange()
+        {
+            PopUps.PopUpWdw wdw = new PopUps.PopUpWdw("설정이 변경되었습니다.", "정상적으로 변경 인식되었습니다.");
+            wdw.ShowTime(1000);
         }
 
         private void DebugTick(object sender, EventArgs e)
@@ -215,22 +225,22 @@ namespace AutoCapturer
 
             Windows.ImageEditor ie = new Windows.ImageEditor();
 
-            ie.Editor.image = CopyScreen();
+            //ie.Editor.image = CopyScreen();
 
-            ie.ShowDialog();
+            //ie.ShowDialog();
 
-            var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + $"\\Test{++ctr}.jpg", FileMode.Create);
+            //var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + $"\\Test{++ctr}.jpg", FileMode.Create);
 
-            var encoder = new PngBitmapEncoder();
+            //var encoder = new PngBitmapEncoder();
 
-            encoder.Frames.Add(BitmapFrame.Create(ie.Editor.image));
-            encoder.Save(filestream);
+            //encoder.Frames.Add(BitmapFrame.Create(ie.Editor.image));
+            //encoder.Save(filestream);
 
-            filestream.Dispose();
+            //filestream.Dispose();
         }
 
-        int ctr = 0;
-        private void DetectPrtscr(ImageSource Img)
+        //int ctr = 0;
+        private void DetectPrtscr(object sender, WorkEventArgs e)
         {
             if (AuCaEnabled)
             {
@@ -238,18 +248,18 @@ namespace AutoCapturer
 
                 Windows.ImageEditor ie = new Windows.ImageEditor();
 
-                ie.Editor.image = (BitmapSource)Img;
+                //ie.Editor.image = (BitmapSource)((Worker.ImageWorkEventArgs)e).Data;
 
-                ie.ShowDialog();
+                //ie.ShowDialog();
 
-                var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + $"\\Test{++ctr}.jpg", FileMode.Create);
+                //var filestream = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + $"\\Test{++ctr}.jpg", FileMode.Create);
 
-                var encoder = new PngBitmapEncoder();
+                //var encoder = new PngBitmapEncoder();
 
-                encoder.Frames.Add(BitmapFrame.Create(ie.Editor.image));
-                encoder.Save(filestream);
+                //encoder.Frames.Add(BitmapFrame.Create(ie.Editor.image));
+                //encoder.Save(filestream);
 
-                filestream.Dispose();
+                //filestream.Dispose();
 
             }
 
@@ -319,13 +329,15 @@ namespace AutoCapturer
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
             sw = new SettingWdw();
-            sw.Show();
+            sw.ShowDialog();
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             Windows.ImageEditor ie = new Windows.ImageEditor();
 
+            ie.Editor.image = new BitmapImage(new Uri("/AutoCapturer;component/Resources/Icons/CloseImg.png", UriKind.Relative));
+            
             ie.Show();
         }
 

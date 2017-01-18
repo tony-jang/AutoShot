@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoCapturer.Setting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Shell;
+using static AutoCapturer.Globals.Globals;
 
 namespace AutoCapturer
 {
@@ -28,9 +30,30 @@ namespace AutoCapturer
             InitializeComponent();
 
             ShowPopupGrid.IsEnabled = false;
+
+
+            RadioButton[] AuCaRingTypeRB = { AuCaRingType1, AuCaRingType2, AuCaRingType3, AuCaRingType4 };
+
+            RadioButton[] GetImageRB = { GetURLImage1, GetURLImage2, GetURLImage3,
+                                         GetTagImage1, GetTagImage2, GetTagImage3};
+            RadioButton[] AllCaCountDownRB = { AllCaCountDown1, AllCaCountDown2, AllCaCountDown3,
+                                               AllCaCountDown4, AllCaCountDown5, AllCaCountDown6 };
+            RadioButton[] PopCountDownRB = { PopCountDown1, PopCountDown2, PopCountDown3 };
+
+            AuCaRingType2.Unchecked += AuCaRing_Change;
+            AuCaRingType3.Unchecked += AuCaRing_Change;
+            foreach (RadioButton rb in AuCaRingTypeRB)
+                rb.Checked += AuCaRing_Change;
+
+            foreach (RadioButton rb in GetImageRB)
+                rb.Checked += GetImage_Change;
+
+            foreach (RadioButton rb in AllCaCountDownRB)
+                rb.Checked += AllCaCountDown_Change;
+
+            foreach (RadioButton rb in PopCountDownRB)
+                rb.Checked += PopCount_Change;
             
-            AuCaRingType2.Unchecked += PopupStateChange;
-            AuCaRingType2.Checked += PopupStateChange;
 
             RecoWidthTB.PreviewTextInput += RecoRangeTBPreviewCheck;
             RecoHeightTB.PreviewTextInput += RecoRangeTBPreviewCheck;
@@ -38,6 +61,36 @@ namespace AutoCapturer
             RecoWidthTB.TextChanged += RecoRangeTBChanged;
             RecoHeightTB.TextChanged += RecoRangeTBChanged;
 
+        }
+
+        private void PopCount_Change(object sender, RoutedEventArgs e)
+        {
+            int Index = int.Parse(((RadioButton)sender).Tag.ToString());
+
+            CurrentSetting.PopupCountSecond = Index;
+        }
+
+        private void GetImage_Change(object sender, RoutedEventArgs e)
+        {
+            int Index = int.Parse(((RadioButton)sender).Tag.ToString());
+
+            CurrentSetting.ImageFromURLSave = (HowtoSaveGetPicture)(Index + 1);
+        }
+
+        private void AllCaCountDown_Change(object sender, RoutedEventArgs e)
+        {
+            int Index = int.Parse(((RadioButton)sender).Tag.ToString());
+
+            CurrentSetting.AllCaptureCountDown = Index;
+        }
+
+        private void AuCaRing_Change(object sender, RoutedEventArgs e)
+        {
+            ShowPopupGrid.IsEnabled = ((bool)AuCaRingType2.IsChecked || (bool)AuCaRingType3.IsChecked);
+
+            int Index = int.Parse(((RadioButton)sender).Tag.ToString());
+
+            CurrentSetting.AutoCaptureEnableSelection = (AuCaEnableSelection)(Index + 1);
         }
 
         private void RecoRangeTBChanged(object sender, TextChangedEventArgs e)
@@ -120,11 +173,6 @@ namespace AutoCapturer
 
                 MouseRangeRect.Height = value * 16;
             }
-        }
-
-        private void PopupStateChange(object sender, RoutedEventArgs e)
-        {
-            ShowPopupGrid.IsEnabled = (bool)AuCaRingType2.IsChecked;
         }
 
         void DragBrder_MD(object sender, MouseButtonEventArgs e)

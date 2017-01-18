@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DragHelper">
+      <HintPath>C:\Users\uutak\OneDrive\문서\카카오톡 받은 파일\CropExample2\CropExample2\bin\Debug\DragHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Shell">
       <HintPath>C:\Users\uutak\Desktop\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
@@ -57,6 +60,7 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -88,12 +92,15 @@
     <Compile Include="Effectors\BaseEffector.cs" />
     <Compile Include="Effectors\RotateEffector.cs" />
     <Compile Include="Globals\Globals.cs" />
-    <Compile Include="ImageWorker\BaseWorker.cs" />
+    <Compile Include="Worker\BaseWorker.cs" />
+    <Compile Include="Worker\ImgFromURLWorker.cs" />
+    <Compile Include="Worker\StorageSpaceWorker.cs" />
+    <Compile Include="Worker\WorkEventArgs.cs" />
     <Compile Include="Interop\Constats.cs" />
     <Compile Include="Interop\ExternDll.cs" />
     <Compile Include="Interop\NativeMethods.cs" />
     <Compile Include="Interop\UnsafeNativeMethods.cs" />
-    <Compile Include="ImageWorker\PrintScreenWorker.cs" />
+    <Compile Include="Worker\ImgFromPrtScrWorker.cs" />
     <Compile Include="Setting\Setting.cs" />
     <Compile Include="SpaceCalculator.cs" />
     <Compile Include="UserControls\ImageEdit.xaml.cs">

@@ -151,8 +151,9 @@
                             <StackPanel Margin="20">
                                 <TextBlock HorizontalAlignment="Left" Text="자동 캡쳐 활성화 시" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="15"/>
 
-                                <RadioButton x:Name="AuCaRingType1" Margin="0,12,0,0" Content="소리 재생" IsChecked="True" GroupName="AuCaRingType" FontSize="12"/>
-                                <RadioButton x:Name="AuCaRingType2" Margin="0,12,0,0" Content="팝업으로 띄우기" GroupName="AuCaRingType" FontSize="12"/>
+                                <RadioButton x:Name="AuCaRingType1" Margin="0,12,0,0" Content="소리 재생" IsChecked="True" GroupName="AuCaRingType" FontSize="12" Tag="0"/>
+                                <RadioButton x:Name="AuCaRingType2" Margin="0,12,0,0" Content="팝업으로 띄우기" GroupName="AuCaRingType" FontSize="12" Tag="1"/>
+                                <RadioButton x:Name="AuCaRingType3" Margin="0,12,0,0" Content="팝업과 소리 동시에 띄우기" GroupName="AuCaRingType" FontSize="12" Tag="2"/>
                                 <Grid x:Name="ShowPopupGrid" Background="#FFF7F7F7" Margin="0,12,0,0">
                                     <Grid Margin="10" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
@@ -162,13 +163,13 @@
                                             <ColumnDefinition Width="10"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <RadioButton Content="1초" Grid.Column="0" IsChecked="True" FontSize="12"/>
-                                        <RadioButton Content="2초" Grid.Column="2" FontSize="12"/>
-                                        <RadioButton Content="3초" Grid.Column="4" FontSize="12"/>
+                                        <RadioButton x:Name="PopCountDown1" Content="1초" Grid.Column="0" IsChecked="True" FontSize="12" Tag="1"/>
+                                        <RadioButton x:Name="PopCountDown2" Content="2초" Grid.Column="2" FontSize="12" Tag="2"/>
+                                        <RadioButton x:Name="PopCountDown3" Content="3초" Grid.Column="4" FontSize="12" Tag="3"/>
                                     </Grid>
                                 </Grid>
 
-                                <RadioButton x:Name="AuCaRingType3" Margin="0,12,0,0" Content="알림 없음 (권장하지 않음)" GroupName="AuCaRingType" FontSize="12"/>
+                                <RadioButton x:Name="AuCaRingType4" Margin="0,12,0,0" Content="알림 없음 (권장하지 않음)" GroupName="AuCaRingType" FontSize="12" Tag="3"/>
 
                                 <TextBlock Margin="0,36,0,0" Text="전체 캡쳐 시 카운트 다운" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="15"/>
                                 <Grid x:Name="AllCaCountDown" Background="#FFF7F7F7" Margin="0,12,0,0">
@@ -186,24 +187,24 @@
                                             <ColumnDefinition Width="10"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <RadioButton Content="없음" Grid.Column="0" IsChecked="True" FontSize="12"/>
-                                        <RadioButton Content="1초" Grid.Column="2" FontSize="12"/>
-                                        <RadioButton Content="2초" Grid.Column="4" FontSize="12"/>
-                                        <RadioButton Content="3초" Grid.Column="6" FontSize="12"/>
-                                        <RadioButton Content="4초" Grid.Column="8" FontSize="12"/>
-                                        <RadioButton Content="5초" Grid.Column="10" FontSize="12"/>
+                                        <RadioButton x:Name="AllCaCountDown1" Content="없음" GroupName="AllCaptureCountDown" Grid.Column="0" IsChecked="True" FontSize="12" Tag="0"/>
+                                        <RadioButton x:Name="AllCaCountDown2" Content="1초"  GroupName="AllCaptureCountDown" Grid.Column="2" FontSize="12" Tag="1"/>
+                                        <RadioButton x:Name="AllCaCountDown3" Content="2초"  GroupName="AllCaptureCountDown" Grid.Column="4" FontSize="12" Tag="2"/>
+                                        <RadioButton x:Name="AllCaCountDown4" Content="3초"  GroupName="AllCaptureCountDown" Grid.Column="6" FontSize="12" Tag="3"/>
+                                        <RadioButton x:Name="AllCaCountDown5" Content="4초"  GroupName="AllCaptureCountDown" Grid.Column="8" FontSize="12" Tag="4"/>
+                                        <RadioButton x:Name="AllCaCountDown6" Content="5초"  GroupName="AllCaptureCountDown"  Grid.Column="10" FontSize="12" Tag="5"/>
                                     </Grid>
                                 </Grid>
 
                                 <TextBlock Margin="0,36,0,0" Text="URL로 사진 가져올때 (자동 저장 활성화 시)" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="15"/>
-                                <RadioButton x:Name="GetURLImage1" Margin="0,12,0,0" Content="바로 파일로 저장할지에 대해 물어보기" IsChecked="True" GroupName="GetURLImage" FontSize="12"/>
-                                <RadioButton x:Name="GetURLImage2" Margin="0,12,0,0" Content="패턴에 따라 파일로 저장하기" GroupName="GetURLImage" FontSize="12"/>
-                                <RadioButton x:Name="GetURLImage3" Margin="0,12,0,0" Content="해당 기능 사용하지 않음" GroupName="GetURLImage" FontSize="12"/>
+                                <RadioButton x:Name="GetURLImage1" Margin="0,12,0,0" Content="바로 파일로 저장할지에 대해 물어보기" IsChecked="True" GroupName="GetURLImage" FontSize="12" Tag="0"/>
+                                <RadioButton x:Name="GetURLImage2" Margin="0,12,0,0" Content="패턴에 따라 파일로 저장하기" GroupName="GetURLImage" FontSize="12" Tag="1"/>
+                                <RadioButton x:Name="GetURLImage3" Margin="0,12,0,0" Content="해당 기능 사용하지 않음" GroupName="GetURLImage" FontSize="12" Tag="2"/>
 
                                 <TextBlock Margin="0,36,0,0" Text="Image 태그로 사진 가져올때 (자동 저장 활성화 시)" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="15"/>
-                                <RadioButton x:Name="GetTagImage1" Margin="0,12,0,0" Content="바로 파일로 저장할지에 대해 물어보기" IsChecked="True" GroupName="GetTagImage" FontSize="12"/>
-                                <RadioButton x:Name="GetTagImage2" Margin="0,12,0,0" Content="패턴에 따라 파일로 저장하기" GroupName="GetTagImage" FontSize="12"/>
-                                <RadioButton x:Name="GetTagImage3" Margin="0,12,0,0" Content="해당 기능 사용하지 않음" GroupName="GetTagImage" FontSize="12"/>
+                                <RadioButton x:Name="GetTagImage1" Margin="0,12,0,0" Content="바로 파일로 저장할지에 대해 물어보기" IsChecked="True" GroupName="GetTagImage" FontSize="12" Tag="1"/>
+                                <RadioButton x:Name="GetTagImage2" Margin="0,12,0,0" Content="패턴에 따라 파일로 저장하기" GroupName="GetTagImage" FontSize="12" Tag="2"/>
+                                <RadioButton x:Name="GetTagImage3" Margin="0,12,0,0" Content="해당 기능 사용하지 않음" GroupName="GetTagImage" FontSize="12" Tag="3"/>
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static AutoCapturer.Globals.Globals;
 using System.IO;
+using System.Threading;
 
 namespace AutoCapturer.UserControls
 {
@@ -27,8 +28,36 @@ namespace AutoCapturer.UserControls
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetCursorPos(out WIN32POINT lpPoint);
 
+        Vector RealSize;
+        double _Ratio = 100.0;
+        public double Ratio
+        {
+            get { return _Ratio; }
+            set
+            {
+                _Ratio = value;
+                
+                Vector AfterSize = new Vector(RealSize.X * (_Ratio / 100), RealSize.Y * (_Ratio / 100));
+
+                this.MainGrid.Width = AfterSize.X + 10;
+                this.MainGrid.Height = AfterSize.Y + 10;
+
+                RatioChanged();
+            }
+                
+        }
+
+
+        public delegate void SizeChangedEventHandler();
+        public event SizeChangedEventHandler ImageSizeChanged ;
+
+        public delegate void RatioChangedEventHandler();
+        public event RatioChangedEventHandler RatioChanged;
+
+
+
         // StretchMode를 None으로 설정했을때 이미지 최대 크기
-        Size MaximumSize;
+        //Size MaximumSize;
         // 이미지 크기
         Size SourceSize;
 
@@ -44,6 +73,7 @@ namespace AutoCapturer.UserControls
         f.Timer Dragtmr = new f.Timer();
         f.Timer Croptmr = new f.Timer();
 
+        int PlusValue = 11;
 
         Rectangle[] CropRects;
         Rectangle[] DragRects;
@@ -59,11 +89,11 @@ namespace AutoCapturer.UserControls
 
 
 
-                //SourceSize = new Size(value.Width, value.Height);
-                SourceSize = new Size(1000, 800);
+                SourceSize = new Size(value.Width, value.Height);
+                //SourceSize = new Size(1000, 800);
                 PreviewRect.Width = value.Width;
                 PreviewRect.Height = value.Height;
-                ImageStretchMode = Stretch.None;
+                ImageStretchMode = Stretch.Fill;
                 DragGrid.Margin = new Thickness(0, 0, 0, 0);
 
             }
@@ -87,27 +117,27 @@ namespace AutoCapturer.UserControls
             {
                 InnerImg.Stretch = value;
                 
-                switch (value)
-                {
-                    case Stretch.None:
-                        MaximumSize = new Size(SourceSize.Width + 11, SourceSize.Height + 11);
+                //switch (value)
+                //{
+                    //case Stretch.None:
+                        //MaximumSize = new Size(SourceSize.Width, SourceSize.Height);
 
-                        double w = MaximumSize.Width, h = MaximumSize.Height;
+                        //double w = MaximumSize.Width + PlusValue, h = MaximumSize.Height + PlusValue;
 
-                        PreviewRect.Width = w;
-                        PreviewRect.Height = h;
-                        MainGrid.Width = w;
-                        MainGrid.Height = h;
-                        CropGrid.Width = w;
-                        CropGrid.Height = h;
-                        break;
-                    case Stretch.Fill:
-                        MaximumSize = new Size(0, 0);
-                        break;
-                    case Stretch.Uniform:
-                        MaximumSize = new Size(0, 0);
-                        break;
-                }
+                        //PreviewRect.Width = w;
+                        //PreviewRect.Height = h;
+                        //MainGrid.Width = w;
+                        //MainGrid.Height = h;
+                        //CropGrid.Width = w;
+                        //CropGrid.Height = h;
+                    //    break;
+                    //case Stretch.Fill:
+                    //    MaximumSize = new Size(0, 0);
+                    //    break;
+                    //case Stretch.Uniform:
+                    //    MaximumSize = new Size(0, 0);
+                    //    break;
+                //}
             }
         }
 
@@ -132,6 +162,10 @@ namespace AutoCapturer.UserControls
                         foreach (Rectangle rect in DragRects) rect.Visibility = Visibility.Hidden;
                         CropGrid.Visibility = Visibility.Visible;
                         break;
+                    case EditMode.PenEdit:
+                        foreach (Rectangle rect in DragRects) rect.Visibility = Visibility.Hidden;
+                        CropGrid.Visibility = Visibility.Hidden;
+                        break;
                 }
             }
         }
@@ -142,6 +176,7 @@ namespace AutoCapturer.UserControls
         public ImageEdit()
         {
             InitializeComponent();
+            
 
             RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.HighQuality);
 
@@ -158,8 +193,6 @@ namespace AutoCapturer.UserControls
             foreach (Rectangle DragRect in DragRects)
                 DragRect.MouseDown += Dragger_Process;
             
-            
-
             Dragtmr.Interval = 10; Croptmr.Interval = 10;
 
             Dragtmr.Tick += Tick_SizeChange;
@@ -258,10 +291,10 @@ namespace AutoCapturer.UserControls
                 // 최소 사이즈 (Margin 5(10) + 1)
                 if (Width < 11) Width = 11; if (Height < 11) Height = 11;
                 // 최대 사이즈
-                if (MaximumSize.Width != 0 && MaximumSize.Height != 0) { 
-                    if (Width >= MaximumSize.Width) Width = MaximumSize.Width;
-                    if (Height >= MaximumSize.Height) Height = MaximumSize.Height;
-                }
+                //if (MaximumSize.Width != 0 && MaximumSize.Height != 0) { 
+                //    if (Width >= MaximumSize.Width + PlusValue) Width = MaximumSize.Width + PlusValue;
+                //    if (Height >= MaximumSize.Height + PlusValue) Height = MaximumSize.Height + PlusValue;
+                //}
                 if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth)
                 {
                     PreviewRect.Width = Width - 10;
@@ -282,12 +315,24 @@ namespace AutoCapturer.UserControls
         public void DragUpProcess()
         {
             PreviewRect.Opacity = 0.0;
-            if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth) { MainGrid.Width = ReservePoint.Width; CropGrid.Width = ReservePoint.Width; }
-            if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight) { MainGrid.Height = ReservePoint.Height; CropGrid.Height = ReservePoint.Height; }
+            if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth)
+            {
+                MainGrid.Width = ReservePoint.Width;
+                CropGrid.Width = ReservePoint.Width;
+                RealSize.X = ReservePoint.Width * (100 / Ratio) - 10;
+            }
+            if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight)
+            {
+                MainGrid.Height = ReservePoint.Height;
+                CropGrid.Height = ReservePoint.Height;
+                RealSize.Y = ReservePoint.Height * (100 / Ratio) - 10;
+            }
             Mode = DragMode.Wait;
+
             StartPosition.X = 0; StartPosition.Y = 0;
             this.Cursor = null;
             Dragtmr.Stop();
+            if (ImageSizeChanged != null) ImageSizeChanged();
         }
 
         private void Dragger_Process(object sender, MouseButtonEventArgs e)
@@ -414,6 +459,6 @@ namespace AutoCapturer.UserControls
 
     public enum EditMode
     {
-        SizeChange, Select, CropImage
+        SizeChange, PenEdit, CropImage
     }
 }

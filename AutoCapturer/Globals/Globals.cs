@@ -14,6 +14,12 @@ namespace AutoCapturer.Globals
     static class Globals
     {
 
+        // 현재 설정
+        public static Setting.Setting CurrentSetting;
+
+
+
+
         /// <summary>
         /// 사용 할 수 없는 String 모음
         /// </summary>
@@ -81,10 +87,77 @@ namespace AutoCapturer.Globals
             return pathDownload;
         }
 
+        public static double Max(double[] data)
+        {
+            double max = 0.0;
+
+            foreach(double dble in data)
+                if (max < dble) max = dble;
+
+            return max;
+        }
+
+        public static double[] Copy(this double[] array)
+        {
+            List<double> list = new List<double>();
+            foreach (double d in array)
+            {
+                list.Add(d);
+            }
+
+            return list.ToArray();
+        }
+
+        #region [ Math Method ]
+        public static double NearDouble(double[] data, double BaseValue, FindMode mode = FindMode.None)
+        {
+            bool flag = false;
+
+            List<double> list = data.Copy().ToList();
+
+            // 초기화 작업
+            foreach (double d in data.Copy())
+            {
+                switch (mode)
+                {
+                    case FindMode.None: flag = true; break;
+                    case FindMode.NoOver:
+                        if (d > BaseValue) list.Remove(d);
+                        break;
+                    case FindMode.NoUnder:
+                        if (d < BaseValue) list.Remove(d);
+                        break;
+                }
+
+                if (flag) break;
+            }
+            data = list.ToArray();
 
 
-        
+            if (data.Length == 1) return data[0];
+
+            double Near = double.MinValue;
+            foreach(double d in data)
+            {
+                if (Math.Abs(BaseValue - d) < Math.Abs(BaseValue - Near))
+                {
+                    if (d >= BaseValue && mode == FindMode.NoOver && !(Max(data) == d)) continue;
+                    else if (d <= BaseValue && mode == FindMode.NoUnder) continue;
+                    if (d == BaseValue) continue;
+
+                    Near = d;
+                }
+            }
 
 
+            return Near;
+        }
+
+        public enum FindMode
+        {
+            None, NoOver, NoUnder
+        }
+
+        #endregion
     }
 }

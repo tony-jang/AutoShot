@@ -7,30 +7,27 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using f=System.Windows.Forms;
+using f = System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using static AutoCapturer.Interop.UnsafeNativeMethods;
 
-namespace AutoCapturer.Observer
+namespace AutoCapturer.Worker
 {
-    class PrintScreenWorker
+    class ImgFromPrtScrWorker : BaseWorker
     {
+        Thread thr;
 
 
-        public event AEventHandler DetectPrtScr;
-        public delegate void AEventHandler(ImageSource DetectedImage);
-
-        public void StartObserving()
+        public ImgFromPrtScrWorker()
         {
-        
-            Thread thr = new Thread(new ThreadStart(() =>
+            thr = new Thread(new ThreadStart(() =>
             {
                 do
                 {
-                    if (DetectPrtScr != null && GetAsyncKeyState((int)f.Keys.PrintScreen) == -32767)
+                    if (GetAsyncKeyState((int)f.Keys.PrintScreen) == -32767)
                     {
                         do
                         {
@@ -47,24 +44,22 @@ namespace AutoCapturer.Observer
                                     if (clipboardData.GetDataPresent(f.DataFormats.Bitmap))
                                     {
                                         Bitmap bitmap = (Bitmap)clipboardData.GetData(f.DataFormats.Bitmap);
-                                        
+
                                         try
                                         {
-                                            DetectPrtScr(System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()));
+                                            ImageWorkEventArgs ev = new ImageWorkEventArgs();
+                                            ev.Data = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                                            OnFind(ev);
                                         }
                                         catch (NullReferenceException)
                                         {
-                                            
+
                                             Globals.Globals.MainDispatcher.Invoke(new Action(() =>
                                             {
-                                                PopUps.PopUpWdw wdw = new PopUps.PopUpWdw("알 수 없는 오류", "알 수 없는 오류가 발생했습니다.");
+                                                PopUps.PopUpWdw wdw = new PopUps.PopUpWdw("예외(오류) 발생", "NullReferenceException 예외가 발생했습니다.");
                                                 wdw.ShowTime(1000);
                                             }));
-                                            
-                                            
                                         }
-
-
                                         break;
                                     }
                                 }
@@ -77,23 +72,40 @@ namespace AutoCapturer.Observer
                 } while (true);
 
             }));
+        }
 
+        protected override void OnFind(WorkEventArgs e)
+        {
+            base.OnFind(e);
+        }
+
+        public bool GetClipboardImage(ref BitmapSource img)
+        {
+            try { img = Clipboard.GetImage(); }
+            catch { return false; }
+
+            return true;
+        }
+
+        public override void Work()
+        {
             thr.SetApartmentState(ApartmentState.STA);
             thr.Start();
         }
-        public bool GetClipboardImage(ref BitmapSource img)
+
+        public override void Rest()
         {
-            
-            try
-            {
-                img = Clipboard.GetImage();   
-            }
-            catch
-            {
-                return false;
-            }
-            
-            return true;
+            Stop();
         }
+
+        public override void Stop()
+        {
+            thr.Abort();
+        }
+    }
+
+    public class ImageWorkEventArgs : WorkEventArgs
+    {
+        public ImageSource Data { get; set; }
     }
 }

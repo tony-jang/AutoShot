@@ -9,57 +9,186 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="Auto Capturer Image Editor" d:DesignHeight="500" d:DesignWidth="700" WindowStartupLocation="CenterScreen" Height="500" Width="700">
+        Title="Auto Capturer Image Editor" d:DesignHeight="600" d:DesignWidth="900" WindowStartupLocation="CenterScreen" Height="600" Width="900">
+    <Window.Resources>
+        <Style x:Key="RadioButtonWithImage" TargetType="{x:Type RadioButton}">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="46"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="MainBorder" CornerRadius="5" Background="{TemplateBinding Background}" Grid.ColumnSpan="2">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="2" Direction="280" ShadowDepth="3" Opacity="0.1"></DropShadowEffect>
+                                </Border.Effect>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Content="{TemplateBinding Content}"
+                                              Grid.Column="0"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              Focusable="False"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="8"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="Center"/>
+
+                            <Path x:Name="CheckPth" Grid.Column="1" Data="{StaticResource CheckPath}" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White" Margin="0,0,0,4" Opacity="0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="True">
+                                <Setter Property="FocusVisualStyle">
+                                    <Setter.Value>
+                                        <Style>
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="4,-1,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray" TargetName="MainBorder"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFBFBFBF" TargetName="MainBorder"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Background" Value="#7E8AA2" TargetName="MainBorder"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Opacity" Value="1.0" TargetName="CheckPth"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.50" TargetName="contentPresenter"/>
+                                <Setter Property="Background" Value="#FFB3B6BD" TargetName="MainBorder"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.ColumnSpan="2">
+        <Grid>
+            <StackPanel Margin="5">
+                <TextBlock Margin="0,12,0,0" FontSize="15" Text="도구 상자"/>
+                <RadioButton x:Name="EditBtn1" Margin="6,12,6,6" Content="마우스" GroupName="EditMode" Tag="0"/>
+                <RadioButton x:Name="EditBtn2" Margin="6" Content="잘라내기" GroupName="EditMode" Tag="2"/>
+                <RadioButton x:Name="EditBtn3" Margin="6" Content="펜" GroupName="EditMode" Tag="1"/>
+                <TextBlock x:Name="CropInfoTB" Margin="4" Grid.Row="5" TextWrapping="Wrap" Visibility="Hidden">
+                    <Run Text="잘라내기를 끝내려면 "></Run>
+                    <Run FontWeight="Bold" Foreground="Red" Text="오른쪽 버튼"/><Run Text="을 누르세요."/>
+                </TextBlock>
+                <Button Content="클립보드에 복사하기" Height="30"  Margin="6" Click="Button_Click_1">
+                    <Button.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="0.4"/>
+                    </Button.Effect>
+                </Button>
+            </StackPanel>
+
+
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="EditTB" Margin="20,0,0,0" FontSize="15"  VerticalAlignment="Center"><Run Text="현재 편집 중인 파일 : C:\Users\User\Desktop"/></TextBlock>
-        </Grid>
+            <UserControls:ImageEdit Margin="5" x:Name="Editor" Grid.ColumnSpan="2" Background="#FFE8E8E8" MouseWheel="Editor_MouseWheel"/>
 
+            <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Fill="White"/>
+            <ComboBox x:Name="RatioCB" Margin="1" Grid.Row="1" IsEditable="True" SelectedIndex="5" FontSize="9.5">
 
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            </ComboBox>
 
-            <RadioButton x:Name="EditBtn1" Margin="6" Grid.Row="1" Content="선택" GroupName="EditMode"/>
-            <RadioButton x:Name="EditBtn2" Margin="6" Grid.Row="2" Content="자르기" GroupName="EditMode"/>
-            <RadioButton x:Name="EditBtn3" Margin="6" Grid.Row="3" Content="펜" GroupName="EditMode"/>
-            <RadioButton x:Name="EditBtn4" Margin="6" Grid.Row="4" Content="크기/비율" GroupName="EditMode"/>
-
-            <Border Grid.Row="1" Grid.RowSpan="4" Background="#CCFFFFFF">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="미완성된 기능" FontSize="20"/>
-            </Border>
-
-            <TextBlock Margin="4" Grid.Row="5" TextWrapping="Wrap">
-                잘라내기를 끝내려면<LineBreak/>
-                오른쪽 버튼을 누르세요.
+            <TextBlock VerticalAlignment="Center" Margin="10,0" Grid.Row="1" Grid.Column="1" FontSize="11">
+                <TextBlock.Text>
+                    {크기 자동 조정 (최대 크기 초과) | 늘리기 :: 선택 모드}
+                </TextBlock.Text>
             </TextBlock>
-            <TextBox x:Name="TBWidth" HorizontalAlignment="Left" Height="23" Margin="85,150,0,0" Grid.Row="6" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="53" IsHitTestVisible="False"/>
-            <TextBox x:Name="TBHeight" HorizontalAlignment="Left" Height="23" Margin="85,180,0,0" Grid.Row="6" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="53" IsHitTestVisible="False"/>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="13,153,0,0" Grid.Row="6" TextWrapping="Wrap" Text="너비(Width)" VerticalAlignment="Top"/>
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="13,183,0,0" Grid.Row="6" TextWrapping="Wrap" Text="높이(Height)" VerticalAlignment="Top"/>
         </Grid>
 
-        <UserControls:ImageEdit x:Name="Editor" Grid.Column="1" Grid.Row="1"/>
+        <Grid Grid.Column="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="0">
+                <Grid Margin="0,12,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" VerticalAlignment="Center" Margin="10,0" Text="너비(Width)"/>
+                    <TextBlock Grid.Row="1" VerticalAlignment="Center" Margin="10,0" Text="높이(Height)"/>
+
+                    <TextBox x:Name="WidthTB"  Grid.Row="0" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" FontSize="14" Text="0" TextAlignment="Center"/>
+                    <TextBox x:Name="HeightTB" Grid.Row="1" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" FontSize="14" Text="0" TextAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Margin="5" Content="취소">
+                    <Button.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="0.50"/>
+                    </Button.Effect>
+                </Button>
+                <Button Grid.Row="1" Margin="5" Content="결정" Background="#FF263248" Foreground="White"/>
+            </Grid>
+        </Grid>
+        
+
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+            <Border Background="#FF3E4F6C"/>
+            <TextBlock Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="정상 로드" Foreground="White"/>
+        </Grid>
+
+
+
+
         <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="9,245,0,0" Grid.Row="1" SelectedIndex="0" SelectionChanged="comboBox_SelectionChanged">
             <ComboBoxItem Content="원본 사이즈 유지"/>
             <ComboBoxItem Content="늘리기"/>
@@ -71,7 +200,7 @@
             <ComboBoxItem Content="자르기"/>
         </ComboBox>
         <Button x:Name="button" Content="파일 설정/재설정" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,320,0,0" Grid.Row="1" Height="25" Click="button_Click" Background="#FFEBEBEB"/>
-        <Button x:Name="button_Copy" Content="복사" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,422,0,0" Grid.Row="1" Height="25" Background="#FFEBEBEB"/>
+        <Button x:Name="button_Copy" Content="복사" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="9,422,0,0" Grid.Row="1" Height="25" Background="#FFEBEBEB" Click="button_Copy_Click"/>
 
     </Grid>
 </local:ChromeWindow>
