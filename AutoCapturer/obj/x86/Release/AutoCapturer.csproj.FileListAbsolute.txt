@@ -1,0 +1,12 @@
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\bin\x86\Release\AutoCapturer.exe.config
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\MainWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\UserControls\ImageEdit.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\Windows\ImageEditor.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\Windows\ImageEffector.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\Windows\InitSettingWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\Windows\PatternWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\Windows\PopUpWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\Windows\SelDirectoryWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\GeneratedInternalTypeHelper.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\AutoCapturer_MarkupCompile.cache
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\x86\Release\AutoCapturer_MarkupCompile.lref

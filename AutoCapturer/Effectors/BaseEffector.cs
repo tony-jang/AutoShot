@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace AutoCapturer.Effectors
 {
-    abstract class BaseEffector
+    public abstract class BaseEffector
     {
         BitmapImage BmpImg;
         public BaseEffector(BitmapImage bmpImg)

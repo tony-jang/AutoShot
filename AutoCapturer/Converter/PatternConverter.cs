@@ -22,17 +22,17 @@ namespace AutoCapturer.Converter
                     Output = string.Format("{0:yyyyMMdd}", dt);
                     break;
                 case "%t":
-                    if (dt.Hour >= 12) { Output = string.Format("{0:hh:mm}PM", dt); }
-                    else { Output = string.Format("{0:hh:mm}AM", dt); }
+                    if (dt.Hour >= 12) { Output = string.Format("{0:오후 hh시 mm분}", dt); }
+                    else { Output = string.Format("{0:오전 hh시 mm분}", dt); }
                     break;
                 case "%T":
-                    Output = string.Format("{0:HH:mm}", dt);
+                    Output = string.Format("{0:HH시 mm분}", dt);
                     break;
                 case "%a":
-                    Output = string.Format("{0:yyyyMMdd HH:mm:ss}", dt);
+                    Output = string.Format("{0:yyyyMMdd HH시 mm분 ss초}", dt);
                     break;
                 case "%s":
-                    Output = string.Format("{0:HH:mm:ss}", dt);
+                    Output = string.Format("{0:HH시 mm분 ss초}", dt);
                     break;
                 case "%%":
                     Output = "%";

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoCapturer.Converter;
+using AutoCapturer.Effectors;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace AutoCapturer.Setting
 {
-    class Setting
+    public class Setting
     {
         public delegate void SettingChangeHandler();
 
@@ -100,6 +102,27 @@ namespace AutoCapturer.Setting
             set { _Users = value; SettingChange(); }
         }
         #endregion
+
+
+
+
+
+
+
+        #region [ 패턴 관리 ]
+
+
+        public SavePattern DefaultPattern { get; set; } = new SavePattern("저장본 (%s)", "%d");
+
+        List<SavePattern> _Patterns = new List<SavePattern>();
+        public List<SavePattern> Patterns
+        {
+            get { return _Patterns; }
+            set { _Patterns = value; }
+        }
+
+        #endregion
+
     }
 
 
@@ -249,5 +272,49 @@ namespace AutoCapturer.Setting
         }
     }
     
+
+    public struct SavePattern
+    {
+        
+        public SavePattern(string Name, string Location, bool openeffector = false, bool overwrite = false,
+                           bool putlogo = false)
+        {
+            PatternName = Name;
+            SaveLocation = Location;
+            OpenEffector = openeffector;
+            OverWrite = overwrite;
+            PutLogo = putlogo;
+            SetAutoEffect = new NullBaseEffector();
+        }
+
+        public string RealSaveName
+        {
+            get
+            {
+                string str;
+                PatternConverter.ConvertAll(PatternName, out str);
+                return str;
+            }
+        }
+        public string RealSaveLocation
+        {
+            get
+            {
+                string str;
+                LocationConverter.ConvertAll(SaveLocation, out str);
+                return str;
+            }
+        }
+
+        public string PatternName;
+        public string SaveLocation;
+        
+        public bool OpenEffector;
+        public bool OverWrite;
+        public bool PutLogo;
+        BaseEffector SetAutoEffect;
+
+
+    }
 
 }

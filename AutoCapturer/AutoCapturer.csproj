@@ -49,12 +49,33 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DragHelper">
       <HintPath>C:\Users\uutak\OneDrive\문서\카카오톡 받은 파일\CropExample2\CropExample2\bin\Debug\DragHelper.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Windows.Shell">
-      <HintPath>C:\Users\uutak\Desktop\Microsoft.Windows.Shell.dll</HintPath>
+    <Reference Include="Microsoft.Windows.Shell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -90,10 +111,18 @@
     <Compile Include="Converter\LocationConverter.cs" />
     <Compile Include="Converter\PatternConverter.cs" />
     <Compile Include="Effectors\BaseEffector.cs" />
+    <Compile Include="Effectors\NullBaseEffector.cs" />
     <Compile Include="Effectors\RotateEffector.cs" />
     <Compile Include="Globals\Globals.cs" />
+    <Compile Include="Setting\SettingReader.cs" />
+    <Compile Include="Setting\SettingWriter.cs" />
+    <Compile Include="UserControls\StoargySpaceToolTip.cs" />
+    <Compile Include="Windows\InitSettingWindow.xaml.cs">
+      <DependentUpon>InitSettingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Worker\BaseWorker.cs" />
     <Compile Include="Worker\ImgFromURLWorker.cs" />
+    <Compile Include="Worker\ShortCutWorker.cs" />
     <Compile Include="Worker\StorageSpaceWorker.cs" />
     <Compile Include="Worker\WorkEventArgs.cs" />
     <Compile Include="Interop\Constats.cs" />
@@ -152,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ImageEffector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InitSettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

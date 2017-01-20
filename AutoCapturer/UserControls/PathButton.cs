@@ -13,7 +13,7 @@ namespace AutoCapturer.UserControls
     {
         public static DependencyProperty DataProperty =
             DependencyProperty.Register(nameof(Data), typeof(Geometry), typeof(PathButton));
-
+        
         public Geometry Data
         {
             get { return (Geometry)GetValue(DataProperty); }

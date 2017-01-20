@@ -1,20 +1,11 @@
 ﻿using AutoCapturer.Setting;
+using AutoCapturer.UserControls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Shell;
 using static AutoCapturer.Globals.Globals;
 
 namespace AutoCapturer
@@ -22,23 +13,23 @@ namespace AutoCapturer
     /// <summary>
     /// SettingWdw.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SettingWdw : Windows.ChromeWindow
+    public partial class SettingWindow : Windows.ChromeWindow
     {
-        
-        public SettingWdw()
+        RadioButton[] AuCaRingTypeRB, GetImageRB, AllCaCountDownRB, PopCountDownRB;
+        public SettingWindow()
         {
             InitializeComponent();
 
             ShowPopupGrid.IsEnabled = false;
 
 
-            RadioButton[] AuCaRingTypeRB = { AuCaRingType1, AuCaRingType2, AuCaRingType3, AuCaRingType4 };
+            AuCaRingTypeRB = new RadioButton[]{ AuCaRingType1, AuCaRingType2, AuCaRingType3, AuCaRingType4 };
 
-            RadioButton[] GetImageRB = { GetURLImage1, GetURLImage2, GetURLImage3,
-                                         GetTagImage1, GetTagImage2, GetTagImage3};
-            RadioButton[] AllCaCountDownRB = { AllCaCountDown1, AllCaCountDown2, AllCaCountDown3,
-                                               AllCaCountDown4, AllCaCountDown5, AllCaCountDown6 };
-            RadioButton[] PopCountDownRB = { PopCountDown1, PopCountDown2, PopCountDown3 };
+            GetImageRB = new RadioButton[]{ GetURLImage1, GetURLImage2, GetURLImage3,
+                           GetTagImage1, GetTagImage2, GetTagImage3};
+            AllCaCountDownRB = new RadioButton[]{ AllCaCountDown1, AllCaCountDown2, AllCaCountDown3,
+                                 AllCaCountDown4, AllCaCountDown5, AllCaCountDown6 };
+            PopCountDownRB = new RadioButton[]{ PopCountDown1, PopCountDown2, PopCountDown3 };
 
             AuCaRingType2.Unchecked += AuCaRing_Change;
             AuCaRingType3.Unchecked += AuCaRing_Change;
@@ -60,8 +51,14 @@ namespace AutoCapturer
 
             RecoWidthTB.TextChanged += RecoRangeTBChanged;
             RecoHeightTB.TextChanged += RecoRangeTBChanged;
-
         }
+
+        public new void ShowDialog()
+        {
+            SettingSync(CurrentSetting);
+            base.ShowDialog();
+        }
+
 
         private void PopCount_Change(object sender, RoutedEventArgs e)
         {
@@ -200,7 +197,7 @@ namespace AutoCapturer
             {
                 var ptnitm = new UserControls.PatternItem();
 
-                ptnitm.SavePattern = result.SaveLocation;
+                ptnitm.SaveLocation = result.SaveLocation;
                 ptnitm.Content = result.Pattern;
 
                 listView.Items.Add(ptnitm);
@@ -215,26 +212,56 @@ namespace AutoCapturer
                 if (MessageBox.Show("정말 해당 패턴을 삭제하시겠습니까?", "삭제 확인", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     listView.Items.Remove(listView.SelectedItem);
             }
+            
             TBPtnCount.Text = $"등록된 패턴 ({listView.Items.Count}개)";
 
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UserControls.PatternItem itm = (UserControls.PatternItem)listView.SelectedItem;
+            PatternItem itm = (PatternItem)listView.SelectedItem;
 
             if (itm == null)
             {
-                TBPtnName.Text = null; TBPtnName.IsEnabled = false;
-                TBSaveLoc.Text = null; TBSaveLoc.IsEnabled = false;
+                TBPtnName.Text = null;
+                TBSaveLoc.Text = null;
+                SettingGrid.IsEnabled = false;
             }
             else
             {
-                TBPtnName.Text = itm.Content.ToString(); TBPtnName.IsEnabled = true;
-                TBSaveLoc.Text = itm.SavePattern;        TBSaveLoc.IsEnabled = true;
+                SettingGrid.IsEnabled = true;
+                TBPtnName.Text = itm.Content.ToString();
+                TBSaveLoc.Text = itm.SaveLocation;
+                SWOpenEditor.IsChecked = itm.pattern.OpenEffector;
+                SWOverwrite.IsChecked = itm.pattern.OverWrite;
+                SWPutLogo.IsChecked = itm.pattern.PutLogo;
+
             }
-            TBPtnCount.Text = $"등록된 패턴 ({listView.Items.Count}개)";
         }
+
+        private void SWOpenEditor_Checked(object sender, RoutedEventArgs e)
+        {
+            ((PatternItem)listView.SelectedItem).pattern.OpenEffector = (bool)SWOpenEditor.IsChecked;
+            CurrentSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
+        }
+
+        private void SWOverwrite_Checked(object sender, RoutedEventArgs e)
+        {
+            ((PatternItem)listView.SelectedItem).pattern.OverWrite = (bool)SWOverwrite.IsChecked;
+            CurrentSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
+        }
+
+        private void SWPutLogo_Checked(object sender, RoutedEventArgs e)
+        {
+            ((PatternItem)listView.SelectedItem).pattern.PutLogo = (bool)SWPutLogo.IsChecked;
+            CurrentSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
+        }
+
+        private void BtnAutoEffector_Click(object sender, RoutedEventArgs e)
+        {
+            // 자동 이펙터 설정
+        }
+        
 
         private void TBPtnName_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -242,6 +269,8 @@ namespace AutoCapturer
             if (itm == null) return;
 
             itm.Content = TBPtnName.Text;
+            ((PatternItem)listView.SelectedItem).pattern.PatternName = TBPtnName.Text;
+            CurrentSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
         }
 
         private void TBSaveLoc_TextChanged(object sender, TextChangedEventArgs e)
@@ -249,7 +278,48 @@ namespace AutoCapturer
             UserControls.PatternItem itm = (UserControls.PatternItem)listView.SelectedItem;
             if (itm == null) return;
 
-            itm.SavePattern = TBSaveLoc.Text;
+            itm.SaveLocation = TBSaveLoc.Text;
+            ((PatternItem)listView.SelectedItem).pattern.SaveLocation = TBSaveLoc.Text;
+            CurrentSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
         }
+
+
+
+        #region [ Setting 설정에 맟추기 ]
+        public void SettingSync(Setting.Setting setting)
+        {
+            #region [ 캡처 설정 ]
+            foreach (RadioButton rb in AuCaRingTypeRB)
+                if (int.Parse(rb.Tag.ToString()) + 1 == (int)setting.AutoCaptureEnableSelection) rb.IsChecked = true;
+
+            foreach (RadioButton rb in PopCountDownRB)
+                if (int.Parse(rb.Tag.ToString()) == setting.PopupCountSecond) rb.IsChecked = true;
+
+            foreach (RadioButton rb in AllCaCountDownRB)
+                if (int.Parse(rb.Tag.ToString()) == setting.AllCaptureCountDown) rb.IsChecked = true;
+
+            foreach (RadioButton rb in new RadioButton[] { GetURLImage1, GetURLImage2, GetURLImage3 })
+                if (int.Parse(rb.Tag.ToString()) + 1 == (int)setting.ImageFromURLSave) rb.IsChecked = true;
+
+            foreach (RadioButton rb in new RadioButton[] { GetTagImage1, GetTagImage2, GetTagImage3 })
+                if (int.Parse(rb.Tag.ToString()) + 1 == (int)setting.ImageFromImageTag) rb.IsChecked = true;
+            #endregion
+
+            #region [ 패턴 관리 ]
+            listView.Items.Clear();
+            int i = 0;
+            foreach(SavePattern ptn in new SavePattern[] { CurrentSetting.DefaultPattern })
+            {
+                listView.Items.Add(new PatternItem(ptn.SaveLocation, ptn.PatternName, ptn));
+                if (ReferenceEquals(ptn, setting.DefaultPattern))
+                {
+                    listView.SelectedIndex = i;
+                }
+                i++;
+            }
+            TBPtnCount.Text = $"등록된 패턴 ({listView.Items.Count}개)";
+            #endregion
+        }
+        #endregion
     }
 }

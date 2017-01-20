@@ -18,7 +18,7 @@ namespace AutoCapturer
         /// <param name="maxShowNumber">보여줄 수 있는 최대 크기를 의미합니다. 초과시 +로 표시됩니다.</param>
         public SpaceCalculator(string volumeName, long expectsize, int maxShowNumber)
         {
-            _ExpectImageSize = expectsize * 1024 * 1024;
+            _ExpectImageSize = expectsize;
             Volume = volumeName;
             _MaxShowNumber = maxShowNumber;
             

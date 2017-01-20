@@ -12,33 +12,33 @@
         </Grid.Background>
         <Grid x:Name="MainGrid" HorizontalAlignment="Left" Height="310"  VerticalAlignment="Top" Width="310" Margin="0">
 
-            <Rectangle x:Name="RD_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
-            <Rectangle x:Name="RC_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
-            <Rectangle x:Name="RUC_Dragger" VerticalAlignment="Center" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
-            
-            <Border x:Name="ImageRect" Margin="5" BorderBrush="Black" BorderThickness="1">
+            <Rectangle x:Name="RD_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
+            <Rectangle x:Name="RC_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
+            <Rectangle x:Name="RUC_Dragger" VerticalAlignment="Center" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
+
+            <Border x:Name="ImageRect" Margin="8" BorderBrush="Black" BorderThickness="1">
                 <Image VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="InnerImg" Stretch="Fill"/>
             </Border>
-            
+
         </Grid>
-        <Rectangle x:Name="PreviewRect" Margin="5" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="300" Opacity="0"/>
+        <Rectangle x:Name="PreviewRect" Margin="8" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="300" Opacity="0"/>
 
         <Grid x:Name="CropGrid" Width="310" Height="310" HorizontalAlignment="Left" VerticalAlignment="Top" >
-            
-            <Grid x:Name="DragGrid" Margin="0,0,0,0">
-                <Rectangle x:Name="CropRect" Fill="#7F000000" Margin="5" Stroke="Black"/>
 
-                <Rectangle x:Name="DR_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
-                <Rectangle x:Name="DC_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
-                <Rectangle x:Name="CR_Cropper" VerticalAlignment="Center" HorizontalAlignment="Right" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
-                <Rectangle x:Name="DL_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNESW" ></Rectangle>
-                <Rectangle x:Name="CL_Cropper" VerticalAlignment="Center" HorizontalAlignment="Left" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeWE" ></Rectangle>
-                <Rectangle x:Name="UL_Cropper" VerticalAlignment="Top" HorizontalAlignment="Left" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeNWSE" ></Rectangle>
-                <Rectangle x:Name="UC_Cropper" VerticalAlignment="Top" HorizontalAlignment="Center" Width="5" Height="5"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNS" ></Rectangle>
-                <Rectangle x:Name="UR_Cropper" VerticalAlignment="Top" HorizontalAlignment="Right" Width="5" Height="5" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNESW" ></Rectangle>
+            <Grid x:Name="DragGrid" Margin="0,0,0,0" >
+                <Rectangle x:Name="CropRect" Fill="#7F000000" Margin="8" Stroke="Black"/>
+
+                <Rectangle x:Name="DR_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
+                <Rectangle x:Name="DC_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
+                <Rectangle x:Name="CR_Cropper" VerticalAlignment="Center" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
+                <Rectangle x:Name="DL_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNESW" ></Rectangle>
+                <Rectangle x:Name="CL_Cropper" VerticalAlignment="Center" HorizontalAlignment="Left" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeWE" ></Rectangle>
+                <Rectangle x:Name="UL_Cropper" VerticalAlignment="Top" HorizontalAlignment="Left" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeNWSE" ></Rectangle>
+                <Rectangle x:Name="UC_Cropper" VerticalAlignment="Top" HorizontalAlignment="Center" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNS" ></Rectangle>
+                <Rectangle x:Name="UR_Cropper" VerticalAlignment="Top" HorizontalAlignment="Right" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNESW" ></Rectangle>
             </Grid>
-           
-            
+
+
 
 
         </Grid>

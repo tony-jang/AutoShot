@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -107,6 +110,31 @@ namespace AutoCapturer.Globals
 
             return list.ToArray();
         }
+
+
+        public static BitmapSource CopyScreen()
+        {
+            var FullBound = Rectangle.Empty;
+            foreach (var scr in Screen.AllScreens)
+            {
+                FullBound = Rectangle.Union(FullBound, scr.Bounds);
+            }
+
+            using (var screenBmp = new Bitmap(FullBound.Width, FullBound.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            {
+                using (var bmpGraphics = Graphics.FromImage(screenBmp))
+                {
+                    bmpGraphics.CopyFromScreen(FullBound.Left, 0, 0, 0, FullBound.Size);
+                    return Imaging.CreateBitmapSourceFromHBitmap(
+                        screenBmp.GetHbitmap(),
+                        IntPtr.Zero,
+                        Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+                }
+            }
+        }
+
+
 
         #region [ Math Method ]
         public static double NearDouble(double[] data, double BaseValue, FindMode mode = FindMode.None)

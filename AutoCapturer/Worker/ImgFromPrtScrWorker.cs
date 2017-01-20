@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using static AutoCapturer.Interop.UnsafeNativeMethods;
+using AutoCapturer.Windows;
 
 namespace AutoCapturer.Worker
 {
@@ -43,11 +44,11 @@ namespace AutoCapturer.Worker
                                 {
                                     if (clipboardData.GetDataPresent(f.DataFormats.Bitmap))
                                     {
-                                        Bitmap bitmap = (Bitmap)clipboardData.GetData(f.DataFormats.Bitmap);
+                                        var bitmap = (Bitmap)clipboardData.GetData(f.DataFormats.Bitmap);
 
                                         try
                                         {
-                                            ImageWorkEventArgs ev = new ImageWorkEventArgs();
+                                            var ev = new ImageWorkEventArgs();
                                             ev.Data = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                                             OnFind(ev);
                                         }
@@ -56,7 +57,7 @@ namespace AutoCapturer.Worker
 
                                             Globals.Globals.MainDispatcher.Invoke(new Action(() =>
                                             {
-                                                PopUps.PopUpWdw wdw = new PopUps.PopUpWdw("예외(오류) 발생", "NullReferenceException 예외가 발생했습니다.");
+                                                var wdw = new PopUpWindow("예외(오류) 발생", "NullReferenceException 예외가 발생했습니다.");
                                                 wdw.ShowTime(1000);
                                             }));
                                         }

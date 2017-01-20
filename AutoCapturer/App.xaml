@@ -19,7 +19,6 @@
             <Style x:Key="ChromeWindowStyle" TargetType="{x:Type c:ChromeWindow}">
                 <Setter Property="shell:WindowChrome.WindowChrome">
                     <Setter.Value>
-
                         <shell:WindowChrome CaptionHeight="32" CornerRadius="0" GlassFrameThickness="1" ResizeBorderThickness="5"/>
                     </Setter.Value>
                 </Setter>
@@ -45,8 +44,12 @@
 
 
                                     <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{TemplateBinding Title}" VerticalAlignment="Center" FontSize="12" IsHitTestVisible="False" Foreground="White" Margin="8,0,0,0" TextTrimming="CharacterEllipsis"/>
-                                    <UserControls:PathButton x:Name="EndButt" Data="{StaticResource EndPath}" Command="{x:Static local:WindowSystemCommand.CloseCommand}"
-                                                             shell:WindowChrome.IsHitTestVisibleInChrome="true" Margin="8" Background="White" Grid.Column="1"/>
+
+                                    <Grid Grid.Column="1">
+                                        <UserControls:PathButton shell:WindowChrome.IsHitTestVisibleInChrome="true" Command="{x:Static local:WindowSystemCommand.CloseCommand}" Background="#00000000" />
+                                        <UserControls:PathButton x:Name="EndButt" Data="{StaticResource EndPath}" Margin="8" Background="White" Grid.Column="1"
+                                                                 shell:WindowChrome.IsHitTestVisibleInChrome="true" Command="{x:Static local:WindowSystemCommand.CloseCommand}" />
+                                    </Grid>
                                 </Grid>
 
                                 <ContentPresenter Content="{TemplateBinding Content}" Grid.Row="1"/>
@@ -60,7 +63,7 @@
                     </Setter.Value>
                 </Setter>           
             </Style>
-
+            
             <Style x:Key="PatternItemStyle" TargetType="{x:Type UserControls:PatternItem}">
                 <Setter Property="FontSize" Value="15"></Setter>
                 <Setter Property="Height" Value="30"></Setter>
@@ -83,7 +86,7 @@
                                                FontSize="{TemplateBinding FontSize}" TextTrimming="CharacterEllipsis"/>
 
                                     <TextBlock x:Name="SavePtnTB" Grid.Column="3"
-                                               Text="{TemplateBinding SavePattern}"
+                                               Text="{TemplateBinding SaveLocation}"
                                                Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
                                                FontSize="{TemplateBinding FontSize}"  TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
                                     </TextBlock>
@@ -97,31 +100,27 @@
                                     <Setter TargetName="SavePtnTB" Property="FontWeight" Value="Bold"/>
                                     <Setter TargetName="CheckPth" Property="Opacity" Value="1"/>
                                 </Trigger>
-                                <Trigger Property="SavePattern" Value="">
+                                <Trigger Property="SaveLocation" Value="">
                                     <Setter Property="TextBlock.Text" Value="(프로그램 실행 위치)" TargetName="SavePtnTB"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
-                    
-                    
                 </Setter>
-               
             </Style>
 
             <Style TargetType="{x:Type UserControls:PathButton}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type UserControls:PathButton}">
-                            <Border Background="#00000000">
-                                <Path Data="{TemplateBinding Data}"
+                            <Border x:Name="border" Background="#00000000">
+                                <Path x:Name="pth" Data="{TemplateBinding Data}"
                                   Fill="{TemplateBinding Background}"
                                   Width="{TemplateBinding Width}"
                                   Height="{TemplateBinding Height}"
                                   Stretch="Fill">
                                 </Path>
                             </Border>
-
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -296,6 +295,40 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="StoargySpaceToolTipStyle" TargetType="{x:Type UserControls:StoargySpaceToolTip}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type UserControls:StoargySpaceToolTip}">
+                            <Grid Background="Black" MinWidth="200">
+                                <Grid Margin="1" Background="White">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="1"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="1"/>
+                                        <RowDefinition Height="20"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="남은 장 수" VerticalAlignment="Center" TextAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="15" VerticalAlignment="Center" TextAlignment="Center">
+                                        <Run Text="{TemplateBinding RemainPictureCount}"></Run>개
+                                    </TextBlock>
+
+                                    <Rectangle Fill="Black" Grid.Column="1" Grid.RowSpan="3"/>
+                                    <Rectangle Fill="Black" Grid.Row="1" Grid.ColumnSpan="3"/>
+
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="기준 용량" VerticalAlignment="Center" TextAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="2" Text="{TemplateBinding CalcFileSize}" VerticalAlignment="Center" TextAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
             
             <Style x:Key="TransparentToolTip" TargetType="{x:Type ToolTip}">
                 <Setter Property="Template">
@@ -478,8 +511,8 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="20"/>
                                     </Grid.ColumnDefinitions>
-                                    <Path Margin="20,10" Data="M173.307,273.34601 C193.296,291.52802 216.751,303.25699 242.60599,303.25699 268.49,303.25699 291.94199,291.529 311.90299,273.34601 322.451,291.17401 341.702,303.25699 363.908,303.25699 L394.23499,303.25699 C394.23499,303.25699 449.19901,318.41599 485.21101,394.236 L485.21101,454.88501 C485.21101,471.64899 471.64799,485.211 454.88901,485.211 L30.326997,485.211 C13.564,485.211 0,471.64899 0,454.88501 L0,394.236 C36.013999,318.41501 90.977996,303.25699 90.977996,303.25699 L121.304,303.25699 C143.529,303.25699 162.74799,291.17401 173.307,273.34601 z M242.60599,0 C333.58601,3.5400153E-06 348.745,62.681003 348.745,121.304 348.745,179.92501 301.24299,272.93 242.60599,272.93 183.997,272.93 136.465,179.92501 136.465,121.304 136.465,62.681003 151.628,3.5400153E-06 242.60599,0 z" Stretch="Fill" Fill="Black"/>
-                                    <Image x:Name="Image" Margin="5,0" Grid.Column="0"
+                                    <Path Margin="15,10" Data="M173.307,273.34601 C193.296,291.52802 216.751,303.25699 242.60599,303.25699 268.49,303.25699 291.94199,291.529 311.90299,273.34601 322.451,291.17401 341.702,303.25699 363.908,303.25699 L394.23499,303.25699 C394.23499,303.25699 449.19901,318.41599 485.21101,394.236 L485.21101,454.88501 C485.21101,471.64899 471.64799,485.211 454.88901,485.211 L30.326997,485.211 C13.564,485.211 0,471.64899 0,454.88501 L0,394.236 C36.013999,318.41501 90.977996,303.25699 90.977996,303.25699 L121.304,303.25699 C143.529,303.25699 162.74799,291.17401 173.307,273.34601 z M242.60599,0 C333.58601,3.5400153E-06 348.745,62.681003 348.745,121.304 348.745,179.92501 301.24299,272.93 242.60599,272.93 183.997,272.93 136.465,179.92501 136.465,121.304 136.465,62.681003 151.628,3.5400153E-06 242.60599,0 z" Stretch="Fill" Fill="Black"/>
+                                    <Image x:Name="Image" Margin="4,0" Grid.Column="0"
                                                Source="{TemplateBinding MainImage}"
                                                Stretch="Fill"/>
 

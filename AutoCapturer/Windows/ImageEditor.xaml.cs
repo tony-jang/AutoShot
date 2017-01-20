@@ -2,6 +2,7 @@
 using AutoCapturer.UserControls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,17 +23,12 @@ namespace AutoCapturer.Windows
     /// </summary>
     public partial class ImageEditor : Windows.ChromeWindow
     {
-        Timer tmr = new Timer();
         public ImageEditor()
         {
+            Windows.PopUpWindow.AllWindowClose();
             InitializeComponent();
             Editor.ImageEditMode = UserControls.EditMode.SizeChange;
-            Editor.ImageStretchMode = Stretch.Fill;
-
-            tmr.Interval = 20;
-            tmr.Tick += ForDebugChangeSize;
-            tmr.Start();
-
+            
             EditBtn1.Click += EditBtnClick;
             EditBtn2.Click += EditBtnClick;
             EditBtn3.Click += EditBtnClick;
@@ -42,7 +38,7 @@ namespace AutoCapturer.Windows
             Editor.RatioChanged += Editor_RatioChanged;
             Editor.ImageSizeChanged += Editor_ImageSizeChanged;
 
-            double[] Ratios = { 12.5, 25.0, 33.33, 50.0, 66.67, 100.0, 150.0, 200.0, 400.0, 800.0 };
+            double[] Ratios = { 12.5, 25.0, 33.33, 50.0, 66.67, 100.0, 150.0, 200.0, 400.0, 800.0, 1600.0, 3200.0 };
 
             foreach (double Ratio in Ratios)
             {
@@ -50,13 +46,27 @@ namespace AutoCapturer.Windows
             }
 
             this.Activate();
-            this.Topmost = true;
+            
         }
+
+        Tuple<bool, BitmapImage> returndata = new Tuple<bool, BitmapImage>(false, null);
+
+        public new Tuple<bool, BitmapImage> ShowDialog()
+        {
+            base.ShowDialog();
+
+            return returndata;
+        }
+
 
         private void Editor_RatioChanged()
         {
             WidthTB.Text = Math.Round((Editor.MainGrid.Width - 10.0),2).ToString();
             HeightTB.Text = Math.Round((Editor.MainGrid.Height - 10.0), 2).ToString();
+
+            double Ratio = Convert.ToDouble(((string)RatioCB.SelectedItem).Substring(0, ((string)RatioCB.SelectedItem).Length - 1));
+            if (Ratio != Editor.Ratio) RatioCB.Text = Editor.Ratio + "%";
+
         }
 
         private void Editor_ImageSizeChanged()
@@ -71,6 +81,9 @@ namespace AutoCapturer.Windows
             if (Index == 2) CropInfoTB.Visibility = Visibility.Visible;
             else CropInfoTB.Visibility = Visibility.Hidden;
             Editor.ImageEditMode = (EditMode)Index;
+            //RenderTargetBitmap img = (RenderTargetBitmap)Editor.Originalimage;
+
+            
         }
 
         private void SelectionChanging(object sender, SelectionChangedEventArgs e)
@@ -82,50 +95,29 @@ namespace AutoCapturer.Windows
             Editor.Ratio = Ratio;
         }
 
-        private void RatioChaning()
+        public BitmapImage GetVisibleEditorImage()
         {
-            //RatioCB.SelectionChanged -= SelectionChanging;
-            //RatioCB.Text = Math.Round((ImgEditor.Ratio * 100),2) + "%";
-            //RatioCB.SelectionChanged += SelectionChanging;
+            BitmapImage img = new BitmapImage();
+
+            img.BeginInit();
+            PngBitmapEncoder enc = new PngBitmapEncoder();
+            img.StreamSource = new MemoryStream(Globals.Globals.ImageSourceToBytes(enc, Editor.InnerImg.Source));
+
+            img.CacheOption = BitmapCacheOption.OnLoad;
+            img.DecodePixelWidth = (int)Editor.RealSize.X;
+            img.DecodePixelHeight = (int)Editor.RealSize.Y;
+            img.EndInit();
+
+            return img;
         }
 
-        private void ForDebugChangeSize(object sender, EventArgs e)
-        {
-            //WidthTB.Text = "Width : " + (int)ImgEditor.InnerImg.ActualWidth;
-            //HeightTB.Text = "Height : " + (int)ImgEditor.InnerImg.ActualHeight;
-        }
-
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //Editor.ImageStretchMode = (Stretch)comboBox.SelectedIndex;
-        }
-
-        private void comboBox_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //Editor.ImageEditMode = (UserControls.EditMode)comboBox_Copy.SelectedIndex;
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "png 파일|*.png|jpg 파일|*.jpg";
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                //Editor.image = new BitmapImage(new Uri(ofd.FileName));
-            }
-        }
-
-        private void button_Copy_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            System.Windows.Clipboard.SetData(System.Windows.DataFormats.Bitmap, Editor.InnerImg.Source);
-            
+            System.Windows.Clipboard.SetData(System.Windows.DataFormats.Bitmap, GetVisibleEditorImage());
         }
+        
 
-        private void Editor_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void Editor_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (!Keyboard.IsKeyDown(Key.LeftCtrl)) return;
             bool IsUp = e.Delta > 0 ? true : false;
@@ -136,6 +128,23 @@ namespace AutoCapturer.Windows
             else li.Value--;
 
             RatioCB.SelectedIndex = li.Value;
+            e.Handled = true;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnOriginSizeReturn_Click(object sender, RoutedEventArgs e)
+        {
+            Editor.ResetToOringinal();
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            returndata = new Tuple<bool, BitmapImage>(true, GetVisibleEditorImage());
+            this.Close();
         }
     }
 }

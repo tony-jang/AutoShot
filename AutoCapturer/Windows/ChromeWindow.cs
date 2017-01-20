@@ -1,8 +1,7 @@
-﻿using Microsoft.Windows.Shell;
-using System.Windows;
+﻿using System.Windows;
 using System;
 using System.Windows.Interop;
-
+using System.Windows.Shell;
 using AutoCapturer.Interop;
 using MINMAXINFO = AutoCapturer.Interop.NativeMethods.MINMAXINFO;
 using MONITORINFO = AutoCapturer.Interop.NativeMethods.MONITORINFO;
@@ -35,9 +34,6 @@ namespace AutoCapturer.Windows
         protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
         {
             base.OnVisualChildrenChanged(visualAdded, visualRemoved);
-
-            //if (this.Content != null)
-            //    WindowChrome.SetIsHitTestVisibleInChrome(this.Content as IInputElement, true);
         }
 
         protected override void OnSourceInitialized(EventArgs e)

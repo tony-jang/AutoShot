@@ -19,21 +19,21 @@ using System.Windows.Threading;
 using static AutoCapturer.Sounds.NotificationSounds;
 using static AutoCapturer.Globals.Globals;
 
-namespace AutoCapturer.PopUps
+namespace AutoCapturer.Windows
 {
     /// <summary>
     /// PopUpWdw.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class PopUpWdw : Window
+    public partial class PopUpWindow : Window
     {
 
-        public static Stack<PopUpWdw> puw = new Stack<PopUpWdw>();
+        public static Stack<PopUpWindow> puw = new Stack<PopUpWindow>();
 
         
         System.Windows.Point StartPosition;
 
 
-        public PopUpWdw(string MainMsg, string InnerMsg)
+        public PopUpWindow(string MainMsg, string InnerMsg)
         {
             InitializeComponent();
 
@@ -58,6 +58,16 @@ namespace AutoCapturer.PopUps
             
         }
 
+        public static void AllWindowClose()
+        {
+            while (puw.Count > 0)
+            {
+
+                PopUpWindow pw = puw.Pop();
+                pw.Dispatcher.Invoke(new Action(delegate { pw.Close(); }));
+
+            }
+        }
 
         /// <summary>
         /// Show 작업과 나머지 모든 창을 모두 닫습니다.
@@ -67,12 +77,14 @@ namespace AutoCapturer.PopUps
         {
             while (puw.Count > 0)
             {
-                PopUpWdw pw = puw.Pop();
+               
+                PopUpWindow pw = puw.Pop();
 
                 if (pw != this)
                 {
                     pw.Close();
                 }
+                
             }
             puw.Push(this);
 
