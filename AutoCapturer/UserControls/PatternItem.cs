@@ -24,12 +24,22 @@ namespace AutoCapturer.UserControls
 
         public static DependencyProperty SaveLocationProperty =
             DependencyProperty.Register(nameof(SaveLocation), typeof(string),
-                typeof(PatternItem),new PropertyMetadata(string.Empty));
+                typeof(PatternItem), new PropertyMetadata(string.Empty));
+
+        public static DependencyProperty IsDefaultPatternProperty =
+            DependencyProperty.Register(nameof(IsDefaultPattern), typeof(bool),
+                typeof(PatternItem), new PropertyMetadata(false));
 
         public string SaveLocation
         {
             get { return (string)GetValue(SaveLocationProperty); }
             set { SetValue(SaveLocationProperty, value); }
+        }
+
+        public bool IsDefaultPattern
+        {
+            get { return (bool)GetValue(IsDefaultPatternProperty); }
+            set { SetValue(IsDefaultPatternProperty, value); }
         }
 
         public SavePattern pattern;

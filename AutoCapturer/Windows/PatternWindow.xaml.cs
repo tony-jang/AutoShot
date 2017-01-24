@@ -64,7 +64,7 @@ namespace AutoCapturer.Windows
         private void PtnCheck(object sender, EventArgs e)
         {
             bool PtnFlag = false, LocFlag = false;
-            switch (PatternConverter.ConvertAll(TBPtnName.Text, out Ptn))
+            switch (ConvertAll(TBPtnName.Text, out Ptn))
             {
                 case ErrorList.AlreadyAutoUsed:
                     PtnFlag = true;

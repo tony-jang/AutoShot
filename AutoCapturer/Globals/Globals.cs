@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -14,7 +15,7 @@ using System.Windows.Threading;
 
 namespace AutoCapturer.Globals
 {
-    static class Globals
+    static partial class Globals
     {
 
         // 현재 설정
@@ -27,6 +28,43 @@ namespace AutoCapturer.Globals
         /// 사용 할 수 없는 String 모음
         /// </summary>
         public static string NotAccessStr = @"\/:*?""<>|";
+
+
+
+        public enum ThickPos
+        {
+            Bottom, Top, Left, Right
+        }
+        public static Thickness GetMargin(Thickness margin, ThickPos thickpos, double value, double Maximum = 1000, bool DisAllowMinus = true, bool AllowOverMaximum = false)
+        {
+            double l = margin.Left, t = margin.Top, r = margin.Right, b = margin.Bottom;
+            bool lb = false, tb = false, rb = false, bb = false;
+
+            switch (thickpos)
+            {
+                case ThickPos.Left: l = value; lb = true; break;
+                case ThickPos.Top: t = value; tb = true; break;
+                case ThickPos.Right: r = value; rb = true; break;
+                case ThickPos.Bottom: b = value; bb = true; break;
+            }
+            if (DisAllowMinus)
+            {
+                if (l < 0 && lb) l = 0;
+                if (t < 0 && tb) t = 0;
+                if (r < 0 && rb) r = 0;
+                if (b < 0 && bb) b = 0;
+            }
+            if (!AllowOverMaximum)
+            {
+                if (l > Maximum && lb) l = Maximum;
+                if (t > Maximum && tb) t = Maximum;
+                if (r > Maximum && rb) r = Maximum;
+                if (b > Maximum && bb) b = Maximum;
+            }
+            return new Thickness(l, t, r, b);
+        }
+
+
 
 
 
@@ -131,6 +169,95 @@ namespace AutoCapturer.Globals
                         Int32Rect.Empty,
                         BitmapSizeOptions.FromEmptyOptions());
                 }
+            }
+        }
+
+        #region [ Array Methods ]
+        public static object[] CopyArray(List<object> list)
+        {
+            List<object> lists = new List<object>();
+            foreach (object itm in list)
+            {
+                lists.Add(itm);
+            }
+
+            return lists.ToArray();
+        }
+        public static object[] CopyArray(ItemCollection list)
+        {
+            List<object> lists = new List<object>();
+            foreach (object itm in list)
+            {
+                lists.Add(itm);
+            }
+
+            return lists.ToArray();
+        }
+        public static object[] CopyArray(object[] list)
+        {
+            List<object> lists = new List<object>();
+            foreach (object itm in list)
+            {
+                lists.Add(itm);
+            }
+
+            return lists.ToArray();
+        }
+
+        #endregion
+
+
+        #region [ Icon Methods ]
+        public static ImageSource GetIcon(string filepath)
+        {
+            var converter = new FileToImageIconConverter(filepath);
+
+            return converter.Icon;
+        }
+
+        public class FileToImageIconConverter
+        {
+            private string filePath;
+            private System.Windows.Media.ImageSource icon;
+
+            public string FilePath { get { return filePath; } }
+            public ImageSource Icon
+            {
+                get
+                {
+                    if (icon == null && System.IO.File.Exists(FilePath))
+                    {
+                        using (System.Drawing.Icon sysicon = System.Drawing.Icon.ExtractAssociatedIcon(FilePath))
+                        {
+                            icon = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+                                      sysicon.Handle,
+                                      System.Windows.Int32Rect.Empty,
+                                      System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                        }
+                    }
+
+                    return icon;
+                }
+            }
+            public FileToImageIconConverter(string filePath)
+            {
+                this.filePath = filePath;
+            }
+        }
+        #endregion
+
+        public static Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
+        {
+            // BitmapImage bitmapImage = new BitmapImage(new Uri("../Images/test.png", UriKind.Relative));
+
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                enc.Save(outStream);
+                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+
+                return new Bitmap(bitmap);
             }
         }
 

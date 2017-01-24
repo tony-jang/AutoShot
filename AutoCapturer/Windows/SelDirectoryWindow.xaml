@@ -32,9 +32,9 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="검색" TextAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
-                    <TextBox x:Name="searchTB" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" Margin="0,0,10,0"/>
+                    <TextBox x:Name="searchTB" Grid.Column="1" Style="{StaticResource SimpleTextBoxStyle}" Margin="0,0,10,0" TextChanged="searchTB_TextChanged"/>
                 </Grid>
-                
+
             </Grid>
             <Grid Grid.Row="1" Margin="0,12,0,0">
                 <Grid.ColumnDefinitions>
@@ -52,11 +52,12 @@
                         <u:ImageItem x:Name="itm_Music" Style="{StaticResource DirItmStyle}" Content="내 음악" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/MusicIcon.png"/>
                         <u:ImageItem x:Name="itm_Pic" Style="{StaticResource DirItmStyle}" Content="내 사진" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/ImageIcon.png"/>
                         <u:ImageItem x:Name="itm_Dwn" Style="{StaticResource DirItmStyle}" Content="다운로드" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/DownloadIcon.png"/>
+                        <u:ImageItem x:Name="itm_exeFolder" Style="{StaticResource DirItmStyle}" Content="프로그램 위치" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/PresentationIcon.png"/>
                         <ListViewItem Margin="5" Content="내 컴퓨터" FontSize="15" IsHitTestVisible="False"/>
                         <Rectangle Margin="5,0" Fill="Black" Height="1"  IsHitTestVisible="False"/>
                     </ListView>
                 </Grid>
-                
+
                 <GridSplitter VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1"/>
 
                 <Grid Grid.Column="2">
@@ -64,15 +65,14 @@
                         <RowDefinition/>
                         <RowDefinition Height="100"/>
                     </Grid.RowDefinitions>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView x:Name="PART_File" ItemsSource="{Binding TrackCollection}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView x:Name="PART_File" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel IsItemsHost="True"/>
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListView>
-                    </ScrollViewer>
                     <Grid Grid.Row="1" Background="WhiteSmoke">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -89,8 +89,8 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock x:Name="TB_FileName" Grid.Row="0" Text="File Item" FontSize="20" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="TB_FileType" Grid.Row="1" Text="File Type" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TB_FileName" Grid.Row="0" FontSize="20" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock x:Name="TB_FileType" Grid.Row="1" FontSize="15" VerticalAlignment="Center"/>
                             </Grid>
                         </Grid>
                         <Grid Grid.Column="1" Height="30" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10">
@@ -99,14 +99,14 @@
                                 <ColumnDefinition Width="10"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Content="취소"/>
-                            <Button Grid.Column="2" Content="확인" Background="#FF263248" Foreground="White"/>
+                            <Button x:Name="BtnCancel" Grid.Column="0" Content="취소" Click="BtnCancel_Click"/>
+                            <Button x:Name="BtnOK" Grid.Column="2" Content="확인" Background="#FF263248" Foreground="White" Click="BtnOK_Click"/>
                         </Grid>
                     </Grid>
-                    
+
                 </Grid>
             </Grid>
-            
+
         </Grid>
     </Grid>
 </local:ChromeWindow>

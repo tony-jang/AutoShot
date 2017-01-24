@@ -207,79 +207,6 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <TabItem Header="개인 설정" Style="{StaticResource BasicTabItemStyle}">
-                    <Grid Background="#FFE5E5E5">
-                        <ScrollViewer>
-                            <StackPanel Margin="20">
-
-
-                                <TextBlock Text="사용자 설정" FontSize="14"/>
-                                <Grid Margin="0,12,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="사용자 이름" Margin="10" Grid.Column="0" FontSize="14" TextAlignment="Center"/>
-                                    <TextBox Grid.Column="1" Margin="5" Style="{StaticResource SimpleTextBoxStyle}"/>
-
-                                    <TextBlock Text="사용자 사진" Margin="10" Grid.Column="0" Grid.Row="1" FontSize="14" 
-                						TextAlignment="Center" VerticalAlignment="Center"/>
-
-                                    <Grid Grid.Column="1" Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="120"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Width="100" Height="100" Margin="10" Fill="#FFB9B9B9"/>
-                                        <Image Width="100" Height="100" Margin="10"/>
-                                        <TextBlock Grid.Column="1" Margin="10" VerticalAlignment="Center" FontSize="14"><Run Text="- 사진은 자동으로 1:1 비율로 조정되거나 자를 수 있습니다."/><LineBreak/><Run Text="- 해당 사진은 사용자 이름과 함께 프로필에 사용됩니다."/><LineBreak/><Run Text="- 사진은 100x100 사이즈로 조정됩니다."/><LineBreak/><Run Text="- 용량 제한은 없지만 저장시 자동으로 축소됩니다."/></TextBlock>
-                                    </Grid>
-
-                                    <Grid Width="200" Height="25" Grid.Row="2" Grid.ColumnSpan="2" Margin="12,12,0,0" HorizontalAlignment="Left">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="10"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Button x:Name="UsrAddBtn" Grid.Column="0" Content="사용자 추가"/>
-                                        <Button x:Name="UsrRemBtn" Grid.Column="2" Content="사용자 삭제"/>
-                                    </Grid>
-                                </Grid>
-                                <TextBlock Text="사용자 전환" Margin="0,36,0,0" FontSize="14"/>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <ListView x:Name="UserLV" Height="122" Margin="0,12,0,0" Style="{StaticResource NoHScrollBarListViewStyle}">
-                                        <UserControls:ImageItem x:Name="pi" Content="기본 저장"  />
-                                        <UserControls:ImageItem x:Name="pi2" Content="강의용 캡처" />
-                                    </ListView>
-                                </Grid>
-                                <TextBlock Text="개인 설정 저장" Margin="0,36,0,0"  FontSize="14"/>
-                                <Grid Margin="0,12,0,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="130"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock TextTrimming="CharacterEllipsis" FontSize="15" Margin="5"><Run Text="사용자의 설정을 불러옵니다. 이때 기존 설정되어 있었던 설정들은"/><LineBreak/><Run Text="모두 덮어씌워지니 설정 내보내기로 미리 저장해두시기 바랍니다."/></TextBlock>
-                                    <Button Content="설정 불러오기" FontSize="15" Grid.Column="1" Margin="5"/>
-                                    <TextBlock TextTrimming="CharacterEllipsis" FontSize="15" Margin="5" Grid.Row="1"><Run Text="현재 설정을 파일로 내보냅니다. 파일로 내보내진 설정은"/><LineBreak/><Run Text="설정 불러오기를 통해서 다시 불러와 사용할 수 있습니다."/></TextBlock>
-                                    <Button Content="설정 내보내기" FontSize="15" Grid.Row="2" Grid.Column="1" Margin="5"/>
-                                </Grid>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </TabItem>
                 <TabItem Header="환경 설정" Style="{StaticResource BasicTabItemStyle}">
                     <Grid Background="#FFE5E5E5">
                         <ScrollViewer>
@@ -328,7 +255,10 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="단축키 설정" FontSize="15"/>
-                                    <TextBlock Text="자주 사용하는 단축키는 원하는 단축키로 변경해서 사용할 수 있습니다." Margin="0,12,0,0" Grid.Row="1" FontSize="13"/>
+                                    <TextBlock Margin="0,12,0,0" Grid.Row="1" FontSize="13">
+                                         자주 사용하는 단축키는 원하는 단축키로 변경해서 사용할 수 있습니다.<LineBreak/>
+                                         <Run Text="빨간색" Foreground="Red"/>은 모두 사용하지 못하는 상황, <Run Text="초록색" Foreground="Green"/>은 두 개가 같아서 2개의 단축키가 의미가 없는 상황입니다.
+                                    </TextBlock>
                                     <Grid Grid.Row="2" Margin="0,12,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
@@ -344,29 +274,21 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
 
-                                        <TextBlock Text="자동 저장" Margin="0,12" TextAlignment="Center" Grid.Row="0" FontSize="14" VerticalAlignment="Center"/>
-                                        <Button Margin="20,8" Grid.Column="1" Grid.Row="0" Content="(사용하지 않음)"/>
-                                        <Button Margin="20,8" Grid.Column="2" Grid.Row="0" Content="F2 Key"/>
+                                        <TextBlock x:Name="BtnAutoSavelbl" Text="자동 저장" Margin="0,12" TextAlignment="Center" Grid.Row="0" FontSize="14" VerticalAlignment="Center"/>
+                                        <Button x:Name="BtnAutoSave1" Margin="20,8" Grid.Column="1" Grid.Row="0" Content="(사용하지 않음)" Tag="0"/>
+                                        <Button x:Name="BtnAutoSave2" Margin="20,8" Grid.Column="2" Grid.Row="0" Content="F2 Key" Tag="0"/>
 
-                                        <TextBlock Text="전체 캡쳐" Margin="0,12" TextAlignment="Center" Grid.Row="1" FontSize="14" VerticalAlignment="Center"/>
-                                        <Button Margin="20,8" Grid.Column="1" Grid.Row="1" Content="(사용하지 않음)"/>
-                                        <Button Margin="20,8" Grid.Column="2" Grid.Row="1" Content="F3 Key"/>
+                                        <TextBlock x:Name="BtnAllCapturelbl" Text="전체 캡쳐" Margin="0,12" TextAlignment="Center" Grid.Row="1" FontSize="14" VerticalAlignment="Center"/>
+                                        <Button x:Name="BtnAllCapture1" Margin="20,8" Grid.Column="1" Grid.Row="1" Content="(사용하지 않음)" Tag="0"/>
+                                        <Button x:Name="BtnAllCapture2" Margin="20,8" Grid.Column="2" Grid.Row="1" Content="F3 Key" Tag="0"/>
 
-                                        <TextBlock Text="선택 캡쳐" Margin="0,12" TextAlignment="Center" Grid.Row="2" FontSize="14" VerticalAlignment="Center"/>
-                                        <Button Margin="20,8" Grid.Column="1" Grid.Row="2" Content="(사용하지 않음)"/>
-                                        <Button Margin="20,8" Grid.Column="2" Grid.Row="2" Content="F4 Key"/>
+                                        <TextBlock x:Name="BtnSelCapturelbl" Text="선택 캡쳐" Margin="0,12" TextAlignment="Center" Grid.Row="2" FontSize="14" VerticalAlignment="Center"/>
+                                        <Button x:Name="BtnSelCapture1" Margin="20,8" Grid.Column="1" Grid.Row="2" Content="(사용하지 않음)" Tag="0"/>
+                                        <Button x:Name="BtnSelCapture2" Margin="20,8" Grid.Column="2" Grid.Row="2" Content="F4 Key" Tag="0"/>
 
-                                        <TextBlock Text="설정 창 열기" Margin="0,12" TextAlignment="Center" Grid.Row="3" FontSize="14" VerticalAlignment="Center"/>
-                                        <Button Margin="20,8" Grid.Column="1" Grid.Row="3" Content="Control Key"/>
-                                        <Button Margin="20,8" Grid.Column="2" Grid.Row="3" Content="` Key"/>
-
-                                        <TextBlock Text="이미지 에디터" Margin="0,12" TextAlignment="Center" Grid.Row="4" FontSize="14" VerticalAlignment="Center"/>
-                                        <Button Margin="20,8" Grid.Column="1" Grid.Row="4" Content="Control Key"/>
-                                        <Button Margin="20,8" Grid.Column="2" Grid.Row="4" Content="1 Key"/>
-
-                                        <TextBlock Text="이미지 이펙터" Margin="0,12" TextAlignment="Center" Grid.Row="5" FontSize="14" VerticalAlignment="Center"/>
-                                        <Button Margin="20,8" Grid.Column="1" Grid.Row="5" Content="Control Key"/>
-                                        <Button Margin="20,8" Grid.Column="2" Grid.Row="5" Content="2 Key"/>
+                                        <TextBlock x:Name="BtnOpenSettinglbl" Text="설정 창 열기" Margin="0,12" TextAlignment="Center" Grid.Row="3" FontSize="14" VerticalAlignment="Center"/>
+                                        <Button x:Name="BtnOpenSetting1" Margin="20,8" Grid.Column="1" Grid.Row="3" Content="Control Key" Tag="0"/>
+                                        <Button x:Name="BtnOpenSetting2" Margin="20,8" Grid.Column="2" Grid.Row="3" Content="` Key" Tag="0"/>
                                     </Grid>
 
                                 </Grid>
@@ -383,7 +305,7 @@
                                 <ListView x:Name="listView" Height="150" Margin="0,12,0,0"
                                           Style="{StaticResource NoHScrollBarListViewStyle}" SelectionChanged="listView_SelectionChanged">
 
-                                    <UserControls:PatternItem x:Name="patternItem" Content="기본 저장"  SaveLocation="C:\Users\uutak\Desktop\%dasdfasdfasdfasdfasdfasdfdasfadsasdfasdfaasdfasdfasdfasdf" />
+                                    <UserControls:PatternItem x:Name="patternItem" Content="기본 저장"  SaveLocation="C:\Users\uutak\Desktop\%dasdfasdfasdfasdfasdfasdfdasfadsasdfasdfaasdfasdfasdfasdf" IsDefaultPattern="True" />
                                     <UserControls:PatternItem x:Name="patternItem_Copy" Content="강의용 캡처" SaveLocation="C:\Users\uutak\Desktop\%d" />
                                 </ListView>
 
@@ -415,8 +337,8 @@
                                         <TextBlock Text="캡쳐 후 에디터 열기" Style="{StaticResource SettingBlockStyle}" Grid.Row="0" Grid.Column="0"/>
                                         <UserControls:Switch x:Name="SWOpenEditor" Grid.Row="0" Grid.Column="1" Content="" Checked="SWOpenEditor_Checked" Unchecked="SWOpenEditor_Checked"/>
 
-                                        <TextBlock Text="자동 이펙트 설정하기 (설정됨)" Style="{StaticResource SettingBlockStyle}" Grid.Row="1" Grid.Column="0"/>
-                                        <Button x:Name="BtnAutoEffector" Margin="5" Grid.Row="1" Grid.Column="1"  FontSize="15" Content="설정" Click="BtnAutoEffector_Click"/>
+                                        <TextBlock Text="기본 패턴으로 설정하기" Style="{StaticResource SettingBlockStyle}" Grid.Row="1" Grid.Column="0"/>
+                                        <Button x:Name="BtnSetToDefaultPtn" Margin="5" Grid.Row="1" Grid.Column="1"  FontSize="15" Content="설정" Click="BtnSetToDefaultPtn_Click"/>
 
                                         <TextBlock Text="로고 삽입하기" Style="{StaticResource SettingBlockStyle}" Grid.Row="1" Grid.Column="2"/>
                                         <UserControls:Switch x:Name="SWPutLogo" Grid.Row="1" Grid.Column="3" Checked="SWPutLogo_Checked" Unchecked="SWPutLogo_Checked"/>
@@ -578,7 +500,21 @@
 
                                     <Button Grid.Row="2" Grid.Column="1" Content="로그 보기"/>
                                 </Grid>
-
+                                <TextBlock Text="개인 설정 저장/불러오기" Margin="0,36,0,0"  FontSize="14"/>
+                                <Grid Margin="0,12,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="130"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock TextTrimming="CharacterEllipsis" FontSize="15" Margin="5"><Run Text="사용자의 설정을 불러옵니다. 이때 기존 설정되어 있었던 설정들은"/><LineBreak/><Run Text="모두 덮어씌워지니 설정 내보내기로 미리 저장해두시기 바랍니다."/></TextBlock>
+                                    <Button x:Name="BtnImport" Content="설정 불러오기" FontSize="15" Grid.Column="1" Margin="5" Click="BtnImport_Click"/>
+                                    <TextBlock TextTrimming="CharacterEllipsis" FontSize="15" Margin="5" Grid.Row="1"><Run Text="현재 설정을 파일로 내보냅니다. 파일로 내보내진 설정은"/><LineBreak/><Run Text="설정 불러오기를 통해서 다시 불러와 사용할 수 있습니다."/></TextBlock>
+                                    <Button x:Name="BtnExport" Content="설정 내보내기" FontSize="15" Grid.Row="2" Grid.Column="1" Margin="5" Click="BtnExport_Click"/>
+                                </Grid>
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

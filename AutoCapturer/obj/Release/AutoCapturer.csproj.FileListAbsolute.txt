@@ -38,3 +38,7 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\AutoCapturer.csproj.GenerateResource.Cache
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\AutoCapturer.exe
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\AutoCapturer.pdb
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Globals\KeyInputWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Globals\MessageBoxWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Globals\KeyInputWindow.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Globals\MessageBoxWindow.baml

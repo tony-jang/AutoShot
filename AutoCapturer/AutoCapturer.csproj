@@ -113,10 +113,24 @@
     <Compile Include="Effectors\BaseEffector.cs" />
     <Compile Include="Effectors\NullBaseEffector.cs" />
     <Compile Include="Effectors\RotateEffector.cs" />
+    <Compile Include="Globals\CursorHelper.cs" />
     <Compile Include="Globals\Globals.cs" />
+    <Compile Include="Globals\KeyInputWindow.xaml.cs">
+      <DependentUpon>KeyInputWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Globals\MessageBoxWindow.xaml.cs">
+      <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Setting\SettingReader.cs" />
     <Compile Include="Setting\SettingWriter.cs" />
+    <Compile Include="UserControls\BlankRect.cs" />
     <Compile Include="UserControls\StoargySpaceToolTip.cs" />
+    <Compile Include="Windows\CountDownWindow.xaml.cs">
+      <DependentUpon>CountDownWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FileSaveWindow.xaml.cs">
+      <DependentUpon>FileSaveWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\InitSettingWindow.xaml.cs">
       <DependentUpon>InitSettingWindow.xaml</DependentUpon>
     </Compile>
@@ -160,6 +174,14 @@
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Sounds\NotificationSounds.cs" />
+    <Page Include="Globals\KeyInputWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Globals\MessageBoxWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -173,6 +195,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControls\ImageEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CountDownWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\FileSaveWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,7 +291,9 @@
     <Resource Include="Resources\Icons\AuCaOff.png" />
     <Resource Include="Resources\Icons\AuCaOn.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\BookIcon.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Tile.png" />
   </ItemGroup>
@@ -281,6 +313,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\SmallIcons\FillFolderIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\PresentationIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\ZipIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\LinkIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SmallIcons\PlayIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cursors\crosscur.cur" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

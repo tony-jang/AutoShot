@@ -72,4 +72,11 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Wi
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\InitSettingWindow.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\bin\Debug\Microsoft.Windows.Shell.dll
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\bin\Debug\Microsoft.Windows.Shell.pdb
-F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\AutoCapturer.csprojResolveAssemblyReference.cache
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Globals\MessageBoxWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Globals\MessageBoxWindow.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Globals\KeyInputWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Globals\KeyInputWindow.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\CountDownWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\CountDownWindow.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\FileSaveWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Debug\Windows\FileSaveWindow.baml

@@ -74,12 +74,16 @@
                             <Border x:Name="MainBorder">
                                 <Grid Margin="0,0,3,0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="5"/>
                                         <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="20"/>
+                                        
                                     </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock x:Name="DefaultInfoTB" Margin="10,0" Grid.Column="0" VerticalAlignment="Center" Text="(기본)" Visibility="Hidden"/>
+                                    
                                     <TextBlock x:Name="ContentTB" Grid.Column="1"
                                                Text="{TemplateBinding Content}"
                                                Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
@@ -103,6 +107,10 @@
                                 <Trigger Property="SaveLocation" Value="">
                                     <Setter Property="TextBlock.Text" Value="(프로그램 실행 위치)" TargetName="SavePtnTB"/>
                                 </Trigger>
+                                <Trigger Property="IsDefaultPattern" Value="True">
+                                    <Setter Property="Visibility" TargetName="DefaultInfoTB" Value="Visible" />
+                                </Trigger>
+                                
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -521,7 +529,7 @@
                                                Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
                                                FontSize="{TemplateBinding FontSize}"  TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
                                     </TextBlock>
-
+                                    <Rectangle Fill="#02000000" Grid.ColumnSpan="3"/>
 
                                 </Grid>
                             </Border>

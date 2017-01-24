@@ -266,40 +266,7 @@ namespace AutoCapturer.UserControls
             Movetmr.Start();
         }
 
-        public enum ThickPos
-        {
-            Bottom, Top, Left, Right
-        }
-
-        public Thickness GetMargin(Thickness margin, ThickPos thickpos, double value, double Maximum = 1000, bool DisAllowMinus = true, bool AllowOverMaximum = false)
-        {
-            double l = margin.Left, t = margin.Top, r = margin.Right, b = margin.Bottom;
-            bool lb = false, tb = false, rb = false, bb = false;
-
-            switch (thickpos)
-            {
-                case ThickPos.Left: l = value; lb = true; break;
-                case ThickPos.Top: t = value; tb = true; break;
-                case ThickPos.Right: r = value; rb = true; break;
-                case ThickPos.Bottom: b = value; bb = true; break;
-            }
-            if (DisAllowMinus)
-            {
-                if (l < 0 && lb) l = 0;
-                if (t < 0 && tb) t = 0;
-                if (r < 0 && rb) r = 0;
-                if (b < 0 && bb) b = 0;
-            }
-            if (!AllowOverMaximum)
-            {
-                if (l > Maximum && lb) l = Maximum;
-                if (t > Maximum && tb) t = Maximum;
-                if (r > Maximum && rb) r = Maximum;
-                if (b > Maximum && bb) b = Maximum;
-            }
-            return new Thickness(l, t, r, b);
-        }
-
+        
         private void Tick_CropChange(object sender, EventArgs e)
         {
             if (f.Control.MouseButtons == f.MouseButtons.Left)

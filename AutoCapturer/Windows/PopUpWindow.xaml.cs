@@ -77,14 +77,14 @@ namespace AutoCapturer.Windows
         {
             while (puw.Count > 0)
             {
-               
+
                 PopUpWindow pw = puw.Pop();
 
                 if (pw != this)
                 {
                     pw.Close();
                 }
-                
+
             }
             puw.Push(this);
 

@@ -29,7 +29,8 @@ namespace AutoCapturer.Worker
                     if (remainingspace != LookingDrive.TotalFreeSpace)
                         OnFind(new StorageSpaceWorkEventArgs(remainingspace, LookingDrive));
                     remainingspace = LookingDrive.TotalFreeSpace;
-                    
+
+                    Thread.Sleep(1);
                 } while (true);
             });
         }

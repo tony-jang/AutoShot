@@ -1,11 +1,14 @@
 ﻿using AutoCapturer.Setting;
 using AutoCapturer.UserControls;
+using AutoCapturer.Windows;
+using AutoCapturer.Worker;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using static AutoCapturer.Globals.Globals;
 
 namespace AutoCapturer
@@ -15,7 +18,9 @@ namespace AutoCapturer
     /// </summary>
     public partial class SettingWindow : Windows.ChromeWindow
     {
-        RadioButton[] AuCaRingTypeRB, GetImageRB, AllCaCountDownRB, PopCountDownRB;
+        RadioButton[] AuCaRingTypeRB, AllCaCountDownRB, PopCountDownRB;
+        RadioButton[][] GetImageRB;
+        Button[] ShortCutButtons;
         public SettingWindow()
         {
             InitializeComponent();
@@ -25,25 +30,42 @@ namespace AutoCapturer
 
             AuCaRingTypeRB = new RadioButton[]{ AuCaRingType1, AuCaRingType2, AuCaRingType3, AuCaRingType4 };
 
-            GetImageRB = new RadioButton[]{ GetURLImage1, GetURLImage2, GetURLImage3,
-                           GetTagImage1, GetTagImage2, GetTagImage3};
+            GetImageRB = new RadioButton[][] { new RadioButton[] { GetURLImage1, GetURLImage2, GetURLImage3 },
+                           new RadioButton[]{ GetTagImage1, GetTagImage2, GetTagImage3} };
             AllCaCountDownRB = new RadioButton[]{ AllCaCountDown1, AllCaCountDown2, AllCaCountDown3,
                                  AllCaCountDown4, AllCaCountDown5, AllCaCountDown6 };
             PopCountDownRB = new RadioButton[]{ PopCountDown1, PopCountDown2, PopCountDown3 };
+
+            ShortCutButtons = new Button[] { BtnAutoSave1, BtnAutoSave2,
+                BtnAllCapture1, BtnAllCapture2,
+                BtnOpenSetting1, BtnOpenSetting2,
+                BtnSelCapture1, BtnSelCapture2 };
 
             AuCaRingType2.Unchecked += AuCaRing_Change;
             AuCaRingType3.Unchecked += AuCaRing_Change;
             foreach (RadioButton rb in AuCaRingTypeRB)
                 rb.Checked += AuCaRing_Change;
 
-            foreach (RadioButton rb in GetImageRB)
-                rb.Checked += GetImage_Change;
+            foreach (RadioButton rb in GetImageRB[0])
+            {
+                rb.Checked += GetURLImage_Change;
+            }
+
+            foreach (RadioButton rb in GetImageRB[1])
+            {
+                rb.Checked += GetTagImage_Change;
+            }
 
             foreach (RadioButton rb in AllCaCountDownRB)
                 rb.Checked += AllCaCountDown_Change;
 
             foreach (RadioButton rb in PopCountDownRB)
                 rb.Checked += PopCount_Change;
+
+            foreach (Button btn in ShortCutButtons)
+            {
+                btn.Click += Btn_Click;
+            }
             
 
             RecoWidthTB.PreviewTextInput += RecoRangeTBPreviewCheck;
@@ -51,6 +73,88 @@ namespace AutoCapturer
 
             RecoWidthTB.TextChanged += RecoRangeTBChanged;
             RecoHeightTB.TextChanged += RecoRangeTBChanged;
+            
+        }
+
+
+        string NonUse = "(사용하지 않음)";
+        string[] names = { "BtnAutoSave", "BtnAllCapture", "BtnSelCapture", "BtnOpenSetting" };
+        ShortCutKey[] keys;
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (keys == null) keys = new ShortCutKey[] { CurrentSetting.AutoCaptureKey, CurrentSetting.AllCaptureKey, CurrentSetting.SelectCaptureKey, CurrentSetting.OpenSettingKey };
+
+            Key key = ShowKeyInput((Key)(((Button)sender).Tag));
+
+            if (key == Key.None) ((Button)sender).Content = NonUse;
+            else ((Button)sender).Content = key + " Key";
+
+            ((Button)sender).Tag = (int)key;
+
+            string basename = ((Button)sender).Name.Substring(0, ((Button)sender).Name.Length - 1);
+            int basenum = int.Parse(((Button)sender).Name.Substring(((Button)sender).Name.Length - 1));
+            
+            
+
+            foreach (ShortCutKey k in keys)
+            {
+                k.IsDisabled = false;
+            }
+
+            for(int i =0;i< 4; i++)
+            {
+                Button Btn1 = (Button)FindName(names[i] + "1");
+                Button Btn2 = (Button)FindName(names[i] + "2");
+                TextBlock TB = (TextBlock)FindName(names[i] + "lbl");
+                if (Btn1.Content.ToString() == Btn2.Content.ToString()) TB.Foreground = Brushes.Green; else TB.Foreground = Brushes.Black;
+
+                if (Btn1.Content.ToString() == NonUse && Btn2.Content.ToString() == NonUse) TB.Foreground = Brushes.Red;
+            }
+
+            for(int i = 0; i < 3; i++)
+            {
+
+
+                Button iBtn1, iBtn2,  jBtn1, jBtn2;
+                TextBlock ilbl, jlbl;
+
+                iBtn1 = (Button)FindName(names[i] + "1");
+                iBtn2 = (Button)FindName(names[i] + "2");
+                ilbl = (TextBlock)FindName(names[i] + "lbl");
+                for (int j= i + 1; j < 4; j++)
+                {
+                    jBtn1 = (Button)FindName(names[j] + "1");
+                    jBtn2 = (Button)FindName(names[j] + "2");
+                    jlbl = (TextBlock)FindName(names[j] + "lbl");
+
+                    if (iBtn1.Content.ToString() == jBtn1.Content.ToString() && iBtn2.Content.ToString() == jBtn2.Content.ToString())
+                    {
+                        keys[i].IsDisabled = true;
+                        keys[j].IsDisabled = true;
+                        ilbl.Foreground = Brushes.Red;
+                        jlbl.Foreground = Brushes.Red;
+                    }
+
+                }
+            }
+
+
+            switch (basename)
+            {
+                case "BtnAutoSave":
+                    if (basenum == 1) CurrentSetting.AutoCaptureKey.FirstKey = key; else CurrentSetting.AutoCaptureKey.SecondKey = key;
+                    break;
+                case "BtnAllCapture":
+                    if (basenum == 1) CurrentSetting.AllCaptureKey.FirstKey = key; else CurrentSetting.AllCaptureKey.SecondKey = key;
+                    break;
+                case "BtnSelCapture":
+                    if (basenum == 1) CurrentSetting.SelectCaptureKey.FirstKey = key; else CurrentSetting.SelectCaptureKey.SecondKey = key;
+                    break;
+                case "BtnOpenSetting":
+                    if (basenum == 1) CurrentSetting.OpenSettingKey.FirstKey = key; else CurrentSetting.OpenSettingKey.SecondKey = key;
+                    break;
+            }
         }
 
         public new void ShowDialog()
@@ -67,7 +171,14 @@ namespace AutoCapturer
             CurrentSetting.PopupCountSecond = Index;
         }
 
-        private void GetImage_Change(object sender, RoutedEventArgs e)
+
+        private void GetTagImage_Change(object sender, RoutedEventArgs e)
+        {
+            int Index = int.Parse(((RadioButton)sender).Tag.ToString());
+
+            CurrentSetting.ImageFromImageTag = (HowtoSaveGetPicture)(Index + 1);
+        }
+        private void GetURLImage_Change(object sender, RoutedEventArgs e)
         {
             int Index = int.Parse(((RadioButton)sender).Tag.ToString());
 
@@ -151,6 +262,8 @@ namespace AutoCapturer
                 }
 
                 MouseRangeRect.Width = value * 16;
+                RecoWidthTB.Text = value.ToString();
+                CurrentSetting.RecoWidth = value;
             }
         }
 
@@ -169,6 +282,8 @@ namespace AutoCapturer
                 }
 
                 MouseRangeRect.Height = value * 16;
+                RecoHeightTB.Text = value.ToString();
+                CurrentSetting.RecoHeight = value;
             }
         }
 
@@ -209,7 +324,7 @@ namespace AutoCapturer
         {
             if (listView.SelectedItem != null)
             {
-                if (MessageBox.Show("정말 해당 패턴을 삭제하시겠습니까?", "삭제 확인", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MsgBox("정말 해당 패턴을 삭제하시겠습니까?", "삭제 확인", Globals.MessageBoxStyle.YesNo) == MessageBoxResult.Yes)
                     listView.Items.Remove(listView.SelectedItem);
             }
             
@@ -235,6 +350,8 @@ namespace AutoCapturer
                 SWOpenEditor.IsChecked = itm.pattern.OpenEffector;
                 SWOverwrite.IsChecked = itm.pattern.OverWrite;
                 SWPutLogo.IsChecked = itm.pattern.PutLogo;
+                BtnSetToDefaultPtn.IsEnabled = !itm.IsDefaultPattern;
+                
 
             }
         }
@@ -257,12 +374,11 @@ namespace AutoCapturer
             CurrentSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
         }
 
-        private void BtnAutoEffector_Click(object sender, RoutedEventArgs e)
+        private void BtnSetToDefaultPtn_Click(object sender, RoutedEventArgs e)
         {
-            // 자동 이펙터 설정
+            ((PatternItem)listView.SelectedItem).IsDefaultPattern = true;
+            BtnSetToDefaultPtn.IsEnabled = false;
         }
-        
-
         private void TBPtnName_TextChanged(object sender, TextChangedEventArgs e)
         {
             UserControls.PatternItem itm = (UserControls.PatternItem)listView.SelectedItem;
@@ -271,6 +387,35 @@ namespace AutoCapturer
             itm.Content = TBPtnName.Text;
             ((PatternItem)listView.SelectedItem).pattern.PatternName = TBPtnName.Text;
             CurrentSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
+        }
+
+        private void BtnImport_Click(object sender, RoutedEventArgs e)
+        {
+            // 임포트 (불러오기)
+            try
+            {
+                SettingReader sr = new SettingReader(ShowSelectFileDialog(new string[] { ".aucasetting" }).FullName);
+                if (MsgBox("정말 현재 설정을 바꾸시겠습니까?","설정 변경 여부 확인", Globals.MessageBoxStyle.YesNo) == MessageBoxResult.Yes)
+                {
+                    CurrentSetting = sr.ReadSetting();
+                    MsgBox("정상적으로 변경 완료되었습니다!");
+                }
+                
+            }
+            catch (NullReferenceException)
+            { }
+            
+        }
+
+        private void BtnExport_Click(object sender, RoutedEventArgs e)
+        {
+            // 엑스포트 (내보내기)
+            var wdw = new FileSaveWindow();
+
+            if (wdw.ShowDialog())
+            {
+                MsgBox("정상적으로 내보내기가 완료되었습니다.", "내보내기 완료");
+            }
         }
 
         private void TBSaveLoc_TextChanged(object sender, TextChangedEventArgs e)
@@ -288,6 +433,8 @@ namespace AutoCapturer
         #region [ Setting 설정에 맟추기 ]
         public void SettingSync(Setting.Setting setting)
         {
+            if (keys == null) keys = new ShortCutKey[] { CurrentSetting.AutoCaptureKey, CurrentSetting.AllCaptureKey, CurrentSetting.SelectCaptureKey, CurrentSetting.OpenSettingKey };
+
             #region [ 캡처 설정 ]
             foreach (RadioButton rb in AuCaRingTypeRB)
                 if (int.Parse(rb.Tag.ToString()) + 1 == (int)setting.AutoCaptureEnableSelection) rb.IsChecked = true;
@@ -305,17 +452,68 @@ namespace AutoCapturer
                 if (int.Parse(rb.Tag.ToString()) + 1 == (int)setting.ImageFromImageTag) rb.IsChecked = true;
             #endregion
 
+            #region [ 환경 설정 ]
+            RecoHeight = CurrentSetting.RecoHeight;
+            RecoWidth = CurrentSetting.RecoWidth;
+
+            Button[][] btns = { new Button[]{ BtnAutoSave1, BtnAutoSave2 },
+                                new Button[]{ BtnAllCapture1, BtnAllCapture2 },                 
+                                new Button[]{ BtnSelCapture1, BtnSelCapture2 }, 
+                                new Button[]{ BtnOpenSetting1, BtnOpenSetting2 } };
+
+            int counter = 0;
+            foreach(ShortCutKey k in keys)
+            {
+                btns[counter][0].Tag = (int)k.FirstKey;
+                btns[counter][1].Tag = (int)k.SecondKey;
+
+                btns[counter][0].Content = k.FirstKey.ToString() + " Key";
+                btns[counter][1].Content = k.SecondKey.ToString() + " Key";
+                counter++;
+            }
+
+            for (int it = 0; it < 4; it++)
+            {
+                Button Btn1 = (Button)FindName(names[it] + "1");
+                Button Btn2 = (Button)FindName(names[it] + "2");
+                TextBlock TB = (TextBlock)FindName(names[it] + "lbl");
+                if (Btn1.Content.ToString() == Btn2.Content.ToString()) TB.Foreground = Brushes.Green; else TB.Foreground = Brushes.Black;
+
+                if (Btn1.Content.ToString() == NonUse && Btn2.Content.ToString() == NonUse) TB.Foreground = Brushes.Red;
+            }
+
+            for (int it = 0; it < 3; it++)
+            {
+                Button iBtn1, iBtn2, jBtn1, jBtn2;
+                TextBlock ilbl, jlbl;
+
+                iBtn1 = (Button)FindName(names[it] + "1");
+                iBtn2 = (Button)FindName(names[it] + "2");
+                ilbl = (TextBlock)FindName(names[it] + "lbl");
+                for (int j = it + 1; j < 4; j++)
+                {
+                    jBtn1 = (Button)FindName(names[j] + "1");
+                    jBtn2 = (Button)FindName(names[j] + "2");
+                    jlbl = (TextBlock)FindName(names[j] + "lbl");
+
+                    if (iBtn1.Content.ToString() == jBtn1.Content.ToString() && iBtn2.Content.ToString() == jBtn2.Content.ToString())
+                    {
+                        keys[it].IsDisabled = true;
+                        keys[j].IsDisabled = true;
+                        ilbl.Foreground = Brushes.Red;
+                        jlbl.Foreground = Brushes.Red;
+                    }
+
+                }
+            }
+
+            #endregion
+
             #region [ 패턴 관리 ]
             listView.Items.Clear();
-            int i = 0;
             foreach(SavePattern ptn in new SavePattern[] { CurrentSetting.DefaultPattern })
             {
                 listView.Items.Add(new PatternItem(ptn.SaveLocation, ptn.PatternName, ptn));
-                if (ReferenceEquals(ptn, setting.DefaultPattern))
-                {
-                    listView.SelectedIndex = i;
-                }
-                i++;
             }
             TBPtnCount.Text = $"등록된 패턴 ({listView.Items.Count}개)";
             #endregion

@@ -1,33 +1,109 @@
 ﻿using AutoCapturer.Converter;
 using AutoCapturer.Effectors;
+using AutoCapturer.Worker;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.ComponentModel;
 
 namespace AutoCapturer.Setting
 {
-    public class Setting
+    [Serializable]
+    public class Setting : ICloneable
     {
+        
         public delegate void SettingChangeHandler();
 
-        public event SettingChangeHandler SettingChange;
-        
+        List<SettingChangeHandler> delegates = new List<SettingChangeHandler>();
 
-        public Setting()
+        private event SettingChangeHandler _SettingChangeEvent;
+        public event SettingChangeHandler SettingChangeEvent
         {
+            add
+            {
+                _SettingChangeEvent += value;
+                delegates.Add(value);
+            }
+            remove
+            {
+                _SettingChangeEvent -= value;
+                delegates.Remove(value);
+            }
+        }
+
+        public void RemoveAllEvents()
+        {
+            foreach(SettingChangeHandler sch in delegates)
+            {
+                _SettingChangeEvent -= sch;
+            }
+            _AllCaptureKey.RemoveAllEvents();
+            _AutoCaptureKey.RemoveAllEvents();
+            _OpenSettingKey.RemoveAllEvents();
+            _SelectCaptureKey.RemoveAllEvents();
+            delegates.Clear();
+        }
+        
+        
+        public void SettingChange()
+        {
+            if (_SettingChangeEvent != null) _SettingChangeEvent();
+        }
+
+        public object Clone()
+        {
+            Setting setting = new Setting(DefaultPattern);
+            
+            setting._AllCaptureCountDown = _AllCaptureCountDown;
+            setting._AllCaptureKey = _AllCaptureKey.Clone() as ShortCutKey;
+            setting._AutoCaptureEnableSelection = _AutoCaptureEnableSelection;
+            setting._AutoCaptureKey = _AutoCaptureKey.Clone() as ShortCutKey;
+            setting._DefaultPattern = _DefaultPattern;
+            setting._ImageFromImageTag = _ImageFromImageTag;
+            setting._ImageFromURLSave = _ImageFromURLSave;
+            setting._OpenSettingKey = _OpenSettingKey.Clone() as ShortCutKey;
+            setting._Patterns = _Patterns;
+            setting._PopupCountSec = _PopupCountSec;
+            setting._RecoHeight = _RecoHeight;
+            setting._RecoWidth = _RecoWidth;
+            setting._SelectCaptureKey = _SelectCaptureKey.Clone() as ShortCutKey;
+            setting._TutorialProgress = _TutorialProgress;
+
+            return setting;
 
         }
 
+        public Setting(SavePattern ptn)
+        {
+            _Patterns.Add(ptn);
+            _DefaultPattern = ptn;
+        }
+
+        public void AddHandler()
+        {
+            _AllCaptureKey.ValueChangedEvent += KeyChange;
+            _AutoCaptureKey.ValueChangedEvent += KeyChange;
+            _OpenSettingKey.ValueChangedEvent += KeyChange;
+            _SelectCaptureKey.ValueChangedEvent += KeyChange;
+        }
+
+        private void KeyChange()
+        {
+            SettingChange();
+        }
+
         #region [ 캡쳐 설정 ]
-        
+
         #region [ 캡쳐 설정 - 자동 캡쳐 활성화 시 ]
 
-        private AuCaEnableSelection _AutoCaptureEnableSelection;
+        private AuCaEnableSelection _AutoCaptureEnableSelection = AuCaEnableSelection.SoundAndPopUp;
         /// <summary>
         /// 자동 캡쳐 활성화 시 알림 선택 방식을 말합니다.
         /// </summary>
@@ -79,49 +155,96 @@ namespace AutoCapturer.Setting
             set { _ImageFromImageTag = value; SettingChange(); }
         }
         #endregion
+        
 
+        #region [ 환경 설정 ]
 
-        #region [ 개인 설정 ]
+        private int _RecoWidth = 1;
+        private int _RecoHeight = 1;
 
-        private User _ActivatedUser;
-        /// <summary>
-        /// 현재 활성화된 유저를 나타냅니다.
-        /// </summary>
-        public User ActivatedUser
+        public Size RecoSize
         {
-            get { return _ActivatedUser; }
-            set { _ActivatedUser = value; SettingChange(); }
+            get { return new Size(_RecoWidth, _RecoHeight); }
         }
-        private User[] _Users;
-        /// <summary>
-        /// 설정에 저장된 유저 목록을 나타냅니다.
-        /// </summary>
-        public User[] Users
+
+        public int RecoWidth
         {
-            get { return _Users; }
-            set { _Users = value; SettingChange(); }
+            get { return _RecoWidth; }
+            set { _RecoWidth = value; SettingChange(); }
+        }
+        public int RecoHeight
+        {
+            get { return _RecoHeight; }
+            set { _RecoHeight = value; SettingChange(); }
+        }
+
+        #region [ 환경 설정 - 단축키 설정 ]
+        private ShortCutKey _AutoCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D2, "AutoCapture");
+        public ShortCutKey AutoCaptureKey
+        {
+            get { return _AutoCaptureKey; }
+            set { _AutoCaptureKey = value; SettingChange(); }
+        }
+        private ShortCutKey _SelectCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D4, "SelCapture");
+        public ShortCutKey SelectCaptureKey
+        {
+            get { return _SelectCaptureKey; }
+            set { _SelectCaptureKey = value; SettingChange(); }
+        }
+        private ShortCutKey _AllCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D3, "AllCapture");
+        public ShortCutKey AllCaptureKey
+        {
+            get { return _AllCaptureKey; }
+            set { _AllCaptureKey = value; SettingChange(); }
+        }
+        private ShortCutKey _OpenSettingKey = new ShortCutKey(Key.LeftCtrl , Key.D1, "OpenSetting");
+        public ShortCutKey OpenSettingKey
+        {
+            get { return _OpenSettingKey; }
+            set { _OpenSettingKey = value; SettingChange(); }
         }
         #endregion
-
-
-
-
-
-
+        #endregion
+        
 
         #region [ 패턴 관리 ]
 
-
-        public SavePattern DefaultPattern { get; set; } = new SavePattern("저장본 (%s)", "%d");
+        private SavePattern _DefaultPattern;
+        public SavePattern DefaultPattern
+        {
+            get
+            {
+                return _DefaultPattern;
+            }
+            set
+            {
+                if (!_Patterns.Contains(value)) { throw new Exception("DefaultPattern는 Patterns에 포함된 아이템이여야만 합니다."); }
+                _DefaultPattern = value;
+                SettingChange();
+            }
+        }
+        public int DefaultPatternIndex
+        {
+            get { return _Patterns.IndexOf(DefaultPattern); }
+            set { DefaultPattern = _Patterns[value]; SettingChange(); }
+        }
 
         List<SavePattern> _Patterns = new List<SavePattern>();
         public List<SavePattern> Patterns
         {
             get { return _Patterns; }
-            set { _Patterns = value; }
+            set { _Patterns = value; SettingChange(); }
         }
-
         #endregion
+
+
+
+        private bool _TutorialProgress = false;
+        public bool TutorialProgress
+        {
+            get { return _TutorialProgress; }
+            set { _TutorialProgress = value; SettingChange(); }
+        }
 
     }
 
@@ -148,16 +271,9 @@ namespace AutoCapturer.Setting
         PatternSave = 2,
         NoUse = 3
     }
+    
 
-    /// <summary>
-    /// AutoCapture를 사용할 유저에 대해서 나타냅니다.
-    /// </summary>
-    public struct User
-    {
-        public string UserName;
-        public BitmapSource UserImg;
-    }
-
+    [Serializable]
     /// <summary>
     /// 최대, 최솟값이 있는 int 형식입니다.
     /// </summary>
@@ -272,21 +388,19 @@ namespace AutoCapturer.Setting
         }
     }
     
-
-    public struct SavePattern
+    [Serializable]
+    public class SavePattern
     {
         
-        public SavePattern(string Name, string Location, bool openeffector = false, bool overwrite = false,
-                           bool putlogo = false)
+        public SavePattern(string Name, string Location, bool openeffector = false, bool overwrite = false, bool putlogo = false)
         {
             PatternName = Name;
             SaveLocation = Location;
             OpenEffector = openeffector;
             OverWrite = overwrite;
             PutLogo = putlogo;
-            SetAutoEffect = new NullBaseEffector();
         }
-
+        
         public string RealSaveName
         {
             get
@@ -312,9 +426,6 @@ namespace AutoCapturer.Setting
         public bool OpenEffector;
         public bool OverWrite;
         public bool PutLogo;
-        BaseEffector SetAutoEffect;
-
-
     }
 
 }

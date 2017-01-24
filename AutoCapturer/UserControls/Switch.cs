@@ -37,10 +37,11 @@ namespace AutoCapturer.UserControls
         protected override void OnChecked(RoutedEventArgs e)
         {
             base.OnChecked(e);
-
-            Animate(
+                Animate(
                 new Thickness(0),
                 new Thickness(ActualWidth - holder.ActualWidth, 0, 0, 0));
+            
+            
         }
 
         protected override void OnUnchecked(RoutedEventArgs e)
