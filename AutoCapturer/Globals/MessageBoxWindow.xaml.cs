@@ -92,6 +92,7 @@ namespace AutoCapturer.Globals
 
         internal new MessageBoxResult ShowDialog()
         {
+            this.Topmost = true;
             base.ShowDialog();
 
             return returndata;

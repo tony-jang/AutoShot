@@ -336,12 +336,14 @@ namespace AutoCapturer.UserControls
 
                 if (Mode == DragMode.Both || Mode == DragMode.OnlyWidth)
                 {
-                    PreviewRect.Width = Width - 16;
+                    if (Width < 16) PreviewRect.Width = 0;
+                    else PreviewRect.Width = Width - 16;
                     ReservePoint.Width = Width;
                 }
                 if (Mode == DragMode.Both || Mode == DragMode.OnlyHeight)
                 {
-                    PreviewRect.Height = Height - 16;
+                    if (Height < 16) PreviewRect.Height = 0;
+                    else PreviewRect.Height = Height - 16;
                     ReservePoint.Height = Height;
                 }
             }

@@ -6,6 +6,7 @@
              xmlns:UserControls="clr-namespace:AutoCapturer.UserControls"
              xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
              StartupUri="MainWindow.xaml">
+    <!--Windows/HelpWindow-->
     <!--Windows/ImageEditor-->
     <!--Windows/PatternWindow-->
     <!--Windows/ImageEffector-->

@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
+using AutoCapturer.Collections;
 
 namespace AutoCapturer.Setting
 {
@@ -48,6 +49,7 @@ namespace AutoCapturer.Setting
             _AutoCaptureKey.RemoveAllEvents();
             _OpenSettingKey.RemoveAllEvents();
             _SelectCaptureKey.RemoveAllEvents();
+            _ChangeEditorModeKey.RemoveAllEvents();
             delegates.Clear();
         }
         
@@ -62,6 +64,7 @@ namespace AutoCapturer.Setting
             Setting setting = new Setting(DefaultPattern);
             
             setting._AllCaptureCountDown = _AllCaptureCountDown;
+            setting._ChangeEditorModeKey = _ChangeEditorModeKey;
             setting._AllCaptureKey = _AllCaptureKey.Clone() as ShortCutKey;
             setting._AutoCaptureEnableSelection = _AutoCaptureEnableSelection;
             setting._AutoCaptureKey = _AutoCaptureKey.Clone() as ShortCutKey;
@@ -69,12 +72,13 @@ namespace AutoCapturer.Setting
             setting._ImageFromImageTag = _ImageFromImageTag;
             setting._ImageFromURLSave = _ImageFromURLSave;
             setting._OpenSettingKey = _OpenSettingKey.Clone() as ShortCutKey;
-            setting._Patterns = _Patterns;
+            setting._Patterns = (NotifyList<SavePattern>)_Patterns.Clone();
             setting._PopupCountSec = _PopupCountSec;
             setting._RecoHeight = _RecoHeight;
             setting._RecoWidth = _RecoWidth;
             setting._SelectCaptureKey = _SelectCaptureKey.Clone() as ShortCutKey;
             setting._TutorialProgress = _TutorialProgress;
+            setting._IsStartupProgram = _IsStartupProgram;
 
             return setting;
 
@@ -82,8 +86,15 @@ namespace AutoCapturer.Setting
 
         public Setting(SavePattern ptn)
         {
+            _Patterns.ListChanged += ListChanged;
             _Patterns.Add(ptn);
             _DefaultPattern = ptn;
+        }
+
+        private void ListChanged(object sender, ChangeEventArgs<SavePattern> e)
+        {
+            if (e.Action == ChangeAction.Remove) DefaultPatternIndex = 0;
+            SettingChange();
         }
 
         public void AddHandler()
@@ -179,33 +190,39 @@ namespace AutoCapturer.Setting
         }
 
         #region [ 환경 설정 - 단축키 설정 ]
-        private ShortCutKey _AutoCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D2, "AutoCapture");
+        private ShortCutKey _AutoCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.F2, "AutoCapture");
         public ShortCutKey AutoCaptureKey
         {
             get { return _AutoCaptureKey; }
             set { _AutoCaptureKey = value; SettingChange(); }
         }
-        private ShortCutKey _SelectCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D4, "SelCapture");
+        private ShortCutKey _SelectCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.F4, "SelCapture");
         public ShortCutKey SelectCaptureKey
         {
             get { return _SelectCaptureKey; }
             set { _SelectCaptureKey = value; SettingChange(); }
         }
-        private ShortCutKey _AllCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D3, "AllCapture");
+        private ShortCutKey _AllCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.F3, "AllCapture");
         public ShortCutKey AllCaptureKey
         {
             get { return _AllCaptureKey; }
             set { _AllCaptureKey = value; SettingChange(); }
         }
-        private ShortCutKey _OpenSettingKey = new ShortCutKey(Key.LeftCtrl , Key.D1, "OpenSetting");
+        private ShortCutKey _OpenSettingKey = new ShortCutKey(Key.LeftCtrl , Key.F1, "OpenSetting");
         public ShortCutKey OpenSettingKey
         {
             get { return _OpenSettingKey; }
             set { _OpenSettingKey = value; SettingChange(); }
         }
+        private ShortCutKey _ChangeEditorModeKey = new ShortCutKey(Key.LeftCtrl, Key.F5, "ChangeEditorMode");
+        public ShortCutKey ChangeEditorModeKey
+        {
+            get { return _ChangeEditorModeKey; }
+            set { _ChangeEditorModeKey = value;  SettingChange(); }
+        }
         #endregion
         #endregion
-        
+
 
         #region [ 패턴 관리 ]
 
@@ -229,8 +246,8 @@ namespace AutoCapturer.Setting
             set { DefaultPattern = _Patterns[value]; SettingChange(); }
         }
 
-        List<SavePattern> _Patterns = new List<SavePattern>();
-        public List<SavePattern> Patterns
+        NotifyList<SavePattern> _Patterns = new NotifyList<SavePattern>();
+        public NotifyList<SavePattern> Patterns
         {
             get { return _Patterns; }
             set { _Patterns = value; SettingChange(); }
@@ -244,6 +261,14 @@ namespace AutoCapturer.Setting
         {
             get { return _TutorialProgress; }
             set { _TutorialProgress = value; SettingChange(); }
+        }
+
+        private bool _IsStartupProgram = false;
+
+        public bool IsStartupProgram
+        {
+            get { return _IsStartupProgram; }
+            set { _IsStartupProgram = value;  SettingChange(); }
         }
 
     }
@@ -392,13 +417,12 @@ namespace AutoCapturer.Setting
     public class SavePattern
     {
         
-        public SavePattern(string Name, string Location, bool openeffector = false, bool overwrite = false, bool putlogo = false)
+        public SavePattern(string Name, string Location, bool openeffector = false, bool overwrite = false)
         {
             PatternName = Name;
             SaveLocation = Location;
             OpenEffector = openeffector;
             OverWrite = overwrite;
-            PutLogo = putlogo;
         }
         
         public string RealSaveName
@@ -425,7 +449,6 @@ namespace AutoCapturer.Setting
         
         public bool OpenEffector;
         public bool OverWrite;
-        public bool PutLogo;
     }
 
 }

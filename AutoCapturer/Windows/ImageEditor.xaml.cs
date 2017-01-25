@@ -81,9 +81,6 @@ namespace AutoCapturer.Windows
             if (Index == 2) CropInfoTB.Visibility = Visibility.Visible;
             else CropInfoTB.Visibility = Visibility.Hidden;
             Editor.ImageEditMode = (EditMode)Index;
-            //RenderTargetBitmap img = (RenderTargetBitmap)Editor.Originalimage;
-
-            
         }
 
         private void SelectionChanging(object sender, SelectionChangedEventArgs e)

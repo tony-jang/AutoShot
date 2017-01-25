@@ -13,6 +13,7 @@ using static AutoCapturer.Sounds.NotificationSounds;
 using static AutoCapturer.Interop.UnsafeNativeMethods;
 using static AutoCapturer.Interop.NativeMethods;
 using static AutoCapturer.Globals.Globals;
+using static AutoCapturer.Globals.ImageUtilities;
 using f = System.Windows.Forms;
 using s = System.Windows.Shapes;
 using w = System.Windows;
@@ -24,6 +25,9 @@ using System.Threading;
 using AutoCapturer.Setting;
 using System.Windows.Shapes;
 using AutoCapturer.UserControls;
+using System.Text;
+using System.Net;
+using Microsoft.Win32;
 
 namespace AutoCapturer
 {
@@ -42,130 +46,208 @@ namespace AutoCapturer
         ImgFromPrtScrWorker ImgWorker = new ImgFromPrtScrWorker();
         StorageSpaceWorker spaceworker = new StorageSpaceWorker();
         ShortCutWorker scworker = new ShortCutWorker();
+        ImgFromURLWorker urlworker = new ImgFromURLWorker();
 
         int ExpectSize = 1000;
 
         public MainWindow()
         {
             InitializeComponent();
+            //try
+            //{
+
+            PngBitmapEncoder enc = new PngBitmapEncoder();
+
+            ExpectSize = ImageSourceToBytes(enc, CopyScreen()).Length;
+
+            MainDispatcher = Dispatcher;
+
+            CurrentSetting = new SettingReader().ReadSetting();
+            if (CurrentSetting == null)
+                CurrentSetting = (new InitSettingWindow()).ShowDialog();
+
+            CurrentSetting.AddHandler();
+            CurrentSetting.SettingChangeEvent += SettingChange;
+
+            if (!CurrentSetting.TutorialProgress)
+            {
+                if (MsgBox("Auto Capturer 도움말을 엽니다. 계속하시겠습니까?", "도움말", MessageBoxStyle.YesNo) == MessageBoxResult.Yes)
+                {
+                    var hw = new HelpWindow();
+                    hw.ShowDialog();
+                }
+
+
+                CurrentSetting.TutorialProgress = true;
+            }
+
+
+            this.Topmost = true;
+
+            da.Duration = new Duration(TimeSpan.FromMilliseconds(800));
+            da.FillBehavior = FillBehavior.Stop;
+
+            OpaAni.Duration = new Duration(TimeSpan.FromMilliseconds(800));
+            OpaAni.FillBehavior = FillBehavior.Stop;
+
+            this.Left = 0; this.Top = 0;
+
+            ImgWorker.Find += DetectPrtscr;
+            ImgWorker.Work();
+
+            spaceworker.Find += SpaceChange;
+            spaceworker.Work();
+
             try
             {
-
-                PngBitmapEncoder enc = new PngBitmapEncoder();
-
-                ExpectSize = ImageSourceToBytes(enc, CopyScreen()).Length;
-
-                MainDispatcher = Dispatcher;
-
-                CurrentSetting = new SettingReader().ReadSetting();
-                if (CurrentSetting == null)
-                    CurrentSetting = (new InitSettingWindow()).ShowDialog();
-                //CurrentSetting = new Setting.Setting(new SavePattern("%a", "%d"));
-                CurrentSetting.AddHandler();
-                //CurrentSetting = new Setting.Setting(new SavePattern("%a", "%d", true, true, true));
+                if (IsImage(Clipboard.GetText())) Clipboard.Clear();
+            }
+            catch { }
 
 
-                CurrentSetting.SettingChangeEvent += SettingChange;
+            urlworker.Find += DetectURL;
+            urlworker.Work();
 
-                //CurrentSetting.RecoWidth = 10;
-                //CurrentSetting.RecoHeight = 10;
+            scworker.Keys.Add(CurrentSetting.AllCaptureKey);
+            scworker.Keys.Add(CurrentSetting.AutoCaptureKey);
+            scworker.Keys.Add(CurrentSetting.OpenSettingKey);
+            scworker.Keys.Add(CurrentSetting.ChangeEditorModeKey);
+            scworker.Keys.Add(CurrentSetting.SelectCaptureKey);
 
-                //CurrentSetting.Patterns.Add(CurrentSetting.DefaultPattern);
+            scworker.Find += DetectShortCut;
+            scworker.Work();
+
+            this.MouseMove += FrmAppear;
+            this.MouseLeave += FrmDisappear;
+
+            FrmDisappear(this, null);
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
 
 
-                //SettingWriter sw = new SettingWriter(CurrentSetting);
-                //SettingReader sr = new SettingReader();
+        }
 
-                //MessageBox.Show(sr.ReadSetting().DefaultPattern.RealSaveLocation);
-                if (!CurrentSetting.TutorialProgress)
+
+        private void DetectURL(object sender, WorkEventArgs e)
+        {
+            try
+            {
+                ImageSizeEventArgs ev = (ImageSizeEventArgs)e;
+
+                if (CurrentSetting.ImageFromURLSave == HowtoSaveGetPicture.NoUse) return;
+
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.UriSource = ev.Img.UriSource;
+                image.DecodePixelHeight = (int)ev.ImageSize.Height;
+                image.DecodePixelWidth = (int)ev.ImageSize.Width;
+                image.EndInit();
+
+                if (CurrentSetting.ImageFromURLSave == HowtoSaveGetPicture.PatternSave)
                 {
-                    if (MsgBox("Auto Capturer 튜토리얼을 진행합니다. 필요하신가요?", "튜토리얼", MessageBoxStyle.YesNo) == MessageBoxResult.Yes)
-                        MsgBox("OK");
-
-                    CurrentSetting.TutorialProgress = true;
+                    SaveRequest(image);
                 }
-                    
-                        
-
-                this.Topmost = true;
-
-                da.Duration = new Duration(TimeSpan.FromMilliseconds(800));
-                da.FillBehavior = FillBehavior.Stop;
-
-                OpaAni.Duration = new Duration(TimeSpan.FromMilliseconds(800));
-                OpaAni.FillBehavior = FillBehavior.Stop;
-
-                this.Left = 0; this.Top = 0;
-
-                ImgWorker.Find += DetectPrtscr;
-                ImgWorker.Work();
-
-                spaceworker.Find += SpaceChange;
-                spaceworker.Work();
-
-
-                scworker.Keys.Add(CurrentSetting.AllCaptureKey);
-                scworker.Keys.Add(CurrentSetting.AutoCaptureKey);
-                scworker.Keys.Add(CurrentSetting.OpenSettingKey);
-                scworker.Keys.Add(CurrentSetting.SelectCaptureKey);
-
-                scworker.Find += DetectShortCut;
-                scworker.Work();
-
-                this.MouseMove += FrmAppear;
-                this.MouseLeave += FrmDisappear;
-
-                FrmDisappear(this, null);
+                else if (CurrentSetting.ImageFromURLSave == HowtoSaveGetPicture.Ask)
+                {
+                    if (MsgBox("사진이 포함된 URL을 감지했습니다. 저장할까요?", "사진 저장 확인", MessageBoxStyle.YesNo) == MessageBoxResult.Yes)
+                    {
+                        SaveRequest(image);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MsgBox(ex.ToString());
             }
-            //MessageBox.Show(ShowSelectFileDialog().FullName);
-
-
         }
 
         private void DetectShortCut(object sender, WorkEventArgs e)
         {
-            ShortCutWorkEventArgs ev = (ShortCutWorkEventArgs)e;
-
-            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+            try
             {
-                switch (ev.Data.SeparateKey)
+                ShortCutWorkEventArgs ev = (ShortCutWorkEventArgs)e;
+
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                 {
-                    case "AutoCapture":
-                        BtnEnAutoSave_Click(this, null);
-                        break;
-                    case "AllCapture":
-                        BtnAllCapture_Click(this, null);
-                        break;
-                    case "OpenSetting":
-                        PathButton_Click(this, null);
-                        break;
-                }
-            }));
+                    switch (ev.Data.SeparateKey)
+                    {
+                        case "AutoCapture":
+                            BtnEnAutoSave_Click(this, null);
+                            break;
+                        case "AllCapture":
+                            BtnAllCapture_Click(this, null);
+                            break;
+                        case "OpenSetting":
+                            PathButton_Click(this, null);
+                            break;
+                        case "SelCapture":
+                            BtnSelCapture_Click(this, null);
+                            break;
+                        case "ChangeEditorMode":
+                            ChangeEditorMode();
+                            break;
+                    }
+                }));
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.ToString());
+            }
+
+        }
+
+        public void ChangeEditorMode()
+        {
+            PopUpWindow pw;
+            if (CurrentSetting.DefaultPattern.OpenEffector)
+            {
+                pw = new PopUpWindow("이미지 에디터 모드 변경", "캡쳐 후 에디터를 열지 않게 변경되었습니다.");
+            }
+            else
+            {
+                pw = new PopUpWindow("이미지 에디터 모드 변경", "캡쳐 후 에디터가 열리게 변경되었습니다.");
+            }
+            pw.ShowTime(CurrentSetting.PopupCountSecond * 1000);
+            
+            CurrentSetting.DefaultPattern.OpenEffector = !CurrentSetting.DefaultPattern.OpenEffector;
         }
 
         private void SpaceChange(object sender, WorkEventArgs e)
         {
-            StorageSpaceWorkEventArgs ev = (StorageSpaceWorkEventArgs)e;
-            
-            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+            try
             {
-                SpaceCalculator sc = new SpaceCalculator(ev.driveinfo.Name, ExpectSize, 99999);
-                RemainSpaceRun.Text = sc.RemainPicNumText;
-                TBSpaceToolTip.RemainPictureCount = sc.RemainPicNum.ToString();
-                TBSpaceToolTip.CalcFileSize = Math.Round((double)ExpectSize / 1024 / 1024, 4) + "MB";
-            }));
+                StorageSpaceWorkEventArgs ev = (StorageSpaceWorkEventArgs)e;
+
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                {
+                    SpaceCalculator sc = new SpaceCalculator(ev.driveinfo.Name, ExpectSize, 99999);
+                    RemainSpaceRun.Text = sc.RemainPicNumText;
+                    TBSpaceToolTip.RemainPictureCount = sc.RemainPicNum.ToString();
+                    TBSpaceToolTip.CalcFileSize = Math.Round((double)ExpectSize / 1024 / 1024, 4) + "MB";
+                }));
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.ToString());
+            }
+
         }
 
         private void SettingChange()
         {
-            //PopUpWindow wdw = new PopUpWindow("설정이 변경되었습니다.", "정상적으로 변경 인식되었습니다.");
-            //wdw.ShowTime(1000);
             DetectGrid.Width = CurrentSetting.RecoWidth;
             DetectGrid.Height = CurrentSetting.RecoHeight;
+
+            RegistryKey rkey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+
+            if (CurrentSetting.IsStartupProgram)
+                rkey.SetValue("AutoCapturer", $"\"{System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName}\" -bystartup");
+            else
+                rkey.DeleteValue("AutoCapturer", false);
 
             SettingWriter sw = new SettingWriter((Setting.Setting)CurrentSetting.Clone());
         }
@@ -192,7 +274,6 @@ namespace AutoCapturer
                 Appear();
             }
         }
-
         private void FrmDisappear(object sender, w.Input.MouseEventArgs e)
         {
             if (Visibled)
@@ -201,7 +282,6 @@ namespace AutoCapturer
                 DisAppear();
             }
         }
-
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -224,7 +304,6 @@ namespace AutoCapturer
             try
             {
                 PopUpWindow pw;
-                //DropShadowEffect eff = (DropShadowEffect)MainRect.Effect;
                 if (!AuCaEnabled)
                 {
                     pw = new PopUpWindow("자동 캡쳐 활성화", "파일로 자동 저장합니다.");
@@ -232,7 +311,6 @@ namespace AutoCapturer
                         CurrentSetting.AutoCaptureEnableSelection == Setting.AuCaEnableSelection.SoundAndPopUp)
                         PlayNotificationSound(SoundType.AuCaModeOn);
 
-                    //eff.Color = Colors.Red;
                 }
                 else
                 {
@@ -241,7 +319,6 @@ namespace AutoCapturer
                         CurrentSetting.AutoCaptureEnableSelection == Setting.AuCaEnableSelection.SoundAndPopUp)
                         PlayNotificationSound(SoundType.AuCaModeOff);
 
-                    //eff.Color = Colors.Black;
                 }
                 if (CurrentSetting.AutoCaptureEnableSelection == Setting.AuCaEnableSelection.OpenPopup ||
                         CurrentSetting.AutoCaptureEnableSelection == Setting.AuCaEnableSelection.SoundAndPopUp)
@@ -336,78 +413,71 @@ namespace AutoCapturer
         string path;
         private void BtnAllCapture_Click(object sender, RoutedEventArgs e)
         {
-            Thread thr = new Thread(() =>
+            try
             {
-                Dispatcher.Invoke(new Action(() => { this.IsEnabled = false; DisAppear(); }));
-                
-                if (Visibled) Thread.Sleep(500);
-                
-                var wdw = new CountDownWindow(CurrentSetting.AllCaptureCountDown);
-
-                wdw.ShowDialog();
-                
-
-                path = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
-                                                             CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
-                BitmapSource image = CopyScreen();
-
-                Clipboard.SetData(DataFormats.Bitmap, image);
-
-                PlayNotificationSound(SoundType.Captured);
-
-                if (CurrentSetting.DefaultPattern.OpenEffector)
+                Thread thr = new Thread(() =>
                 {
-                    if (!GetImageFromImageEditor(ref image)) return;
-                }
-                var filestream = new FileStream(path, FileMode.Create);
+                    Dispatcher.Invoke(new Action(() => { this.IsEnabled = false; DisAppear(); }));
 
-                var encoder = new PngBitmapEncoder();
+                    if (Visibled) Thread.Sleep(500);
 
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                encoder.Save(filestream);
+                    var wdw = new CountDownWindow(CurrentSetting.AllCaptureCountDown);
 
-                encoder = new PngBitmapEncoder();
-
-                ExpectSize = ImageSourceToBytes(encoder, image).Length;
-
-                filestream.Dispose();
+                    wdw.ShowDialog();
 
 
-                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-                {
-                    PopUpWindow puw = new PopUpWindow("저장 완료됨", "정상적으로 저장이 완료되었습니다.");
-                    puw.ShowTime(1000);
-                }));
+                    path = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
+                                                                 CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
+                    BitmapSource image = CopyScreen();
 
-                Dispatcher.Invoke(new Action(() => { this.IsEnabled = true; }));
-            });
+                    Clipboard.SetData(DataFormats.Bitmap, image);
 
-            thr.SetApartmentState(ApartmentState.STA);
-            thr.Start();
+                    PlayNotificationSound(SoundType.Captured);
+
+                    SaveRequest(image);
+
+                    Dispatcher.Invoke(new Action(() => { this.IsEnabled = true; }));
+                });
+
+                thr.SetApartmentState(ApartmentState.STA);
+                thr.Start();
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.ToString());
+            }
+
 
         }
 
-        //int ctr = 0;
-        private void DetectPrtscr(object sender, WorkEventArgs e)
+        public void SaveRequest(BitmapSource image)
         {
-            path = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
-                                                         CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
-            if (AuCaEnabled)
+            try
             {
-                BitmapSource image = (BitmapSource)((ImageWorkEventArgs)e).Data;
-
-                PlayNotificationSound(SoundType.Captured);
-
+                path = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
+                                                         CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
+                if (File.Exists(path) && !CurrentSetting.DefaultPattern.OverWrite)
+                {
+                    bool flag = false;
+                    int Counter = 1;
+                    while (!flag)
+                    {
+                        string tmp;
+                        tmp = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
+                                                         CurrentSetting.DefaultPattern.RealSaveName + $"({Counter})" + ".jpg");
+                        Counter++;
+                        if (File.Exists(tmp)) continue;
+                        else if (!File.Exists(tmp)) { path = tmp; break; }
+                    }
+                }
                 if (CurrentSetting.DefaultPattern.OpenEffector)
                 {
                     if (!GetImageFromImageEditor(ref image)) return;
                 }
 
-
                 var filestream = new FileStream(path, FileMode.Create);
 
                 var encoder = new PngBitmapEncoder();
-
 
 
                 encoder.Frames.Add(BitmapFrame.Create(image));
@@ -425,10 +495,31 @@ namespace AutoCapturer
                     PopUpWindow puw = new PopUpWindow("저장 완료됨", "정상적으로 저장이 완료되었습니다.");
                     puw.ShowTime(1000);
                 }));
-
-
-
             }
+            catch (Exception ex)
+            {
+                MsgBox(ex.ToString());
+            }
+        }
+
+        private void DetectPrtscr(object sender, WorkEventArgs e)
+        {
+            try
+            {
+                if (AuCaEnabled)
+                {
+                    BitmapSource image = (BitmapSource)((ImageWorkEventArgs)e).Data;
+
+                    PlayNotificationSound(SoundType.Captured);
+
+                    SaveRequest(image);
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.ToString());
+            }
+
         }
         Window Wdw;
         Grid grid;
@@ -452,7 +543,7 @@ namespace AutoCapturer
 
 
                 // 선택 캡처
-                
+
                 foreach (var scr in f.Screen.AllScreens)
                 {
                     FullBound = d.Rectangle.Union(FullBound, scr.Bounds);
@@ -484,12 +575,12 @@ namespace AutoCapturer
 
                 //TODO : 커서 변환 완성시키기
                 blnkrect.MouseDown += DragStart;
-                blnkrect.Cursor = CursorHelper.CreateCursor(
-                    BitmapImage2Bitmap(new BitmapImage(new Uri("/AutoCapturer;component/Resources/Icons/SmallIcons/DeskIcon.png", UriKind.Relative))),0,0);
+                //blnkrect.Cursor = CursorHelper.CreateCursor(
+                //    BitmapImage2Bitmap(new BitmapImage(new Uri("/AutoCapturer;component/Resources/Icons/SmallIcons/DeskIcon.png", UriKind.Relative))),0,0);
 
                 Wdw = new Window();
                 Wdw.AllowsTransparency = true;
-
+                Wdw.Topmost = true;
                 Wdw.ResizeMode = ResizeMode.NoResize;
                 Wdw.Left = FullBound.Left;
                 Wdw.Top = FullBound.Top;
@@ -513,50 +604,20 @@ namespace AutoCapturer
                     this.IsEnabled = true;
                 }));
 
-
-                path = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
-                                              CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
-
-
+                
                 BitmapSource image = new CroppedBitmap((BitmapSource)((ImageBrush)Wdw.Background).ImageSource,
-                    new Int32Rect (blnkrect.Rect.X, blnkrect.Rect.Y, blnkrect.Rect.Width, blnkrect.Rect.Height));
+                    new Int32Rect(blnkrect.Rect.X, blnkrect.Rect.Y, blnkrect.Rect.Width, blnkrect.Rect.Height));
 
-                if (CurrentSetting.DefaultPattern.OpenEffector)
-                {
-                    if (!GetImageFromImageEditor(ref image)) return;
-                }
-
-
-                var filestream = new FileStream(path, FileMode.Create);
-
-                var encoder = new PngBitmapEncoder();
-
-
-
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                encoder.Save(filestream);
-
-                encoder = new PngBitmapEncoder();
-
-                ExpectSize = ImageSourceToBytes(encoder, image).Length;
-
-                filestream.Dispose();
-
-
-                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-                {
-                    PopUpWindow puw = new PopUpWindow("저장 완료됨", "정상적으로 저장이 완료되었습니다.");
-                    puw.ShowTime(1000);
-                }));
+                SaveRequest(image);
 
 
 
             });
-        
+
 
             thr.SetApartmentState(ApartmentState.STA);
             thr.Start();
-            
+
         }
 
         private void WdwInit(object sender, RoutedEventArgs e)
@@ -591,7 +652,7 @@ namespace AutoCapturer
                 dragGrid.Height = (NowLoc.Y - StartLoc.Y);
             }
 
-            
+
             blnkrect.Rect = new d.Rectangle((int)dragGrid.Margin.Left, (int)dragGrid.Margin.Top, (int)dragGrid.Width, (int)dragGrid.Height);
 
 
@@ -611,7 +672,7 @@ namespace AutoCapturer
                     Wdw.Close();
                 }
 
-                
+
             }
         }
 
@@ -658,12 +719,28 @@ namespace AutoCapturer
 
             exStyle |= (int)ExtendedWindowStyles.WS_EX_TOOLWINDOW;
             SetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
+
+            this.Topmost = true;
         }
 
         private void PathButton_Click(object sender, RoutedEventArgs e)
         {
+            scworker.IsUsed = false;
             sw = new SettingWindow();
             sw.ShowDialog();
+            scworker.IsUsed = true;
+        }
+
+        private void HelpButt_Click(object sender, RoutedEventArgs e)
+        {
+            var hw = new HelpWindow();
+
+            hw.ShowDialog();
+        }
+
+        private void CrossButt_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

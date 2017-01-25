@@ -26,8 +26,9 @@ namespace AutoCapturer.Setting
                 fs.Close();
                 return sting;
             }
-            catch
+            catch (Exception ex)
             {
+                fs.Close();
                 return null;
             }
             

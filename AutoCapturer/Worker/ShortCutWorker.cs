@@ -20,6 +20,7 @@ namespace AutoCapturer.Worker
 
         private List<ShortCutKey> _DownKeys = new List<ShortCutKey>();
 
+        public bool IsUsed = true;
 
         public ShortCutWorker() : this(new List<ShortCutKey>()) { }
         public ShortCutWorker(ShortCutKey key) : this(new List<ShortCutKey>(new ShortCutKey[] { key })) { }
@@ -32,23 +33,25 @@ namespace AutoCapturer.Worker
             {
                 do
                 {
-                    foreach (ShortCutKey key in keys)
+                    if (IsUsed)
                     {
-                        if (key.IsDisabled || IsAllNone(key.FirstKey, key.SecondKey)) continue;
-                        if (_DownKeys.Contains(key))
+                        foreach (ShortCutKey key in keys)
                         {
-                            if (IsKeyUp(key.FirstKey) || IsKeyUp(key.SecondKey)) _DownKeys.Remove(key);
+                            if (key.IsDisabled || IsAllNone(key.FirstKey, key.SecondKey)) continue;
+                            if (_DownKeys.Contains(key))
+                            {
+                                if (IsKeyUp(key.FirstKey) || IsKeyUp(key.SecondKey)) _DownKeys.Remove(key);
 
-                            continue;
-                        }
-                        if (IsKeyDown(key.FirstKey) && IsKeyDown(key.SecondKey))
-                        {
-                            _DownKeys.Add(key);
-                            OnFind(new ShortCutWorkEventArgs(key));
+                                continue;
+                            }
+                            if (IsKeyDown(key.FirstKey) && IsKeyDown(key.SecondKey))
+                            {
+                                _DownKeys.Add(key);
+                                OnFind(new ShortCutWorkEventArgs(key));
+                            }
                         }
                     }
-
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                 } while (true);
 
             });

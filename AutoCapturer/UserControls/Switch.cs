@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -32,25 +33,54 @@ namespace AutoCapturer.UserControls
             border = GetTemplateChild("PART_Border") as Border;
 
             this.InvalidateVisual();
+
+            
+            while (SavingRequest.Count != 0)
+            {
+                Tuple<bool, RoutedEventArgs> check = SavingRequest.Dequeue();
+                if (check.Item1) OnChecked(check.Item2);
+                if (!check.Item1) OnUnchecked(check.Item2);
+            }
+            
         }
 
+        public Queue<Tuple<bool, RoutedEventArgs>> SavingRequest = new Queue<Tuple<bool, RoutedEventArgs>>();
         protected override void OnChecked(RoutedEventArgs e)
         {
-            base.OnChecked(e);
-                Animate(
-                new Thickness(0),
-                new Thickness(ActualWidth - holder.ActualWidth, 0, 0, 0));
             
-            
+            if (holder == null) SavingRequest.Enqueue(new Tuple<bool,RoutedEventArgs> (true, e));
+            else
+            {
+                base.OnChecked(e);
+
+                if (holder.ActualWidth == 0)
+                {
+                    Animate(
+                        new Thickness(0),
+                        new Thickness(Width - holder.Width, 0, 0, 0));
+                }
+                else
+                {
+                    Animate(
+                        new Thickness(0),
+                        new Thickness(ActualWidth - holder.ActualWidth, 0, 0, 0));
+                }
+                
+            }
         }
 
         protected override void OnUnchecked(RoutedEventArgs e)
         {
-            base.OnUnchecked(e);
+            if (holder == null) SavingRequest.Enqueue(new Tuple<bool, RoutedEventArgs>(false, e));
+            else
+            {
+                base.OnUnchecked(e);
 
-            Animate(
-                new Thickness(ActualWidth - holder.ActualWidth, 0, 0, 0),
-                new Thickness(0));
+                Animate(
+                    new Thickness(ActualWidth - holder.ActualWidth, 0, 0, 0),
+                    new Thickness(0));
+            }
+            
         }
 
         protected override Size MeasureOverride(Size constraint)

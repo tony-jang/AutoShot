@@ -53,9 +53,8 @@
                         <TextBlock Margin="0,5,0,0" Text="초기 설정 시작" Foreground="Black" FontSize="20"/>
                         <TextBlock Margin="0,4,0,0" TextWrapping="Wrap">
                             지금부터 Auto Capturer <Run Text="초기 설정" FontWeight="Bold"/>을 시작합니다.<LineBreak/>
-                            만약 초기 설정을 원하시지 않으면 건너뛰기를 눌러서 바로 시작해주시면 됩니다.<LineBreak/>
-                            만일 초기 설정을 건너뛰시면 사용자는 자동으로 'User' 라는 이름으로 만들어지게 됩니다.<LineBreak/>
-                            패턴은 자동으로 바탕화면으로 저장되게 되며<LineBreak/>이름은 '캡쳐(시간)'으로 저장되게 됩니다.
+                            만약 초기 설정을 원하시지 않으면 모두 건너뛰기를 눌러서 바로 시작해주시면 됩니다.<LineBreak/>
+                            기본 패턴은 자동으로 바탕화면에 저장되며 이름은 '캡쳐(시간)'으로 저장되게 됩니다.
                         </TextBlock>
                     </StackPanel>
                     <Grid Grid.Row="1" Width="200" HorizontalAlignment="Right">
@@ -131,7 +130,7 @@
                                         : 현재 시간 (24시간)<LineBreak/>
                                         : 현재 날짜 (4자)<LineBreak/>
                                         : 현재 날짜 (8자)<LineBreak/>
-                                        : 자동 포맷 (%D + %s)
+                                        : 합성 포맷 (%D+%s)
                                 </TextBlock>
                                 <TextBlock Grid.Row="2" Grid.Column="2">
                                         Ex) 오전 11시 30분<LineBreak/>
@@ -242,10 +241,7 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="컴퓨터가 켜질때 자동으로 시작하기" VerticalAlignment="Center"/>
-                            <u:Switch Grid.Column="1" Margin="5" Style="{StaticResource SimpleCheckBoxStyle}"/>
-
-                            <TextBlock Grid.Row="1" Text="컴퓨터가 켜질때 자동으로 시작하기" VerticalAlignment="Center"/>
-                            <u:Switch Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource SimpleCheckBoxStyle}"/>
+                            <u:Switch x:Name="swStartupProgram" Grid.Column="1" Margin="5" Style="{StaticResource SimpleCheckBoxStyle}"/>
                         </Grid>
                     </StackPanel>
 
@@ -255,11 +251,6 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="모두 건너뛰기" Margin="5" Grid.Column="0" Click="BtnAllSkip_Click">
-                            <Button.Effect>
-                                <DropShadowEffect ShadowDepth="0" Opacity="0.5"/>
-                            </Button.Effect>
-                        </Button>
                         <Button Content="이전" Margin="5" Grid.Column="1" Tag="2" Click="PrevBtn_Click">
                             <Button.Effect>
                                 <DropShadowEffect ShadowDepth="0" Opacity="0.5"/>

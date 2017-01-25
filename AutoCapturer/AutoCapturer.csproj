@@ -108,6 +108,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Collections\ChangeAction.cs" />
+    <Compile Include="Collections\ChangeEventArgs.cs" />
+    <Compile Include="Collections\NotifyList.cs" />
     <Compile Include="Converter\LocationConverter.cs" />
     <Compile Include="Converter\PatternConverter.cs" />
     <Compile Include="Effectors\BaseEffector.cs" />
@@ -130,6 +133,9 @@
     </Compile>
     <Compile Include="Windows\FileSaveWindow.xaml.cs">
       <DependentUpon>FileSaveWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\InitSettingWindow.xaml.cs">
       <DependentUpon>InitSettingWindow.xaml</DependentUpon>
@@ -157,9 +163,6 @@
     <Compile Include="Windows\ChromeWindow.cs" />
     <Compile Include="Windows\ImageEditor.xaml.cs">
       <DependentUpon>ImageEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ImageEffector.xaml.cs">
-      <DependentUpon>ImageEffector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\PatternWindow.xaml.cs">
       <DependentUpon>PatternWindow.xaml</DependentUpon>
@@ -206,11 +209,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ImageEditor.xaml">
+    <Page Include="Windows\HelpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ImageEffector.xaml">
+    <Page Include="Windows\ImageEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -328,6 +331,28 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Cursors\crosscur.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HelpImages\AllCaptureHelpPic1.png" />
+    <Resource Include="Resources\HelpImages\AutoCaptureHelpPic1.png" />
+    <Resource Include="Resources\HelpImages\BasicPng.png" />
+    <Resource Include="Resources\HelpImages\SelectCaptureHelpPic1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HelpImages\UIHelpPic1.png" />
+    <Resource Include="Resources\HelpImages\UIHelpPic2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HelpImages\UIHelpPic3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HelpImages\Setting_CaptureHelpPic1.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HelpImages\Setting_EnvironHelpPic1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HelpImages\Setting_PatternHelpPic1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

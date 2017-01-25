@@ -26,6 +26,8 @@ namespace AutoCapturer.Windows
         public InitSettingWindow()
         {
             InitializeComponent();
+            PtnNameTB.Text = "캡쳐(%t)";
+            SaveLocTB.Text = "%d";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -35,7 +37,9 @@ namespace AutoCapturer.Windows
 
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
-            Grids.SelectedIndex = int.Parse(((Button)sender).Tag.ToString()) + 1;
+            int index = int.Parse(((Button)sender).Tag.ToString()) + 1;
+            if (index == 3) { this.Close(); return; }
+            Grids.SelectedIndex = index;
         }
 
         private void PrevBtn_Click(object sender, RoutedEventArgs e)
@@ -54,6 +58,12 @@ namespace AutoCapturer.Windows
         public new Setting.Setting ShowDialog()
         {
             base.ShowDialog();
+
+            ReturnSetting.DefaultPattern.SaveLocation = SaveLocTB.Text;
+            ReturnSetting.DefaultPattern.PatternName = PtnNameTB.Text;
+            ReturnSetting.IsStartupProgram = (bool)swStartupProgram.IsChecked;
+            
+
             return ReturnSetting;
         }
 

@@ -2,7 +2,6 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\bin\Release\
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\MainWindow.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\UserControls\ImageEdit.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\ImageEditor.g.cs
-F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\ImageEffector.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\PatternWindow.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\PopUpWindow.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\SelDirectoryWindow.g.cs
@@ -27,7 +26,6 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\MainWindow.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\UserControls\ImageEdit.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\ImageEditor.baml
-F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\ImageEffector.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\InitSettingWindow.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\PatternWindow.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\PopUpWindow.baml
@@ -42,3 +40,9 @@ F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Globals\MessageBoxWindow.g.cs
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Globals\KeyInputWindow.baml
 F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Globals\MessageBoxWindow.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\CountDownWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\FileSaveWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\HelpWindow.g.cs
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\CountDownWindow.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\FileSaveWindow.baml
+F:\장유탁 파일\Github Project\AutoCapturer_Second\AutoCapturer\obj\Release\Windows\HelpWindow.baml
