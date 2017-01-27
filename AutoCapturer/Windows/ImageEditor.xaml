@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="Auto Capturer Image Editor" d:DesignHeight="600" d:DesignWidth="900" WindowStartupLocation="CenterScreen" Height="600" Width="900">
+        Title="Auto Capturer Image Editor" d:DesignHeight="600" d:DesignWidth="900" WindowStartupLocation="CenterScreen" Height="600" Width="900" Icon="/AutoCapturer;component/AuCaOff.ico">
     <Window.Resources>
         <Style x:Key="RadioButtonWithImage" TargetType="{x:Type RadioButton}">
             <Setter Property="BorderBrush" Value="Black"/>

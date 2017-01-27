@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="Auto Capturer Setting" Height="700" Width="850"  WindowStartupLocation="CenterScreen">
+        Title="Auto Capturer Setting" Height="700" Width="850"  WindowStartupLocation="CenterScreen" Icon="/AutoCapturer;component/AuCaOff.ico">
     <!--d:DesignHeight="500" d:DesignWidth="700"-->
     <w:ChromeWindow.Resources>
         <StreamGeometry x:Key="CheckPath">M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z</StreamGeometry>

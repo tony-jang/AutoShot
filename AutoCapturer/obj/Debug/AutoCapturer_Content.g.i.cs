@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sounds/camsound.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("aucaoff.ico")]
 
 

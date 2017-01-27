@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoCapturer.Windows"
         mc:Ignorable="d"
-        Title="Auto Capturer 도움말" Height="600" Width="900" AllowsTransparency="True" WindowStyle="None">
+        Title="Auto Capturer 도움말" Height="600" Width="900" AllowsTransparency="True" WindowStyle="None" Icon="/AutoCapturer;component/AuCaOff.ico">
     <Window.Resources>
         <Grid x:Key="MainHelp">
             <StackPanel Margin="20">

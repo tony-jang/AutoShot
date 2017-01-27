@@ -6,7 +6,7 @@
         
         xmlns:local="clr-namespace:AutoCapturer.Windows"
         mc:Ignorable="d"
-        Title="패턴 추가" Height="210" Width="600" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" IsHitTestVisible="True">
+        Title="패턴 추가" Height="210" Width="600" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" IsHitTestVisible="True" Icon="/AutoCapturer;component/AuCaOff.ico">
     <Grid Background="#FFE5E5E5">
         <Grid Width="550" Margin="0,0,0,30" Height="110" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
