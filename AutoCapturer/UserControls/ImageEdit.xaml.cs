@@ -370,7 +370,7 @@ namespace AutoCapturer.UserControls
             }
             Mode = DragMode.Wait;
 
-            //MessageBox.Show(DragGrid.Margin.ToString());
+            //MsgBox(DragGrid.Margin.ToString());
             StartPosition.X = 0; StartPosition.Y = 0;
             this.Cursor = null;
             Dragtmr.Stop();

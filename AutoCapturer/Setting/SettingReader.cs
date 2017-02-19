@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Windows;
+using static AutoCapturer.Globals.Globals;
+using Microsoft.Win32;
 
 namespace AutoCapturer.Setting
 {
@@ -17,7 +20,26 @@ namespace AutoCapturer.Setting
         private string FileName;
         public Setting ReadSetting()
         {
-            if (string.IsNullOrEmpty(FileName) || !File.Exists(FileName)) return null;
+            if (FileName == "setting.aucasetting")
+            {
+                //RegistryKey key;
+                //key ;
+                //key.SetValue("SettingLocation", fi.FullName);
+
+                object reg = Registry.GetValue(Registry.CurrentUser.ToString() + "\\AutoCapturer","SettingLocation","NotFound");
+
+                if (reg == null)
+                    return null;
+                else if (reg.ToString() == "NotFound")
+                    return null;
+
+                FileName = reg.ToString();
+            }
+
+            if (string.IsNullOrEmpty(FileName) || !File.Exists(FileName))
+            {
+                return null;
+            }
             var bf = new BinaryFormatter();
             var fs = new FileStream(FileName, FileMode.Open);
             try

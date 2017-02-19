@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="Auto Capturer Image Editor" d:DesignHeight="600" d:DesignWidth="900" WindowStartupLocation="CenterScreen" Height="600" Width="900" Icon="/AutoCapturer;component/AuCaOff.ico">
+        Title="Auto Capturer Image Editor" d:DesignHeight="600" d:DesignWidth="900" WindowStartupLocation="CenterScreen" Height="600" Width="900" Icon="/AutoCapturer;component/Resources/Icons/Icon.png">
     <Window.Resources>
         <Style x:Key="RadioButtonWithImage" TargetType="{x:Type RadioButton}">
             <Setter Property="BorderBrush" Value="Black"/>
@@ -101,7 +101,6 @@
                 <TextBlock Margin="0,12,0,0" FontSize="15" Text="도구 상자"/>
                 <RadioButton x:Name="EditBtn1" Margin="6,12,6,6" Content="마우스" GroupName="EditMode" Tag="0"/>
                 <RadioButton x:Name="EditBtn2" Margin="6" Content="잘라내기" GroupName="EditMode" Tag="2"/>
-                <RadioButton x:Name="EditBtn3" Margin="6" Content="펜" GroupName="EditMode" Tag="1"/>
                 <TextBlock x:Name="CropInfoTB" Margin="4" Grid.Row="5" TextWrapping="Wrap" Visibility="Hidden">
                     <Run Text="잘라내기를 끝내려면"></Run><LineBreak/>
                     <Run FontWeight="Bold" Foreground="Red" Text="오른쪽 버튼"/><Run Text="을 누르세요."/>

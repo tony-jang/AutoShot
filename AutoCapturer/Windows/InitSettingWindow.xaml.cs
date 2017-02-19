@@ -21,12 +21,12 @@ namespace AutoCapturer.Windows
     public partial class InitSettingWindow : ChromeWindow
     {
 
-        Setting.Setting ReturnSetting = new Setting.Setting(new Setting.SavePattern("캡쳐(%t)", "%d"));
+        Setting.Setting ReturnSetting = new Setting.Setting(new Setting.SavePattern("캡처(%t)", "%d"));
 
         public InitSettingWindow()
         {
             InitializeComponent();
-            PtnNameTB.Text = "캡쳐(%t)";
+            PtnNameTB.Text = "캡처(%t)";
             SaveLocTB.Text = "%d";
         }
 

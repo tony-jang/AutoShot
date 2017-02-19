@@ -6,7 +6,7 @@
         xmlns:u="clr-namespace:AutoCapturer.UserControls"
         xmlns:local="clr-namespace:AutoCapturer.Windows"
         mc:Ignorable="d"
-        Title="Auto Capturer Folder Selection" WindowStartupLocation="CenterScreen" Height="700" Width="1000" AllowsTransparency="True" WindowStyle="None" Icon="/AutoCapturer;component/AuCaOff.ico">
+        Title="Auto Capturer Folder Selection" WindowStartupLocation="CenterScreen" Height="700" Width="1000" AllowsTransparency="True" WindowStyle="None" Icon="/AutoCapturer;component/Resources/Icons/Icon.png">
     <Grid>
         <Grid Margin="0,12,0,0">
             <Grid.RowDefinitions>

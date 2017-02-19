@@ -70,7 +70,7 @@ namespace AutoCapturer.Converter
                     }
 
                 foreach (string CheckAccstr in NotAccessStr.ToCharArray().Select((elem) => elem.ToString()))
-                    if (CheckChar == CheckAccstr && CheckAccstr != "\\") { Err = ErrorList.CannotAccessString; return Err; }
+                    if (CheckChar == CheckAccstr && CheckAccstr != "\\" && CheckAccstr != ":") { Err = ErrorList.CannotAccessString; return Err; }
 
                 if (flag)
                 {

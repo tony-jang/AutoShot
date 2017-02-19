@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static AutoCapturer.Converter.PatternConverter;
+using static AutoCapturer.Globals.Globals;
 
 namespace AutoCapturer.Windows
 {
@@ -54,6 +55,11 @@ namespace AutoCapturer.Windows
         {
             IsApply = true;
             this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            TBSaveLoc.Text = ShowSelectDirectoryDialog()?.FullName;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

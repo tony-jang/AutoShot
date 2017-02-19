@@ -6,7 +6,7 @@
         
         xmlns:local="clr-namespace:AutoCapturer.Windows"
         mc:Ignorable="d"
-        Title="패턴 추가" Height="210" Width="600" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" IsHitTestVisible="True" Icon="/AutoCapturer;component/AuCaOff.ico">
+        Title="패턴 추가" Height="210" Width="600" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" IsHitTestVisible="True" Icon="/AutoCapturer;component/Resources/Icons/Icon.png">
     <Grid Background="#FFE5E5E5">
         <Grid Width="550" Margin="0,0,0,30" Height="110" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -34,11 +34,18 @@
 
             <TextBlock Grid.Row="3" Text="저장 경로" TextAlignment="Center" FontSize="15" VerticalAlignment="Center"/>
             <TextBlock x:Name="TBLocPreview" Grid.Row="4" Grid.Column="1" Text="(프로그램 실행 위치)" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
-            <TextBox x:Name="TBSaveLoc" Style="{StaticResource SimpleTextBoxStyle}" Grid.Row="3" Grid.Column="2">
-                <TextBox.ToolTip>
-                    <ToolTip Style="{StaticResource SaveLocToolTipStyle}"/>
-                </TextBox.ToolTip>
-            </TextBox>
+            <Grid Grid.Row="3" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TBSaveLoc" Style="{StaticResource SimpleTextBoxStyle}"/>
+                <Button Margin="10,5,0,5" Grid.Column="1" Content="..." Click="Button_Click">
+                    <Button.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="0.5"/>
+                    </Button.Effect>
+                </Button>
+            </Grid>
         </Grid>
         
         

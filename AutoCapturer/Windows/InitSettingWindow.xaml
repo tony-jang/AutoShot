@@ -7,7 +7,7 @@
         xmlns:u="clr-namespace:AutoCapturer.UserControls"
         xmlns:local="clr-namespace:AutoCapturer.Windows"
         mc:Ignorable="d"
-        Title="Auto Capturer 초기 설정" Height="550" Width="400" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/AutoCapturer;component/AuCaOff.ico">
+        Title="Auto Capturer 초기 설정" Height="550" Width="400" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/AutoCapturer;component/Resources/Icons/Icon.png">
 
     <Window.Resources>
         <Style TargetType="{x:Type TabItem}">
@@ -54,7 +54,7 @@
                         <TextBlock Margin="0,4,0,0" TextWrapping="Wrap">
                             지금부터 Auto Capturer <Run Text="초기 설정" FontWeight="Bold"/>을 시작합니다.<LineBreak/>
                             만약 초기 설정을 원하시지 않으면 모두 건너뛰기를 눌러서 바로 시작해주시면 됩니다.<LineBreak/>
-                            기본 패턴은 자동으로 바탕화면에 저장되며 이름은 '캡쳐(시간)'으로 저장되게 됩니다.
+                            기본 패턴은 자동으로 바탕화면에 저장되며 이름은 '캡처(시간)'으로 저장되게 됩니다.
                         </TextBlock>
                     </StackPanel>
                     <Grid Grid.Row="1" Width="200" HorizontalAlignment="Right">

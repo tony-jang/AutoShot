@@ -59,7 +59,7 @@ namespace AutoCapturer.Worker
                         }
                     }
                     catch (Exception ex) {
-                        MessageBox.Show(ex.ToString()); }
+                        MsgBox(ex.ToString()); }
                     Thread.Sleep(10);
                 } while (true);
             });

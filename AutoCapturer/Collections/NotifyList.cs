@@ -33,17 +33,7 @@ namespace AutoCapturer.Collections
         }
 
         List<EventHandler<ChangeEventArgs<T>>> delegates = new List<EventHandler<ChangeEventArgs<T>>>();
-
-        public void RemoveAllEvents()
-        {
-            foreach (EventHandler<ChangeEventArgs<T>> events in delegates)
-            {
-                _ListChanged -= events;
-            }
-            MessageBox.Show(this.Count.ToString());
-            delegates.Clear();
-        }
-
+        
         private event EventHandler<ChangeEventArgs<T>> _ListChanged;
         public event EventHandler<ChangeEventArgs<T>> ListChanged
         {

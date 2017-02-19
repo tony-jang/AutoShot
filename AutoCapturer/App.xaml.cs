@@ -40,7 +40,7 @@ namespace AutoCapturer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace + "\n\n" + "애플리케이션 존재..", "예외 발생!");
+                MsgBox(ex.Message + "\n\n" + ex.StackTrace + "\n\n" + "애플리케이션 존재..", "예외 발생!");
                 Application.Current.Shutdown();
             }
         }

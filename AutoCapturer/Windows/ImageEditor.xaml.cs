@@ -31,7 +31,7 @@ namespace AutoCapturer.Windows
             
             EditBtn1.Click += EditBtnClick;
             EditBtn2.Click += EditBtnClick;
-            EditBtn3.Click += EditBtnClick;
+            //EditBtn3.Click += EditBtnClick;
             
             RatioCB.SelectionChanged += SelectionChanging;
 

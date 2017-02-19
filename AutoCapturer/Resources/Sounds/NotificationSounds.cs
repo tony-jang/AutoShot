@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,22 +12,25 @@ namespace AutoCapturer.Sounds
     {
         public static void PlayNotificationSound(SoundType soundtype)
         {
-            System.Media.SoundPlayer player;
+            SoundPlayer player;
+            Stream str;
+
             switch (soundtype)
             {
                 case SoundType.AuCaModeOn:
-                    player = new System.Media.SoundPlayer($"snd2.wav");
-                    player.Play();
+                    str = Properties.Resources.snd2;
                     break;
                 case SoundType.AuCaModeOff:
-                    player = new System.Media.SoundPlayer($"snd1.wav");
-                    player.Play();
+                    str = Properties.Resources.snd1;
                     break;
                 case SoundType.Captured:
-                    player = new System.Media.SoundPlayer("CamSound.wav");
-                    player.Play();
+                    str = Properties.Resources.CamSound;
                     break;
+                default:
+                    return;
             }
+            player = new SoundPlayer(str);
+            player.Play();
         }
         
         public enum SoundType

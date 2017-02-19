@@ -1,0 +1,190 @@
+[Auto Capturer Runtime Log]
+2017-02-05 오후 7:37:42 로그 기록 시작.
+2017-02-05 오후 7:37:43 CurrentSetting 읽어오는 작업 시작.
+2017-02-05 오후 7:37:43 CurrentSetting 읽어오는 작업 종료.
+2017-02-05 오후 7:37:43 CurrentSetting AddHandler 작업 종료
+
+
+
+
+
+[Auto Capturer Runtime Log]
+2017-02-05 오후 7:38:08 로그 기록 시작.
+2017-02-05 오후 7:38:08 CurrentSetting 읽어오는 작업 시작.
+2017-02-05 오후 7:38:08 CurrentSetting 읽어오는 작업 종료.
+2017-02-05 오후 7:38:08 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-05 오후 7:38:42 로그 기록 시작.
+2017-02-05 오후 7:38:42 CurrentSetting 읽어오는 작업 시작.
+2017-02-05 오후 7:38:42 CurrentSetting 읽어오는 작업 종료.
+2017-02-05 오후 7:38:42 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-05 오후 7:42:04 로그 기록 시작.
+2017-02-05 오후 7:42:05 CurrentSetting 읽어오는 작업 시작.
+2017-02-05 오후 7:42:05 CurrentSetting 읽어오는 작업 종료.
+2017-02-05 오후 7:42:05 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-06 오후 11:38:08 로그 기록 시작.
+2017-02-06 오후 11:38:08 CurrentSetting 읽어오는 작업 시작.
+2017-02-06 오후 11:38:08 CurrentSetting 읽어오는 작업 종료.
+2017-02-06 오후 11:38:08 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-06 오후 11:39:50 로그 기록 시작.
+2017-02-06 오후 11:39:51 CurrentSetting 읽어오는 작업 시작.
+2017-02-06 오후 11:39:51 CurrentSetting 읽어오는 작업 종료.
+2017-02-06 오후 11:39:51 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-06 오후 11:41:20 로그 기록 시작.
+2017-02-06 오후 11:41:20 CurrentSetting 읽어오는 작업 시작.
+2017-02-06 오후 11:41:20 CurrentSetting 읽어오는 작업 종료.
+2017-02-06 오후 11:41:20 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-06 오후 11:41:33 로그 기록 시작.
+2017-02-06 오후 11:41:33 CurrentSetting 읽어오는 작업 시작.
+2017-02-06 오후 11:41:33 CurrentSetting 읽어오는 작업 종료.
+2017-02-06 오후 11:41:33 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-07 오후 2:53:48 로그 기록 시작.
+2017-02-07 오후 2:53:49 CurrentSetting 읽어오는 작업 시작.
+2017-02-07 오후 2:53:49 CurrentSetting 읽어오는 작업 종료.
+2017-02-07 오후 2:53:49 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-07 오후 3:56:22 로그 기록 시작.
+2017-02-07 오후 3:56:22 CurrentSetting 읽어오는 작업 시작.
+2017-02-07 오후 3:56:22 CurrentSetting 읽어오는 작업 종료.
+2017-02-07 오후 3:56:22 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-07 오후 7:04:34 로그 기록 시작.
+2017-02-07 오후 7:04:34 CurrentSetting 읽어오는 작업 시작.
+2017-02-07 오후 7:04:34 CurrentSetting 읽어오는 작업 종료.
+2017-02-07 오후 7:04:34 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-07 오후 7:13:07 로그 기록 시작.
+2017-02-07 오후 7:13:08 CurrentSetting 읽어오는 작업 시작.
+2017-02-07 오후 7:13:08 CurrentSetting 읽어오는 작업 종료.
+2017-02-07 오후 7:13:08 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-09 오후 11:40:54 로그 기록 시작.
+2017-02-09 오후 11:40:55 CurrentSetting 읽어오는 작업 시작.
+2017-02-09 오후 11:40:55 CurrentSetting 읽어오는 작업 종료.
+2017-02-09 오후 11:40:55 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-10 오후 10:54:12 로그 기록 시작.
+2017-02-10 오후 10:54:12 CurrentSetting 읽어오는 작업 시작.
+2017-02-10 오후 10:54:12 CurrentSetting 읽어오는 작업 종료.
+2017-02-10 오후 10:54:12 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-10 오후 10:54:18 로그 기록 시작.
+2017-02-10 오후 10:54:18 CurrentSetting 읽어오는 작업 시작.
+2017-02-10 오후 10:54:18 CurrentSetting 읽어오는 작업 종료.
+2017-02-10 오후 10:54:18 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-13 오후 12:52:50 로그 기록 시작.
+2017-02-13 오후 12:52:51 CurrentSetting 읽어오는 작업 시작.
+2017-02-13 오후 12:52:51 CurrentSetting 읽어오는 작업 종료.
+2017-02-13 오후 12:52:51 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-14 오후 5:48:41 로그 기록 시작.
+2017-02-14 오후 5:48:41 CurrentSetting 읽어오는 작업 시작.
+2017-02-14 오후 5:48:41 CurrentSetting 읽어오는 작업 종료.
+2017-02-14 오후 5:48:41 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-14 오후 10:57:18 로그 기록 시작.
+2017-02-14 오후 10:57:19 CurrentSetting 읽어오는 작업 시작.
+2017-02-14 오후 10:57:19 CurrentSetting 읽어오는 작업 종료.
+2017-02-14 오후 10:57:19 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-15 오후 5:26:26 로그 기록 시작.
+2017-02-15 오후 5:26:26 CurrentSetting 읽어오는 작업 시작.
+2017-02-15 오후 5:26:26 CurrentSetting 읽어오는 작업 종료.
+2017-02-15 오후 5:26:26 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-16 오후 2:32:24 로그 기록 시작.
+2017-02-16 오후 2:32:25 CurrentSetting 읽어오는 작업 시작.
+2017-02-16 오후 2:32:25 CurrentSetting 읽어오는 작업 종료.
+2017-02-16 오후 2:32:25 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-16 오후 3:44:20 로그 기록 시작.
+2017-02-16 오후 3:44:20 CurrentSetting 읽어오는 작업 시작.
+2017-02-16 오후 3:44:20 CurrentSetting 읽어오는 작업 종료.
+2017-02-16 오후 3:44:20 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-16 오후 3:45:45 로그 기록 시작.
+2017-02-16 오후 3:45:45 CurrentSetting 읽어오는 작업 시작.
+2017-02-16 오후 3:45:45 CurrentSetting 읽어오는 작업 종료.
+2017-02-16 오후 3:45:45 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-16 오후 3:46:10 로그 기록 시작.
+2017-02-16 오후 3:46:10 CurrentSetting 읽어오는 작업 시작.
+2017-02-16 오후 3:46:10 CurrentSetting 읽어오는 작업 종료.
+2017-02-16 오후 3:46:10 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-16 오후 10:52:26 로그 기록 시작.
+2017-02-16 오후 10:52:27 CurrentSetting 읽어오는 작업 시작.
+2017-02-16 오후 10:52:27 CurrentSetting 읽어오는 작업 종료.
+2017-02-16 오후 10:52:27 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-17 오전 12:06:43 로그 기록 시작.
+2017-02-17 오전 12:06:44 CurrentSetting 읽어오는 작업 시작.
+2017-02-17 오전 12:06:44 CurrentSetting 읽어오는 작업 종료.
+2017-02-17 오전 12:06:44 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-17 오전 10:51:47 로그 기록 시작.
+2017-02-17 오전 10:51:48 CurrentSetting 읽어오는 작업 시작.
+2017-02-17 오전 10:51:48 CurrentSetting 읽어오는 작업 종료.
+2017-02-17 오전 10:51:48 CurrentSetting AddHandler 작업 종료
+
+
+[Auto Capturer Runtime Log]
+2017-02-17 오후 3:07:14 로그 기록 시작.
+2017-02-17 오후 3:07:14 CurrentSetting 읽어오는 작업 시작.
+2017-02-17 오후 3:07:14 CurrentSetting 읽어오는 작업 종료.
+2017-02-17 오후 3:07:14 CurrentSetting AddHandler 작업 종료

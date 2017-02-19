@@ -70,8 +70,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>AuCaOff.ico</ApplicationIcon>
+    <ApplicationIcon>AucaIcon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="DragHelper">
       <HintPath>C:\Users\uutak\OneDrive\문서\카카오톡 받은 파일\CropExample2\CropExample2\bin\Debug\DragHelper.dll</HintPath>
@@ -359,6 +360,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="AuCaOff.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Release\snd1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Release\snd2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Release\snd3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Release\CamSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AucaIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AucaIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SmallIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

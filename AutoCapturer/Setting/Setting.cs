@@ -73,6 +73,7 @@ namespace AutoCapturer.Setting
             setting._ImageFromURLSave = _ImageFromURLSave;
             setting._OpenSettingKey = _OpenSettingKey.Clone() as ShortCutKey;
             setting._Patterns = (NotifyList<SavePattern>)_Patterns.Clone();
+            setting._DefaultPattern = _DefaultPattern;
             setting._PopupCountSec = _PopupCountSec;
             setting._RecoHeight = _RecoHeight;
             setting._RecoWidth = _RecoWidth;
@@ -110,13 +111,13 @@ namespace AutoCapturer.Setting
             SettingChange();
         }
 
-        #region [ 캡쳐 설정 ]
+        #region [ 캡처 설정 ]
 
-        #region [ 캡쳐 설정 - 자동 캡쳐 활성화 시 ]
+        #region [ 캡처 설정 - 자동 캡처 활성화 시 ]
 
         private AuCaEnableSelection _AutoCaptureEnableSelection = AuCaEnableSelection.SoundAndPopUp;
         /// <summary>
-        /// 자동 캡쳐 활성화 시 알림 선택 방식을 말합니다.
+        /// 자동 캡처 활성화 시 알림 선택 방식을 말합니다.
         /// </summary>
         public AuCaEnableSelection AutoCaptureEnableSelection
         {
@@ -138,7 +139,7 @@ namespace AutoCapturer.Setting
 
         private LimitInt _AllCaptureCountDown = new LimitInt(0, 5, 0);
         /// <summary>
-        /// 전체 캡쳐 시 카운트 다운
+        /// 전체 캡처 시 카운트 다운
         /// </summary>
         public int AllCaptureCountDown
         {
@@ -190,31 +191,31 @@ namespace AutoCapturer.Setting
         }
 
         #region [ 환경 설정 - 단축키 설정 ]
-        private ShortCutKey _AutoCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.F2, "AutoCapture");
+        private ShortCutKey _AutoCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D2, "AutoCapture");
         public ShortCutKey AutoCaptureKey
         {
             get { return _AutoCaptureKey; }
             set { _AutoCaptureKey = value; SettingChange(); }
         }
-        private ShortCutKey _SelectCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.F4, "SelCapture");
+        private ShortCutKey _SelectCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D4, "SelCapture");
         public ShortCutKey SelectCaptureKey
         {
             get { return _SelectCaptureKey; }
             set { _SelectCaptureKey = value; SettingChange(); }
         }
-        private ShortCutKey _AllCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.F3, "AllCapture");
+        private ShortCutKey _AllCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D3, "AllCapture");
         public ShortCutKey AllCaptureKey
         {
             get { return _AllCaptureKey; }
             set { _AllCaptureKey = value; SettingChange(); }
         }
-        private ShortCutKey _OpenSettingKey = new ShortCutKey(Key.LeftCtrl , Key.F1, "OpenSetting");
+        private ShortCutKey _OpenSettingKey = new ShortCutKey(Key.LeftCtrl , Key.D1, "OpenSetting");
         public ShortCutKey OpenSettingKey
         {
             get { return _OpenSettingKey; }
             set { _OpenSettingKey = value; SettingChange(); }
         }
-        private ShortCutKey _ChangeEditorModeKey = new ShortCutKey(Key.LeftCtrl, Key.F5, "ChangeEditorMode");
+        private ShortCutKey _ChangeEditorModeKey = new ShortCutKey(Key.LeftCtrl, Key.D5, "ChangeEditorMode");
         public ShortCutKey ChangeEditorModeKey
         {
             get { return _ChangeEditorModeKey; }
@@ -275,7 +276,7 @@ namespace AutoCapturer.Setting
 
 
     /// <summary>
-    /// 자동 캡쳐 활성화 시 안내 방법입니다.
+    /// 자동 캡처 활성화 시 안내 방법입니다.
     /// </summary>
     public enum AuCaEnableSelection
     {
@@ -417,7 +418,7 @@ namespace AutoCapturer.Setting
     public class SavePattern
     {
         
-        public SavePattern(string Name, string Location, bool openeffector = false, bool overwrite = false)
+        public SavePattern(string Name, string Location, bool openeffector = false, bool overwrite = false, bool saveimmediately = true)
         {
             PatternName = Name;
             SaveLocation = Location;
@@ -449,6 +450,7 @@ namespace AutoCapturer.Setting
         
         public bool OpenEffector;
         public bool OverWrite;
+        public bool SaveImmediately;
     }
 
 }
