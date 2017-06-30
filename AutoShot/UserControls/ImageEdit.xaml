@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="AutoShot.UserControls.ImageEdit"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoShot.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="700" Background="White">
+    <Grid x:Name="BgGrid" MouseDown="BgGrid_MouseDown">
+        <Grid.Background>
+            <ImageBrush ImageSource="/AutoCapturer;component/Resources/Icons/Tile.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,200,200"/>
+        </Grid.Background>
+        <Grid x:Name="MainGrid" HorizontalAlignment="Left" Height="310"  VerticalAlignment="Top" Width="310" Margin="0">
+
+            <Rectangle x:Name="RD_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
+            <Rectangle x:Name="RC_Dragger" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
+            <Rectangle x:Name="RUC_Dragger" VerticalAlignment="Center" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
+
+            <Border x:Name="ImageRect" Margin="8" BorderBrush="Black" BorderThickness="1">
+                <Image VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="InnerImg" Stretch="Fill"/>
+            </Border>
+
+        </Grid>
+        <Rectangle x:Name="PreviewRect" Margin="8" Stroke="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="300" Opacity="0"/>
+
+        <Grid x:Name="CropGrid" Width="310" Height="310" HorizontalAlignment="Left" VerticalAlignment="Top" >
+
+            <Grid x:Name="DragGrid" Margin="0,0,0,0" >
+                <Rectangle x:Name="CropRect" Fill="#7F000000" Margin="8" Stroke="Black"/>
+
+                <Rectangle x:Name="DR_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNWSE" ></Rectangle>
+                <Rectangle x:Name="DC_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNS" ></Rectangle>
+                <Rectangle x:Name="CR_Cropper" VerticalAlignment="Center" HorizontalAlignment="Right" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeWE" ></Rectangle>
+                <Rectangle x:Name="DL_Cropper" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNESW" ></Rectangle>
+                <Rectangle x:Name="CL_Cropper" VerticalAlignment="Center" HorizontalAlignment="Left" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeWE" ></Rectangle>
+                <Rectangle x:Name="UL_Cropper" VerticalAlignment="Top" HorizontalAlignment="Left" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Width" Cursor="SizeNWSE" ></Rectangle>
+                <Rectangle x:Name="UC_Cropper" VerticalAlignment="Top" HorizontalAlignment="Center" Width="8" Height="8"  Fill="White" Stroke="Black" Tag="Both" Cursor="SizeNS" ></Rectangle>
+                <Rectangle x:Name="UR_Cropper" VerticalAlignment="Top" HorizontalAlignment="Right" Width="8" Height="8" Fill="White" Stroke="Black" Tag="Height" Cursor="SizeNESW" ></Rectangle>
+            </Grid>
+
+
+
+
+        </Grid>
+    </Grid>
+</UserControl>
