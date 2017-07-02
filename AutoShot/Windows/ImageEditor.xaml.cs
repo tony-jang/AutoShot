@@ -25,9 +25,9 @@ namespace AutoShot.Windows
     {
         public ImageEditor()
         {
-            Windows.PopUpWindow.AllWindowClose();
+            PopUpWindow.AllWindowClose();
             InitializeComponent();
-            Editor.ImageEditMode = UserControls.EditMode.SizeChange;
+            Editor.ImageEditMode = EditMode.SizeChange;
             
             EditBtn1.Click += EditBtnClick;
             EditBtn2.Click += EditBtnClick;
@@ -57,7 +57,6 @@ namespace AutoShot.Windows
 
             return returndata;
         }
-
 
         private void Editor_RatioChanged()
         {
@@ -121,8 +120,10 @@ namespace AutoShot.Windows
 
             LimitInt li = new LimitInt(0, RatioCB.Items.Count - 1, RatioCB.SelectedIndex);
 
-            if (IsUp) li.Value++;
-            else li.Value--;
+            if (IsUp)
+                li.Value++;
+            else
+                li.Value--;
 
             RatioCB.SelectedIndex = li.Value;
             e.Handled = true;

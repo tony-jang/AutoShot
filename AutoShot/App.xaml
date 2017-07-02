@@ -66,7 +66,7 @@
             </Style>
             
             <Style x:Key="PatternItemStyle" TargetType="{x:Type UserControls:PatternItem}">
-                <Setter Property="FontSize" Value="15"></Setter>
+                <Setter Property="FontSize" Value="12"></Setter>
                 <Setter Property="Height" Value="30"></Setter>
                 
                 <Setter Property="Template">
@@ -82,8 +82,9 @@
                                         <ColumnDefinition Width="20"/>
                                         
                                     </Grid.ColumnDefinitions>
-                                    
-                                    <TextBlock x:Name="DefaultInfoTB" Margin="10,0" Grid.Column="0" VerticalAlignment="Center" Text="(기본)" Visibility="Hidden"/>
+
+                                    <Rectangle Stroke="Black" Margin="10,5" RadiusX="5" RadiusY="5"/>
+                                    <TextBlock x:Name="DefaultInfoTB" Margin="20,0" Grid.Column="0" FontSize="10" VerticalAlignment="Center" Text="기본" />
                                     
                                     <TextBlock x:Name="ContentTB" Grid.Column="1"
                                                Text="{TemplateBinding Content}"
@@ -108,8 +109,8 @@
                                 <Trigger Property="SaveLocation" Value="">
                                     <Setter Property="TextBlock.Text" Value="(프로그램 실행 위치)" TargetName="SavePtnTB"/>
                                 </Trigger>
-                                <Trigger Property="IsDefaultPattern" Value="True">
-                                    <Setter Property="Visibility" TargetName="DefaultInfoTB" Value="Visible" />
+                                <Trigger Property="IsDefaultPattern" Value="False">
+                                    <Setter Property="Text" TargetName="DefaultInfoTB" Value="선택"/>
                                 </Trigger>
                                 
                             </ControlTemplate.Triggers>
@@ -194,10 +195,10 @@
             
             <Style x:Key="BasicTabItemStyle"  TargetType="{x:Type TabItem}">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                <Setter Property="Height" Value="40"/>
-                <Setter Property="Width" Value="130"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="120"/>
                 
-                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontSize" Value="13"/>
                 
                 <Setter Property="Template">
                     <Setter.Value>
@@ -395,6 +396,88 @@
                     </MultiTrigger>
                 </Style.Triggers>
             </Style>
+
+
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type CheckBox}">
+                            <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="MainBorder" CornerRadius="5" Background="{TemplateBinding Background}" Grid.ColumnSpan="2">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="2" Direction="280" ShadowDepth="3" Opacity="0.1"/>
+                                    </Border.Effect>
+
+                                    <Grid x:Name="markGrid" UseLayoutRounding="True">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Content="{TemplateBinding Content}"
+                                              Grid.Column="0"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              Focusable="False"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="8,0,0,0"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="True"
+                                              VerticalAlignment="Center"
+                                              TextOptions.TextRenderingMode="ClearType"/>
+                                        <Path x:Name="CheckPth" Grid.Column="1" Data="{StaticResource CheckPath}" 
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White" Margin="4" Opacity="0"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="HasContent" Value="True">
+                                    <Setter Property="FocusVisualStyle">
+                                        <Setter.Value>
+                                            <Style>
+                                                <Setter Property="Control.Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Padding" Value="4,-1,0,0"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightGray" TargetName="MainBorder"/>
+                                </Trigger>
+
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FFBFBFBF" TargetName="MainBorder"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Background" Value="#7E8AA2" TargetName="MainBorder"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Opacity" Value="1.0" TargetName="CheckPth"></Setter>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.50" TargetName="contentPresenter"/>
+                                    <Setter Property="Background" Value="#FFB3B6BD" TargetName="MainBorder"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
 
             <Style x:Key="SimpleCheckBoxStyle" TargetType="{x:Type UserControls:Switch}">
                 <Setter Property="Width" Value="60"/>

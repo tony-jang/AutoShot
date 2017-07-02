@@ -64,19 +64,19 @@ namespace AutoShot.Setting
             
             setting._AllCaptureCountDown = _AllCaptureCountDown;
             setting._ChangeEditorModeKey = _ChangeEditorModeKey;
-            setting._AllCaptureKey = _AllCaptureKey.Clone() as ShortCutKey;
+            setting._AllCaptureKey = _AllCaptureKey.Clone() as Shotcut;
             setting._AutoCaptureEnableSelection = _AutoCaptureEnableSelection;
-            setting._AutoCaptureKey = _AutoCaptureKey.Clone() as ShortCutKey;
+            setting._AutoCaptureKey = _AutoCaptureKey.Clone() as Shotcut;
             setting._DefaultPattern = _DefaultPattern;
             setting._ImageFromImageTag = _ImageFromImageTag;
             setting._ImageFromURLSave = _ImageFromURLSave;
-            setting._OpenSettingKey = _OpenSettingKey.Clone() as ShortCutKey;
+            setting._OpenSettingKey = _OpenSettingKey.Clone() as Shotcut;
             setting._Patterns = (NotifyList<SavePattern>)_Patterns.Clone();
             setting._DefaultPattern = _DefaultPattern;
             setting._PopupCountSec = _PopupCountSec;
             setting._RecoHeight = _RecoHeight;
             setting._RecoWidth = _RecoWidth;
-            setting._SelectCaptureKey = _SelectCaptureKey.Clone() as ShortCutKey;
+            setting._SelectCaptureKey = _SelectCaptureKey.Clone() as Shotcut;
             setting._TutorialProgress = _TutorialProgress;
             setting._IsStartupProgram = _IsStartupProgram;
 
@@ -187,33 +187,33 @@ namespace AutoShot.Setting
             set { _RecoHeight = value; OnSettingChange(); }
         }
 
-        #region [ 환경 설정 - 단축키 설정 ]
-        private ShortCutKey _AutoCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D2, "AutoCapture");
-        public ShortCutKey AutoCaptureKey
+        #region [  환경 설정 - 단축키 설정  ]
+        private Shotcut _AutoCaptureKey = new Shotcut("AutoCapture", Key.D2, true, false, false);
+        public Shotcut AutoCaptureKey
         {
             get { return _AutoCaptureKey; }
             set { _AutoCaptureKey = value; OnSettingChange(); }
         }
-        private ShortCutKey _SelectCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D4, "SelCapture");
-        public ShortCutKey SelectCaptureKey
+        private Shotcut _SelectCaptureKey = new Shotcut("SelCapture", Key.D4, true, false, false);
+        public Shotcut SelectCaptureKey
         {
             get { return _SelectCaptureKey; }
             set { _SelectCaptureKey = value; OnSettingChange(); }
         }
-        private ShortCutKey _AllCaptureKey = new ShortCutKey(Key.LeftCtrl, Key.D3, "AllCapture");
-        public ShortCutKey AllCaptureKey
+        private Shotcut _AllCaptureKey = new Shotcut("AllCapture", Key.D3, true, false, false);
+        public Shotcut AllCaptureKey
         {
             get { return _AllCaptureKey; }
             set { _AllCaptureKey = value; OnSettingChange(); }
         }
-        private ShortCutKey _OpenSettingKey = new ShortCutKey(Key.LeftCtrl , Key.D1, "OpenSetting");
-        public ShortCutKey OpenSettingKey
+        private Shotcut _OpenSettingKey = new Shotcut("OpenSetting", Key.D1, true, false, false);
+        public Shotcut OpenSettingKey
         {
             get { return _OpenSettingKey; }
             set { _OpenSettingKey = value; OnSettingChange(); }
         }
-        private ShortCutKey _ChangeEditorModeKey = new ShortCutKey(Key.LeftCtrl, Key.D5, "ChangeEditorMode");
-        public ShortCutKey ChangeEditorModeKey
+        private Shotcut _ChangeEditorModeKey = new Shotcut("ChangeEditorMode", Key.D5, true, false, false);
+        public Shotcut ChangeEditorModeKey
         {
             get { return _ChangeEditorModeKey; }
             set { _ChangeEditorModeKey = value;  OnSettingChange(); }

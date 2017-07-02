@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoShot"
         xmlns:u="clr-namespace:AutoShot.UserControls" x:Class="AutoShot.MainWindow"
         mc:Ignorable="d"
-        Title="Auto Capturer" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" Margin="0" Closing="Window_Closing" ShowInTaskbar="False" AllowsTransparency="True" Loaded="Window_Loaded" >
+        Title="AutoShot" Height="120" Width="290" ResizeMode="NoResize" WindowStyle="None" Background="{x:Null}" Margin="0" Closing="Window_Closing" ShowInTaskbar="False" AllowsTransparency="True" Loaded="Window_Loaded" >
 
     <Grid>
         <Grid x:Name="DetectGrid" Background="#02000000" Width="1" Height="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>

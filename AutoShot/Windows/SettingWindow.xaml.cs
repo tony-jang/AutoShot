@@ -23,7 +23,7 @@ namespace AutoShot
     {
         RadioButton[] AuCaRingTypeRB, AllCaCountDownRB, PopCountDownRB;
         RadioButton[] GetImageRB;
-        Button[] ShortCutButtons;
+        ShortcutKey[] shortcutKeys;
 
         Setting.Setting TempSetting;
 
@@ -32,58 +32,36 @@ namespace AutoShot
             InitializeComponent();
 
             ShowPopupGrid.IsEnabled = false;
-
-
+            
             AuCaRingTypeRB = new RadioButton[]{ AuCaRingType1, AuCaRingType2, AuCaRingType3, AuCaRingType4 };
 
             GetImageRB = new RadioButton[] { GetURLImage1, GetURLImage2, GetURLImage3 };
             AllCaCountDownRB = new RadioButton[]{ AllCaCountDown1, AllCaCountDown2, AllCaCountDown3,
                                  AllCaCountDown4, AllCaCountDown5, AllCaCountDown6 };
-            PopCountDownRB = new RadioButton[]{ PopCountDown1, PopCountDown2, PopCountDown3 };
-
-            ShortCutButtons = new Button[] { BtnAutoSave1, BtnAutoSave2,
-                BtnAllCapture1, BtnAllCapture2,
-                BtnOpenSetting1, BtnOpenSetting2,
-                BtnSelCapture1, BtnSelCapture2,
-                BtnChangeEditor1, BtnChangeEditor2};
-
-
-
+            PopCountDownRB = new RadioButton[] { PopCountDown1, PopCountDown2, PopCountDown3 };
+            shortcutKeys = new ShortcutKey[] { scAuto, scAll, scSelect, scSetting, scEditMode, };
 
             AuCaRingType2.Unchecked += AuCaRing_Change;
             AuCaRingType3.Unchecked += AuCaRing_Change;
+
             foreach (RadioButton rb in AuCaRingTypeRB)
                 rb.Checked += AuCaRing_Change;
-
             foreach (RadioButton rb in GetImageRB)
-            {
                 rb.Checked += GetURLImage_Change;
-            }
-            
-
             foreach (RadioButton rb in AllCaCountDownRB)
                 rb.Checked += AllCaCountDown_Change;
-
             foreach (RadioButton rb in PopCountDownRB)
                 rb.Checked += PopCount_Change;
-
-            foreach (Button btn in ShortCutButtons)
-            {
-                btn.Click += Btn_Click;
-            }
 
             this.Closing += SettingWindow_Closing;
 
             RecoWidthTB.PreviewTextInput += RecoRangeTBPreviewCheck;
             RecoHeightTB.PreviewTextInput += RecoRangeTBPreviewCheck;
 
-            RecoWidthTB.TextChanged += RecoRangeTBChanged;
-            RecoHeightTB.TextChanged += RecoRangeTBChanged;
-
-
-            tbSettingLocation.Text = Registry.GetValue(Registry.CurrentUser.ToString() + "\\AutoCapturer", "SettingLocation", "NotFound").ToString();
-
+            RecoWidthTB.LostFocus += RecoRangeTBChanged;
+            RecoHeightTB.LostFocus += RecoRangeTBChanged;
         }
+
         CloseType SaveChangeAllow = CloseType.JustClose;
         private void SettingWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -106,11 +84,11 @@ namespace AutoShot
 
         string NonUse = "(사용하지 않음)";
         string[] names = { "BtnAutoSave", "BtnAllCapture", "BtnSelCapture", "BtnOpenSetting", "BtnChangeEditor" };
-        ShortCutKey[] keys;
+        Shotcut[] keys;
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (keys == null) keys = new ShortCutKey[] { TempSetting.AutoCaptureKey, TempSetting.AllCaptureKey,
+            if (keys == null) keys = new Shotcut[] { TempSetting.AutoCaptureKey, TempSetting.AllCaptureKey,
                 TempSetting.SelectCaptureKey, TempSetting.OpenSettingKey, TempSetting.ChangeEditorModeKey };
 
             Key key = ShowKeyInput((Key)(((Button)sender).Tag));
@@ -125,7 +103,7 @@ namespace AutoShot
             
             
 
-            foreach (ShortCutKey k in keys)
+            foreach (Shotcut k in keys)
             {
                 k.IsDisabled = false;
             }
@@ -142,8 +120,6 @@ namespace AutoShot
 
             for(int i = 0; i <= 4; i++)
             {
-
-
                 Button iBtn1, iBtn2,  jBtn1, jBtn2;
                 TextBlock ilbl, jlbl;
 
@@ -163,30 +139,28 @@ namespace AutoShot
                         keys[j].IsDisabled = true;
                         ilbl.Foreground = Brushes.Red;
                         jlbl.Foreground = Brushes.Red;
-                    }
-
+                    }   
                 }
             }
-
-
-            switch (basename)
-            {
-                case "BtnAutoSave":
-                    if (basenum == 1) TempSetting.AutoCaptureKey.FirstKey = key; else TempSetting.AutoCaptureKey.SecondKey = key;
-                    break;
-                case "BtnAllCapture":
-                    if (basenum == 1) TempSetting.AllCaptureKey.FirstKey = key; else TempSetting.AllCaptureKey.SecondKey = key;
-                    break;
-                case "BtnSelCapture":
-                    if (basenum == 1) TempSetting.SelectCaptureKey.FirstKey = key; else TempSetting.SelectCaptureKey.SecondKey = key;
-                    break;
-                case "BtnOpenSetting":
-                    if (basenum == 1) TempSetting.OpenSettingKey.FirstKey = key; else TempSetting.OpenSettingKey.SecondKey = key;
-                    break;
-                case "BtnChangeEditor":
-                    if (basenum == 1) TempSetting.ChangeEditorModeKey.FirstKey = key; else TempSetting.ChangeEditorModeKey.SecondKey = key;
-                    break;
-            }
+            
+            //switch (basename)
+            //{
+            //    case "BtnAutoSave":
+            //        if (basenum == 1) TempSetting.AutoCaptureKey.FirstKey = key; else TempSetting.AutoCaptureKey.SecondKey = key;
+            //        break;
+            //    case "BtnAllCapture":
+            //        if (basenum == 1) TempSetting.AllCaptureKey.FirstKey = key; else TempSetting.AllCaptureKey.SecondKey = key;
+            //        break;
+            //    case "BtnSelCapture":
+            //        if (basenum == 1) TempSetting.SelectCaptureKey.FirstKey = key; else TempSetting.SelectCaptureKey.SecondKey = key;
+            //        break;
+            //    case "BtnOpenSetting":
+            //        if (basenum == 1) TempSetting.OpenSettingKey.FirstKey = key; else TempSetting.OpenSettingKey.SecondKey = key;
+            //        break;
+            //    case "BtnChangeEditor":
+            //        if (basenum == 1) TempSetting.ChangeEditorModeKey.FirstKey = key; else TempSetting.ChangeEditorModeKey.SecondKey = key;
+            //        break;
+            //}
         }
 
         public new void ShowDialog()
@@ -234,8 +208,8 @@ namespace AutoShot
             TempSetting.AutoCaptureEnableSelection = (CaptureNotifionMode)(Index + 1);
         }
 
-        private void RecoRangeTBChanged(object sender, TextChangedEventArgs e)
-        {
+        private void RecoRangeTBChanged(object sender, EventArgs e)
+        {            
             TextBox tb = (TextBox)sender;
             string t = tb.Name.Substring(4, 1);
             try
@@ -508,7 +482,7 @@ namespace AutoShot
 
                         RegistryKey rkey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
                         
-                        rkey.DeleteValue("AutoCapturer", false);
+                        rkey.DeleteValue("AutoShot", false);
 
 
                         Thread.Sleep(1000);
@@ -529,7 +503,7 @@ namespace AutoShot
 
         private void BtnShowLog_Click(object sender, RoutedEventArgs e)
         {
-            MsgBox("[ 업데이트 로그 ]\nVer 1.0 - Auto Capturer 개발 완료" + Environment.NewLine +
+            MsgBox("[ 업데이트 로그 ]\nVer 1.0 - AutoShot 개발 완료" + Environment.NewLine +
                 "Ver 1.0.1 - 오류 수정 및 설정 불러오기/내보내기 비활성화" + Environment.NewLine +
                 "Ver 1.0.2 - 오류 수정 (시작 프로그램 레지스트리 설정) 및 설정 불러오기 재활성화" + Environment.NewLine +
                 "Ver 1.0.3 - 시스템 위치에 세팅 위치가 잡히는 오류 수정", "업데이트 로그");
@@ -557,8 +531,6 @@ namespace AutoShot
         private void btnSettingLocation_Click(object sender, RoutedEventArgs e)
         {
             var fi = ShowSelectFileDialog(new string[] { ".aucasetting" });
-
-            tbSettingLocation.Text = fi.FullName;
             SettingWriter sw = new SettingWriter(TempSetting, fi.FullName);
         }
 
@@ -577,7 +549,8 @@ namespace AutoShot
         #region [ Setting 설정에 맟추기 ]
         public void SettingSync(Setting.Setting setting)
         {
-            if (keys == null) keys = new ShortCutKey[] { CurrentSetting.AutoCaptureKey, CurrentSetting.AllCaptureKey,
+            if (keys == null) keys = new Shotcut[] { //CurrentSetting.AutoCaptureKey,
+                CurrentSetting.AllCaptureKey,
                 CurrentSetting.SelectCaptureKey, CurrentSetting.OpenSettingKey, CurrentSetting.ChangeEditorModeKey };
 
             #region [ 캡처 설정 ]
@@ -599,58 +572,43 @@ namespace AutoShot
             RecoHeight = CurrentSetting.RecoHeight;
             RecoWidth = CurrentSetting.RecoWidth;
 
-            Button[][] btns = { new Button[]{ BtnAutoSave1, BtnAutoSave2 },
-                                new Button[]{ BtnAllCapture1, BtnAllCapture2 },                 
-                                new Button[]{ BtnSelCapture1, BtnSelCapture2 }, 
-                                new Button[]{ BtnOpenSetting1, BtnOpenSetting2 },
-                                new Button[]{ BtnChangeEditor1,BtnChangeEditor2 }};
+            
 
-            int counter = 0;
-            foreach(ShortCutKey k in keys)
-            {
-                btns[counter][0].Tag = (int)k.FirstKey;
-                btns[counter][1].Tag = (int)k.SecondKey;
+                //for (int it = 0; it < 4; it++)
+                //{
+                //    Button Btn1 = (Button)FindName(names[it] + "1");
+                //    Button Btn2 = (Button)FindName(names[it] + "2");
+                //    TextBlock TB = (TextBlock)FindName(names[it] + "lbl");
+                //    if (Btn1.Content.ToString() == Btn2.Content.ToString()) TB.Foreground = Brushes.Green; else TB.Foreground = Brushes.Black;
 
-                btns[counter][0].Content = k.FirstKey.ToString() + " Key";
-                btns[counter][1].Content = k.SecondKey.ToString() + " Key";
-                counter++;
-            }
+                //    if (Btn1.Content.ToString() == NonUse && Btn2.Content.ToString() == NonUse) TB.Foreground = Brushes.Red;
+                //}
 
-            for (int it = 0; it < 5; it++)
-            {
-                Button Btn1 = (Button)FindName(names[it] + "1");
-                Button Btn2 = (Button)FindName(names[it] + "2");
-                TextBlock TB = (TextBlock)FindName(names[it] + "lbl");
-                if (Btn1.Content.ToString() == Btn2.Content.ToString()) TB.Foreground = Brushes.Green; else TB.Foreground = Brushes.Black;
+                //for (int it = 0; it < 4; it++)
+                //{
+                //    Button iBtn1, iBtn2, jBtn1, jBtn2;
+                //    TextBlock ilbl, jlbl;
 
-                if (Btn1.Content.ToString() == NonUse && Btn2.Content.ToString() == NonUse) TB.Foreground = Brushes.Red;
-            }
+                //    iBtn1 = (Button)FindName(names[it] + "1");
+                //    iBtn2 = (Button)FindName(names[it] + "2");
+                //    ilbl = (TextBlock)FindName(names[it] + "lbl");
+                //    for (int j = it + 1; j < 5; j++)
+                //    {
+                //        jBtn1 = (Button)FindName(names[j] + "1");
+                //        jBtn2 = (Button)FindName(names[j] + "2");
+                //        jlbl = (TextBlock)FindName(names[j] + "lbl");
 
-            for (int it = 0; it < 4; it++)
-            {
-                Button iBtn1, iBtn2, jBtn1, jBtn2;
-                TextBlock ilbl, jlbl;
+                //        if ((iBtn1.Content.ToString() == jBtn1.Content.ToString() && iBtn2.Content.ToString() == jBtn2.Content.ToString()) ||
+                //            (iBtn1.Content.ToString() == jBtn2.Content.ToString() && iBtn2.Content.ToString() == jBtn1.Content.ToString()))
+                //        {
+                //            keys[it].IsDisabled = true;
+                //            keys[j].IsDisabled = true;
+                //            ilbl.Foreground = Brushes.Red;
+                //            jlbl.Foreground = Brushes.Red;
+                //        }
 
-                iBtn1 = (Button)FindName(names[it] + "1");
-                iBtn2 = (Button)FindName(names[it] + "2");
-                ilbl = (TextBlock)FindName(names[it] + "lbl");
-                for (int j = it + 1; j < 5; j++)
-                {
-                    jBtn1 = (Button)FindName(names[j] + "1");
-                    jBtn2 = (Button)FindName(names[j] + "2");
-                    jlbl = (TextBlock)FindName(names[j] + "lbl");
-
-                    if ((iBtn1.Content.ToString() == jBtn1.Content.ToString() && iBtn2.Content.ToString() == jBtn2.Content.ToString()) ||
-                        (iBtn1.Content.ToString() == jBtn2.Content.ToString() && iBtn2.Content.ToString() == jBtn1.Content.ToString()))
-                    {
-                        keys[it].IsDisabled = true;
-                        keys[j].IsDisabled = true;
-                        ilbl.Foreground = Brushes.Red;
-                        jlbl.Foreground = Brushes.Red;
-                    }
-
-                }
-            }
+                //    }
+                //}
 
             swStartupProgram.IsChecked = setting.IsStartupProgram;
 

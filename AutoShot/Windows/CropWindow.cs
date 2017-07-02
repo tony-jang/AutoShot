@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using f = System.Windows.Forms;
-using d = System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using AutoShot.UserControls;
 using System.Windows.Media;
 using System.Windows.Input;
+
+using AutoShot.UserControls;
+
+using f = System.Windows.Forms;
+using d = System.Drawing;
+
 using static AutoShot.Interop.NativeMethods;
 using static AutoShot.Sounds.NotificationSounds;
 using static AutoShot.Interop.UnsafeNativeMethods;
 using static AutoShot.Globals.Globals;
-using static AutoShot.Globals.ImageUtilities;
+using System.Windows.Media.Imaging;
 
 namespace AutoShot.Windows
 {
@@ -28,7 +27,6 @@ namespace AutoShot.Windows
         POINT StartLoc;
         public CropWindow()
         {
-
             // 선택 캡처
 
             foreach (var scr in f.Screen.AllScreens)
@@ -45,10 +43,14 @@ namespace AutoShot.Windows
             grid = new Grid();
 
             PlayNotificationSound(SoundType.Captured);
-            
-            blankRect = new BlankRect();
 
-            blankRect.Fill = (Brush)(new BrushConverter()).ConvertFromString("#7FFFFFFF");
+            blankRect = new BlankRect()
+            {
+                Fill = (Brush)(new BrushConverter()).ConvertFromString("#7FFFFFFF")
+            };
+
+            blankRect.MouseDown += DragStart;
+            blankRect.KeyDown += KeyDownClose;
 
             grid.Children.Add(blankRect);
 
@@ -62,9 +64,9 @@ namespace AutoShot.Windows
                 Height = 100,
                 Visibility = Visibility.Hidden
             };
-            grid.Children.Add(blankRect);
 
-            blankRect.MouseDown += DragStart;
+            grid.Children.Add(dragGrid);
+            
             this.AllowsTransparency = true;
             this.Topmost = true;
             this.ResizeMode = ResizeMode.NoResize;
@@ -73,21 +75,31 @@ namespace AutoShot.Windows
             this.Width = fullBound.Width;
             this.Height = fullBound.Height;
             this.WindowStyle = WindowStyle.None;
-
-            this.MouseDown += DragStart;
-
+            
             this.Background = new ImageBrush(CopyScreen());
 
+            this.MouseDown += DragStart;
             this.Content = grid;
             this.Loaded += WdwInit;
+            this.KeyDown += KeyDownClose;
 
             grid.KeyDown += KeyDownClose;
             dragGrid.KeyDown += KeyDownClose;
-            this.KeyDown += KeyDownClose;
-            blankRect.KeyDown += KeyDownClose;  
+            
         }
 
-        bool CaptureCompFlag = false;
+        bool handled = false;
+        public new BitmapSource ShowDialog()
+        {
+            base.ShowDialog();
+            if (!handled)
+                return null;
+
+            BitmapSource image = new CroppedBitmap((BitmapSource)((ImageBrush)this.Background).ImageSource,
+                new Int32Rect(blankRect.Rect.X, blankRect.Rect.Y, blankRect.Rect.Width, blankRect.Rect.Height));
+
+            return image;
+        }
 
         private void DragStart(object sender, MouseButtonEventArgs e)
         {
@@ -152,7 +164,7 @@ namespace AutoShot.Windows
                 }
                 else
                 {
-                    CaptureCompFlag = true;
+                    handled = true;
                     this.Close();
                 }
             }

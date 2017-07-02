@@ -25,22 +25,35 @@ namespace AutoShot.Globals
             InitializeComponent();
             ReturnData = key;
             KeyTB.Text = key.ToString() + " Key";
+
+            FirstKey = key;
+
             this.PreviewKeyDown += PrevKeyDown;
-            
         }
+        Key FirstKey = Key.None;
         private void PrevKeyDown(object sender, KeyEventArgs e)
         {
-            Key k = e.Key;
-            if (k == Key.Escape)
+            if (InputWord(e.Key))
             {
-                ReturnData = Key.None;
-                this.Close();
-                return;
+                KeyTB.Text = e.Key.ToString() + " Key";
+                ReturnData = e.Key;
+                e.Handled = true;
             }
-            if (k == Key.System) k = Key.LeftAlt;
-            KeyTB.Text = k.ToString() + " Key";
-            ReturnData = k;
-            e.Handled = true;
+
+            bool InputWord(Key key)
+            {
+                int k = (int)key;
+
+                if ((k >= (int)Key.A && k <= (int)Key.Z) ||
+                    (k >= (int)Key.D0 && k <= (int)Key.D9) ||
+                    (k >= (int)Key.F1 && k <= (int)Key.F24) ||
+                    (k >= (int)Key.NumPad0 && k <= (int)Key.NumPad9) ||
+                    (k == (int)Key.Tab))
+                {
+                    return true;
+                }
+                return false;
+            }
         }
 
         public void BtnClick(object sender, RoutedEventArgs e)
@@ -51,7 +64,7 @@ namespace AutoShot.Globals
 
                     break;
                 case "취소":
-                    ReturnData = Key.None;
+                    ReturnData = FirstKey;
                     break;
             }
             this.Close();

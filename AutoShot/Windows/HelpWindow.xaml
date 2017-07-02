@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoShot.Windows"
         mc:Ignorable="d"
-        Title="Auto Capturer 도움말" Height="600" Width="900" AllowsTransparency="True" WindowStyle="None" Icon="/AutoCapturer;component/Resources/Icons/Icon.png">
+        Title="AutoShot 도움말" Height="600" Width="900" AllowsTransparency="True" WindowStyle="None" Icon="/AutoShot;component/Resources/Icons/Icon.png">
     <Window.Resources>
         <Grid x:Key="MainHelp">
             <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="Auto Capturer 도움말"/>
+                <TextBlock FontSize="30" Text="AutoShot 도움말"/>
                 <TextBlock Margin="0,30,0,0" FontSize="15">
-                    이 곳에서 <Run Text="Auto Capturer" FontWeight="Bold"/>를 사용하는 방법에 대해서 알 수 있습니다.<LineBreak/>
+                    이 곳에서 <Run Text="AutoShot" FontWeight="Bold"/>를 사용하는 방법에 대해서 알 수 있습니다.<LineBreak/>
                     해당 도움말에서는 다음과 같은 내용을 다루고 있습니다.<LineBreak/>
                     <LineBreak/>
                     -메인 UI <LineBreak/><LineBreak/>
@@ -44,7 +44,7 @@
                     　　　따라서, 해당 내용이 이미지로 인식되며 이후에는 패턴의 설정대로 처리됩니다.<LineBreak/><LineBreak/>
                     　자동 캡처를 <Run Text="비활성화" Foreground="Red" FontWeight="Bold"/> 시키게 된다면 모든 인식이 취소됩니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/AutoCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/AutoCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock Text="다음의 빨간색으로 표시된 버튼을 누름으로써 자동 캡처를 할 수 있습니다." FontSize="15"/>
             </StackPanel>
 
@@ -61,7 +61,7 @@
                     　전체 캡처를 한다면 창이 띄워져 있을시 창이 들어간 다음에 캡처가 됩니다.<LineBreak/>
                     　　- 해당 캡처법은 설정의 전체 캡처 카운트 다운에 의해 몇 초 뒤에 캡처가 가능합니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/AllCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/AllCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock Text="다음의 빨간색으로 표시된 버튼을 누름으로써 전체 캡처를 할 수 있습니다." FontSize="15"/>
             </StackPanel>
 
@@ -78,7 +78,7 @@
                     　선택 캡처를 한다면 창이 띄워져 있을시 창이 들어간 다음에 캡처가 시작됩니다.<LineBreak/>
                     　　- 해당 캡처법은 설정의 전체 캡처 카운트 다운에 의해 몇 초 뒤에 캡처가 가능합니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/SelectCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/SelectCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock Text="다음의 빨간색으로 표시된 버튼을 누름으로써 선택 캡처를 할 수 있습니다." FontSize="15"/>
             </StackPanel>
 
@@ -90,19 +90,19 @@
                 <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
                     UI에 대해서 알려줍니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/BasicPng.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/BasicPng.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     메인 UI는 다음과 같은 모양을 띄고 있습니다. 왼쪽에 3개는 캡처 방법에 대해서 알려드립니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/UIHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     오른쪽 아래의 2개 버튼 중에 왼쪽 ?표를 누르게 되면 지금 보고 계시는 도움말이 뜹니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/UIHelpPic2.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic2.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     오른쪽 아래의 2개 버튼 중에 오른쪽 톱니바퀴를 누르게 되면 설정을 변경시킬 수 있습니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/UIHelpPic3.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic3.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     오른쪽 위쪽의 남은 장 수는 가장 마지막에 찍었던 사진을 기준으로 남은 장 수를 계산합니다.<LineBreak/>
                     상당히 유동적이며 최대 표시되는 장 수는 99999개 이며 그 이상일 시 99999+로 표시됩니다.<LineBreak/>
@@ -117,7 +117,7 @@
                 <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
                     캡처 설정의 구성요소에 대해서 알려줍니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/Setting_CaptureHelpPic1.PNG" Stretch="Uniform" Width="600" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/Setting_CaptureHelpPic1.PNG" Stretch="Uniform" Width="600" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     이게 전체적인 캡처 설정창의 모습입니다.<LineBreak/>
                 </TextBlock>
@@ -146,7 +146,7 @@
                 <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
                     설정 중 환경 설정에 대해서 알려줍니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/Setting_EnvironHelpPic1.jpg" Stretch="Uniform" Width="500" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/Setting_EnvironHelpPic1.jpg" Stretch="Uniform" Width="500" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     인식 범위는 마우스를 왼쪽 위로 가져갔을때 폼이 뜨는 범위를 말합니다.<LineBreak/>
                     만약 인식이 잘 안된다고 하면 값을 조금 늘려주면 됩니다<LineBreak/>
@@ -166,7 +166,7 @@
                 <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
                     패턴 설정에 대해서 알려줍니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/Setting_PatternHelpPic1.jpg" Stretch="Uniform" Width="600" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/Setting_PatternHelpPic1.jpg" Stretch="Uniform" Width="600" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     패턴 설정은 다음과 같은 구성입니다.<LineBreak/>
                 </TextBlock>
@@ -184,19 +184,19 @@
                 <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
                     UI에 대해서 알려줍니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/BasicPng.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/BasicPng.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     메인 UI는 다음과 같은 모양을 띄고 있습니다. 왼쪽에 3개는 캡처 방법에 대해서 알려드립니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/UIHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     오른쪽 아래의 2개 버튼 중에 왼쪽 ?표를 누르게 되면 지금 보고 계시는 도움말이 뜹니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/UIHelpPic2.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic2.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     오른쪽 아래의 2개 버튼 중에 오른쪽 톱니바퀴를 누르게 되면 설정을 변경시킬 수 있습니다.<LineBreak/>
                 </TextBlock>
-                <Image Source="/AutoCapturer;component/Resources/HelpImages/UIHelpPic3.png" Stretch="None" HorizontalAlignment="Left"/>
+                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic3.png" Stretch="None" HorizontalAlignment="Left"/>
                 <TextBlock FontSize="15" TextWrapping="Wrap">
                     오른쪽 위쪽의 남은 장 수는 가장 마지막에 찍었던 사진을 기준으로 남은 장 수를 계산합니다.<LineBreak/>
                     상당히 유동적이며 최대 표시되는 장 수는 99999개 이며 그 이상일 시 99999+로 표시됩니다.<LineBreak/>
@@ -213,7 +213,7 @@
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
         <TreeView x:Name="treeView">
-            <TreeViewItem FontSize="14" Header="Auto Capturer 도움말" Tag="{StaticResource MainHelp}"/>
+            <TreeViewItem FontSize="14" Header="AutoShot 도움말" Tag="{StaticResource MainHelp}"/>
             <TreeViewItem FontSize="14" Header="Main UI" Tag="{StaticResource MainUI}"/>
             <TreeViewItem FontSize="14" Header="캡처 방법">
                 <TreeViewItem FontSize="14" Header="자동 캡처" Tag="{StaticResource AutoCapture}"/>

@@ -11,19 +11,21 @@ namespace AutoShot.Worker
 {
     class ShortCutWorker : BaseWorker
     {
-        public List<ShortCutKey> Keys { get; set; }
-        private List<ShortCutKey> _DownKeys = new List<ShortCutKey>();
+        public List<Shotcut> Keys { get; set; }
+        private List<Shotcut> _DownKeys = new List<Shotcut>();
+        static IKeyboardMouseEvents hook;
 
         public bool IsUsed = true;
 
-        public ShortCutWorker() : this(new List<ShortCutKey>()) { }
-        public ShortCutWorker(ShortCutKey key) : this(new List<ShortCutKey>(new ShortCutKey[] { key })) { }
-        public ShortCutWorker(ShortCutKey[] keys) : this(keys.ToList()) { }
-        public ShortCutWorker(List<ShortCutKey> keys)
+        public ShortCutWorker() : this(new List<Shotcut>()) { }
+        public ShortCutWorker(Shotcut key) : this(new List<Shotcut>(new Shotcut[] { key })) { }
+        public ShortCutWorker(Shotcut[] keys) : this(keys.ToList()) { }
+        public ShortCutWorker(List<Shotcut> keys)
         {
             this.Keys = keys;
 
-            Hook.GlobalEvents().KeyDown += ShortCutWorker_KeyDown;
+            hook = Hook.GlobalEvents();
+            hook.KeyDown += ShortCutWorker_KeyDown;
 
             //thr = new Thread(() =>
             //{
@@ -55,19 +57,30 @@ namespace AutoShot.Worker
 
         private void ShortCutWorker_KeyDown(object sender, f.KeyEventArgs e)
         {
+            foreach (Shotcut s in Keys)
+            {
+                if (s.WPFKey == Globals.Globals.WPFKeyFromWFormKey(e.KeyCode) &&
+                    s.Control == e.Control &&
+                    s.Alt == e.Alt &&
+                    s.Shift == e.Shift)
+                {
+                    OnFind(new ShortCutWorkEventArgs(s));
+                    break;
+                }
+            }
             
         }
     }
 
     class ShortCutWorkEventArgs : WorkEventArgs
     {
-        public ShortCutWorkEventArgs(ShortCutKey data)
+        public ShortCutWorkEventArgs(Shotcut data)
         {
             _Data = data;
         }
-        ShortCutKey _Data;
+        Shotcut _Data;
 
-        public ShortCutKey Data
+        public Shotcut Data
         {
             get { return _Data; }
             set { _Data = value; }
@@ -75,10 +88,9 @@ namespace AutoShot.Worker
     }
 
     [Serializable]
-    public class ShortCutKey : ICloneable
+    public class Shotcut : ICloneable
     {
         public delegate void BlankEventHandler();
-     
 
         List<BlankEventHandler> delegates = new List<BlankEventHandler>();
 
@@ -101,9 +113,7 @@ namespace AutoShot.Worker
         {
 
             foreach (BlankEventHandler beh in delegates)
-            {
                 _ValueChangedEvent -= beh;
-            }
 
             delegates.Clear();
         }
@@ -114,8 +124,7 @@ namespace AutoShot.Worker
 
         public object Clone()
         {
-            return new ShortCutKey(this.FirstKey, this.SecondKey, this.SeparateKey);
-                
+            return new Shotcut(this.Name, this.WPFKey, this.Control, this.Alt, this.Shift);
         }
 
         private bool _IsDisabled = false;
@@ -124,42 +133,24 @@ namespace AutoShot.Worker
             get { return _IsDisabled; }
             set { _IsDisabled = value; }
         }
-
-
-        private Key _FirstKey, _SecondKey;
-
-        private static List<string> SeparateKeys = new List<string>();
-
-        public Key FirstKey
+        Key _WPFKey;
+        public string Name { get; set; }
+        public bool Control { get; set; }
+        public bool Alt { get; set; }
+        public bool Shift { get; set; }
+        public Key WPFKey
         {
-            get { return _FirstKey; }
-            set { _FirstKey = value; ValueChanged(); }
+            get { return _WPFKey; }
+            set { _WPFKey = value; ValueChanged(); }
         }
-
-        public Key SecondKey
+        public Shotcut(string name, Key key1, bool control, bool alt, bool shift)
         {
-            get { return _SecondKey; }
-            set { _SecondKey = value; ValueChanged(); }
+            this.Name = name;
+            _WPFKey = key1;
+            this.Control = control;
+            this.Alt = alt;
+            this.Shift = shift;
         }
-
-        private string _SeparateKey;
-        /// <summary>
-        /// 해당 쇼트컷을 중복방지용 Key로 사용됩니다.
-        /// </summary>
-        public string SeparateKey
-        {
-            get { return _SeparateKey; }
-        }
-        
-        public ShortCutKey(Key key1, Key key2, string SeparateKey)
-        {
-            FirstKey = key1;
-            SecondKey = key2;
-            _SeparateKey = SeparateKey;
-            SeparateKeys.Add(SeparateKey);
-        }
-
-        public ShortCutKey(Key key1, string SeparateKey) : this(key1, Key.None, SeparateKey) { }
     }
 
     /// <summary>
@@ -169,7 +160,6 @@ namespace AutoShot.Worker
     {
         public DuplicatedKeyException(string message) : base(message)
         {
-
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,11 +24,13 @@ namespace AutoShot.Globals
 
         // 현재 설정
         public static Setting.Setting CurrentSetting;
-
-
+        
         public static string SettingLocation;
 
-
+        public static Key WPFKeyFromWFormKey(Keys key)
+        {
+            return KeyInterop.KeyFromVirtualKey((int)key);
+        }
 
         /// <summary>
         /// 사용 할 수 없는 String 모음
@@ -68,11 +71,7 @@ namespace AutoShot.Globals
             }
             return new Thickness(l, t, r, b);
         }
-
-
-
-
-
+        
         public static double RatioX { get; set; }
         public static double RatioY { get; set; }
 
@@ -351,7 +350,10 @@ namespace AutoShot.Globals
                     var newBytes = GetSomeBytes(uri, currentStart, currentStart + ChunkSize - 1);
                     if (newBytes.Length < ChunkSize) moreBytes = false;
                     allBytes = Combine(allBytes, newBytes);
-                    return GetDimensions(new BinaryReader(new MemoryStream(allBytes)));
+                    using (var ms = new MemoryStream(allBytes))
+                    {
+                        return GetDimensions(new BinaryReader(ms));
+                    }
                 }
                 catch
                 {

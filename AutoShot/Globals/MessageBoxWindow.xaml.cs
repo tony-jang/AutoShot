@@ -121,6 +121,7 @@ namespace AutoShot.Globals
 
     static partial class Globals
     {
+
         public static MessageBoxResult MsgBox(string Message,string Title = "", MessageBoxStyle msgboxstyle = MessageBoxStyle.OK)
         {
             MessageBoxWindow wdw = new MessageBoxWindow(Title, Message, msgboxstyle);

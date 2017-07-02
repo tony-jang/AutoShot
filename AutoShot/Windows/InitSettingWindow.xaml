@@ -7,7 +7,7 @@
         xmlns:u="clr-namespace:AutoShot.UserControls"
         xmlns:local="clr-namespace:AutoShot.Windows"
         mc:Ignorable="d"
-        Title="Auto Capturer 초기 설정" Height="550" Width="400" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/AutoCapturer;component/Resources/Icons/Icon.png">
+        Title="AutoShot 초기 설정" Height="550" Width="400" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/AutoShot;component/Resources/Icons/Icon.png">
 
     <Window.Resources>
         <Style TargetType="{x:Type TabItem}">
@@ -21,13 +21,13 @@
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Margin="40,0">
+        <Grid HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60"/>
-                <ColumnDefinition />
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Image Source="/AutoCapturer;component/Resources/Icons/AuCaOn.png" >
+            <Image Source="/AutoShot;component/Resources/Icons/AuCaOn.png" >
                 <Image.Effect>
                     <DropShadowEffect ShadowDepth="0.2"/>
                 </Image.Effect>
@@ -37,8 +37,8 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Auto Capturer" TextAlignment="Center" FontSize="30" VerticalAlignment="Center" FontWeight="Thin"/>
-                <TextBlock Grid.Row="1" Margin="20,0" Text="Ver 1.0" TextAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Margin="10" Text="AutoShot" TextAlignment="Center" FontSize="30" VerticalAlignment="Center" FontWeight="Thin"/>
+                <TextBlock Grid.Row="1" Margin="20,0" Text="Ver 1.0.3" TextAlignment="Right" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
 
@@ -52,7 +52,7 @@
                     <StackPanel Margin="10">
                         <TextBlock Margin="0,5,0,0" Text="초기 설정 시작" Foreground="Black" FontSize="20"/>
                         <TextBlock Margin="0,4,0,0" TextWrapping="Wrap">
-                            지금부터 Auto Capturer <Run Text="초기 설정" FontWeight="Bold"/>을 시작합니다.<LineBreak/>
+                            지금부터 AutoShot <Run Text="초기 설정" FontWeight="Bold"/>을 시작합니다.<LineBreak/>
                             만약 초기 설정을 원하시지 않으면 모두 건너뛰기를 눌러서 바로 시작해주시면 됩니다.<LineBreak/>
                             기본 패턴은 자동으로 바탕화면에 저장되며 이름은 '캡처(시간)'으로 저장되게 됩니다.
                         </TextBlock>

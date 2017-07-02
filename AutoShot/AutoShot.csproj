@@ -134,6 +134,9 @@
     <Compile Include="Setting\SettingReader.cs" />
     <Compile Include="Setting\SettingWriter.cs" />
     <Compile Include="UserControls\BlankRect.cs" />
+    <Compile Include="UserControls\ShortcutKey.xaml.cs">
+      <DependentUpon>ShortcutKey.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\StoargySpaceToolTip.cs" />
     <Compile Include="Utils\ClipboardFormat.cs" />
     <Compile Include="Utils\ClipboardMonitor.cs" />
@@ -208,6 +211,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControls\ImageEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ShortcutKey.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

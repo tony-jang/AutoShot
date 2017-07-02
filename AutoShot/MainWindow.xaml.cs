@@ -46,8 +46,7 @@ namespace AutoShot
         StorageSpaceWorker spaceworker = new StorageSpaceWorker();
         ShortCutWorker scworker = new ShortCutWorker();
         ImageWorker urlworker = new ImageWorker();
-
-
+        
         private f.NotifyIcon notify;
 
         int ExpectSize = 1000;
@@ -58,15 +57,13 @@ namespace AutoShot
             
             try
             {
-
                 PngBitmapEncoder enc = new PngBitmapEncoder();
                 
                 ExpectSize = ImageSourceToBytes(enc, CopyScreen()).Length;
 
                 MainDispatcher = Dispatcher;
                 CurrentSetting = new SettingReader().ReadSetting();
-
-
+                
                 SettingLocation = Registry.GetValue(Registry.CurrentUser.ToString() + "\\AutoCapturer", "SettingLocation", "NotFound").ToString();
 
                 if (CurrentSetting == null)
@@ -77,13 +74,12 @@ namespace AutoShot
                 CurrentSetting.AddHandler();
                 if (!CurrentSetting.TutorialProgress)
                 {
-                    if (MsgBox("Auto Capturer 도움말을 엽니다. 계속하시겠습니까?", "도움말", MessageBoxStyle.YesNo) == MessageBoxResult.Yes)
+                    if (MsgBox("AutoShot 도움말을 엽니다. 계속하시겠습니까?", "도움말", MessageBoxStyle.YesNo) == MessageBoxResult.Yes)
                     {
                         var hw = new HelpWindow();
                         hw.ShowDialog();
                     }
-
-
+                    
                     CurrentSetting.TutorialProgress = true;
                 }
 
@@ -102,16 +98,18 @@ namespace AutoShot
 
                 this.Left = 0; this.Top = 0;
 
-                ImgWorker.Find += DetectPrtscr;
+                ImgWorker.Find += DetectPrintScreen;
 
                 spaceworker.Find += SpaceChange;
 
                 try
                 {
-                    if (IsImage(Clipboard.GetText())) Clipboard.Clear();
+                    if (IsImage(Clipboard.GetText()))
+                        Clipboard.Clear();
                 }
-                catch { }
-
+                catch
+                {
+                }
 
                 urlworker.Find += DetectURL;
 
@@ -127,13 +125,13 @@ namespace AutoShot
                 this.MouseLeave += FrmDisappear;
 
                 FrmDisappear(this, null);
-
-
+                
                 f.ContextMenu menu = new f.ContextMenu();
 
                 f.MenuItem itm1 = new f.MenuItem();
                 f.MenuItem itm2 = new f.MenuItem();
                 f.MenuItem itm3 = new f.MenuItem();
+
                 menu.MenuItems.Add(itm1);
                 menu.MenuItems.Add(itm2);
                 menu.MenuItems.Add(itm3);
@@ -161,14 +159,13 @@ namespace AutoShot
 
                 notify = new f.NotifyIcon();
                 notify.ContextMenu = menu;
-                notify.Text = "AutoCapturer 동작 중";
+                notify.Text = "AutoShot 동작 중";
                 notify.Visible = true;
                 notify.Icon = Properties.Resources.AucaIcon;
 
-                notify.BalloonTipTitle = "AutoCapturer 실행 알림";
-                notify.BalloonTipText = "AutoCapturer가 실행되었습니다.";
-                notify.ShowBalloonTip(1000);
-                
+                PopUpWindow puw = new PopUpWindow("실행됨", "AutoShot이 실행되었습니다.");
+                puw.ShowTime(1000);
+
                 ClipboardMonitor.Start();
             }
             catch (Exception ex)
@@ -236,7 +233,7 @@ namespace AutoShot
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                 {
-                    switch (ev.Data.SeparateKey)
+                    switch (ev.Data.Name)
                     {
                         case "AutoCapture":
                             BtnEnAutoSave_Click(this, null);
@@ -285,7 +282,6 @@ namespace AutoShot
                 MsgBox(ex.ToString());
                 throw;
             }
-            
         }
 
         private void SpaceChange(object sender, WorkEventArgs e)
@@ -348,8 +344,10 @@ namespace AutoShot
         {
             try
             {
-                if (IsShowed) Dispatcher.Invoke(new Action(() => { Appear(); }));
-                else if (!IsShowed) Dispatcher.Invoke(new Action(() => { DisAppear(); }));
+                if (IsShowed)
+                    Dispatcher.Invoke(new Action(() => { Appear(); }));
+                else if (!IsShowed)
+                    Dispatcher.Invoke(new Action(() => { DisAppear(); }));
             }
             catch (Exception ex)
             {
@@ -488,15 +486,15 @@ namespace AutoShot
                 {
                     Dispatcher.Invoke(new Action(() => { this.IsEnabled = false; DisAppear(); }));
 
-                    if (Visibled) Thread.Sleep(500);
+                    if (Visibled)
+                        Thread.Sleep(500);
 
                     var wdw = new CountDownWindow(CurrentSetting.AllCaptureCountDown);
 
                     wdw.ShowDialog();
-
-
-                    path = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
-                                                                 CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
+                    
+                    path = Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
+                        CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
                     BitmapSource image = CopyScreen();
 
                     Clipboard.SetData(DataFormats.Bitmap, image);
@@ -505,7 +503,10 @@ namespace AutoShot
 
                     SaveRequest(image);
 
-                    Dispatcher.Invoke(new Action(() => { this.IsEnabled = true; }));
+                    Dispatcher.Invoke(new Action(() => 
+                    {
+                        this.IsEnabled = true;
+                    }));
                 });
 
                 thr.SetApartmentState(ApartmentState.STA);
@@ -521,8 +522,12 @@ namespace AutoShot
         {
             try
             {
-                path = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
-                                                         CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
+                if (image == null)
+                    return;
+
+                path = Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
+                           CurrentSetting.DefaultPattern.RealSaveName + ".jpg");
+
                 if (File.Exists(path) && !CurrentSetting.DefaultPattern.OverWrite)
                 {
                     bool flag = false;
@@ -530,8 +535,8 @@ namespace AutoShot
                     while (!flag)
                     {
                         string tmp;
-                        tmp = System.IO.Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
-                                                         CurrentSetting.DefaultPattern.RealSaveName + $"({Counter})" + ".jpg");
+                        tmp = Path.Combine(CurrentSetting.DefaultPattern.RealSaveLocation,
+                            CurrentSetting.DefaultPattern.RealSaveName + $"({Counter})" + ".jpg");
                         Counter++;
                         if (File.Exists(tmp)) continue;
                         else if (!File.Exists(tmp)) { path = tmp; break; }
@@ -545,11 +550,11 @@ namespace AutoShot
 
                 if (CurrentSetting.DefaultPattern.OpenEffector)
                 {
-                    if (!GetImageFromImageEditor(ref image)) return;
+                    if (!GetImageFromImageEditor(ref image))
+                        return;
                 }
 
                 var filestream = new FileStream(path, FileMode.Create);
-
                 var encoder = new PngBitmapEncoder();
 
 
@@ -558,7 +563,8 @@ namespace AutoShot
 
                 encoder = new PngBitmapEncoder();
 
-                if (UpdateStoragy) ExpectSize = ImageSourceToBytes(encoder, image).Length;
+                if (UpdateStoragy)
+                    ExpectSize = ImageSourceToBytes(encoder, image).Length;
 
                 filestream.Dispose();
 
@@ -575,7 +581,7 @@ namespace AutoShot
             }
         }
 
-        private void DetectPrtscr(object sender, WorkEventArgs e)
+        private void DetectPrintScreen(object sender, WorkEventArgs e)
         {
             try
             {
@@ -593,13 +599,6 @@ namespace AutoShot
                 MsgBox(ex.ToString());
             }
         }
-        Window Wdw;
-        Grid grid;
-        Border dragGrid;
-        
-        BlankRect blnkrect;
-
-        
 
         private void BtnSelCapture_Click(object sender, RoutedEventArgs e)
         {
@@ -613,20 +612,14 @@ namespace AutoShot
 
                 Thread.Sleep(500);
 
-                // CropWindow
+                CropWindow cw = new CropWindow();
                 
                 Dispatcher.Invoke(new Action(() =>
                 {
                     this.IsEnabled = true;
                 }));
 
-
-                //if (!CaptureCompFlag) return;
-
-                BitmapSource image = new CroppedBitmap((BitmapSource)((ImageBrush)Wdw.Background).ImageSource,
-                    new Int32Rect(blnkrect.Rect.X, blnkrect.Rect.Y, blnkrect.Rect.Width, blnkrect.Rect.Height));
-
-                SaveRequest(image, false);
+                SaveRequest(cw.ShowDialog(), false);
             });
             
             thr.SetApartmentState(ApartmentState.STA);

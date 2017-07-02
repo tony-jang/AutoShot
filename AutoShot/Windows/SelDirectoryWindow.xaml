@@ -6,7 +6,7 @@
         xmlns:u="clr-namespace:AutoShot.UserControls"
         xmlns:local="clr-namespace:AutoShot.Windows"
         mc:Ignorable="d"
-        Title="Auto Capturer Folder Selection" WindowStartupLocation="CenterScreen" Height="700" Width="1000" AllowsTransparency="True" WindowStyle="None" Icon="/AutoCapturer;component/Resources/Icons/Icon.png">
+        Title="AutoShot Folder Selection" WindowStartupLocation="CenterScreen" Height="700" Width="1000" AllowsTransparency="True" WindowStyle="None" Icon="/AutoShot;component/Resources/Icons/Icon.png">
     <Grid>
         <Grid Margin="0,12,0,0">
             <Grid.RowDefinitions>
@@ -47,12 +47,12 @@
                     <ListView x:Name="PART_Drive" Style="{StaticResource NoHScrollBarListViewStyle}">
                         <ListViewItem Margin="5" Content="자주 쓰는 폴더 모음" FontSize="15" IsHitTestVisible="False"/>
                         <Rectangle Margin="5,0" Fill="Black" Height="1"  IsHitTestVisible="False"/>
-                        <u:ImageItem x:Name="itm_Desk" Style="{StaticResource DirItmStyle}" Content="바탕화면" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/DeskIcon.png"/>
-                        <u:ImageItem x:Name="itm_Dcu" Style="{StaticResource DirItmStyle}" Content="내 문서" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/DocumentIcon.png"/>
-                        <u:ImageItem x:Name="itm_Music" Style="{StaticResource DirItmStyle}" Content="내 음악" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/MusicIcon.png"/>
-                        <u:ImageItem x:Name="itm_Pic" Style="{StaticResource DirItmStyle}" Content="내 사진" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/ImageIcon.png"/>
-                        <u:ImageItem x:Name="itm_Dwn" Style="{StaticResource DirItmStyle}" Content="다운로드" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/DownloadIcon.png"/>
-                        <u:ImageItem x:Name="itm_exeFolder" Style="{StaticResource DirItmStyle}" Content="프로그램 위치" MainImage="/AutoCapturer;component/Resources/Icons/SmallIcons/PresentationIcon.png"/>
+                        <u:ImageItem x:Name="itm_Desk" Style="{StaticResource DirItmStyle}" Content="바탕화면" MainImage="/AutoShot;component/Resources/Icons/SmallIcons/DeskIcon.png"/>
+                        <u:ImageItem x:Name="itm_Dcu" Style="{StaticResource DirItmStyle}" Content="내 문서" MainImage="/AutoShot;component/Resources/Icons/SmallIcons/DocumentIcon.png"/>
+                        <u:ImageItem x:Name="itm_Music" Style="{StaticResource DirItmStyle}" Content="내 음악" MainImage="/AutoShot;component/Resources/Icons/SmallIcons/MusicIcon.png"/>
+                        <u:ImageItem x:Name="itm_Pic" Style="{StaticResource DirItmStyle}" Content="내 사진" MainImage="/AutoShot;component/Resources/Icons/SmallIcons/ImageIcon.png"/>
+                        <u:ImageItem x:Name="itm_Dwn" Style="{StaticResource DirItmStyle}" Content="다운로드" MainImage="/AutoShot;component/Resources/Icons/SmallIcons/DownloadIcon.png"/>
+                        <u:ImageItem x:Name="itm_exeFolder" Style="{StaticResource DirItmStyle}" Content="프로그램 위치" MainImage="/AutoShot;component/Resources/Icons/SmallIcons/PresentationIcon.png"/>
                         <ListViewItem Margin="5" Content="내 컴퓨터" FontSize="15" IsHitTestVisible="False"/>
                         <Rectangle Margin="5,0" Fill="Black" Height="1"  IsHitTestVisible="False"/>
                     </ListView>

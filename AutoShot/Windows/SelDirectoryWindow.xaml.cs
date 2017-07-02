@@ -216,7 +216,7 @@ namespace AutoShot.Windows
         public DirectoryInfo ShowDialogAsDirectory()
         {
             IsDirMode = true;
-            this.Title = "Auto Capturer 폴더 선택";
+            this.Title = "AutoShot 폴더 선택";
             base.ShowDialog();
 
             return ReturnDir;
@@ -224,8 +224,8 @@ namespace AutoShot.Windows
 
         public FileInfo ShowDialogAsFile(string[] Extensions = null)
         {
-            if (Extensions != null) { FilterExtensions = Extensions; this.Title = $"Auto Capturer 파일 선택 ({string.Join(", ", Extensions)})"; }
-            else { this.Title = $"Auto Capturer 파일 선택"; }
+            if (Extensions != null) { FilterExtensions = Extensions; this.Title = $"AutoShot 파일 선택 ({string.Join(", ", Extensions)})"; }
+            else { this.Title = $"AutoShot 파일 선택"; }
             
             
             IsDirMode = false;
