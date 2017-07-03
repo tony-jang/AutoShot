@@ -21,8 +21,8 @@ namespace AutoShot
     /// </summary>
     public partial class SettingWindow : Windows.ChromeWindow
     {
-        RadioButton[] AuCaRingTypeRB, AllCaCountDownRB, PopCountDownRB;
-        RadioButton[] GetImageRB;
+        RadioButton[] auCaRingTypeRB, allCaCountDownRB, popCountDownRB;
+        RadioButton[] getImageRB;
         ShortcutKey[] shortcutKeys;
 
         Setting.Setting TempSetting;
@@ -33,25 +33,28 @@ namespace AutoShot
 
             ShowPopupGrid.IsEnabled = false;
             
-            AuCaRingTypeRB = new RadioButton[]{ AuCaRingType1, AuCaRingType2, AuCaRingType3, AuCaRingType4 };
+            auCaRingTypeRB = new RadioButton[]{ auCaRingType1, auCaRingType2, auCaRingType3, auCaRingType4 };
 
-            GetImageRB = new RadioButton[] { GetURLImage1, GetURLImage2, GetURLImage3 };
-            AllCaCountDownRB = new RadioButton[]{ AllCaCountDown1, AllCaCountDown2, AllCaCountDown3,
-                                 AllCaCountDown4, AllCaCountDown5, AllCaCountDown6 };
-            PopCountDownRB = new RadioButton[] { PopCountDown1, PopCountDown2, PopCountDown3 };
+            getImageRB = new RadioButton[] { getURLImage1, getURLImage2, getURLImage3 };
+            allCaCountDownRB = new RadioButton[]{ allCaCountDown1, allCaCountDown2, allCaCountDown3,
+                                 allCaCountDown4, allCaCountDown5, allCaCountDown6 };
+            popCountDownRB = new RadioButton[] { popCountDown1, popCountDown2, popCountDown3 };
             shortcutKeys = new ShortcutKey[] { scAuto, scAll, scSelect, scSetting, scEditMode, };
 
-            AuCaRingType2.Unchecked += AuCaRing_Change;
-            AuCaRingType3.Unchecked += AuCaRing_Change;
+            auCaRingType2.Unchecked += AuCaRing_Change;
+            auCaRingType3.Unchecked += AuCaRing_Change;
 
-            foreach (RadioButton rb in AuCaRingTypeRB)
+            foreach (RadioButton rb in auCaRingTypeRB)
                 rb.Checked += AuCaRing_Change;
-            foreach (RadioButton rb in GetImageRB)
+            foreach (RadioButton rb in getImageRB)
                 rb.Checked += GetURLImage_Change;
-            foreach (RadioButton rb in AllCaCountDownRB)
+            foreach (RadioButton rb in allCaCountDownRB)
                 rb.Checked += AllCaCountDown_Change;
-            foreach (RadioButton rb in PopCountDownRB)
+            foreach (RadioButton rb in popCountDownRB)
                 rb.Checked += PopCount_Change;
+
+            foreach (ShortcutKey sc in shortcutKeys)
+                sc.KeyChanged += sc_KeyChanged;
 
             this.Closing += SettingWindow_Closing;
 
@@ -60,6 +63,26 @@ namespace AutoShot
 
             RecoWidthTB.LostFocus += RecoRangeTBChanged;
             RecoHeightTB.LostFocus += RecoRangeTBChanged;
+        }
+
+        private void sc_KeyChanged(object sender, EventArgs e)
+        {
+            Shortcut[] shortcuts = { TempSetting.AllCaptureKey,
+                                     TempSetting.AutoCaptureKey,
+                                     TempSetting.ChangeEditorModeKey,
+                                     TempSetting.SelectCaptureKey,
+                                     TempSetting.OpenSettingKey };
+
+            int i = 0;
+            foreach (ShortcutKey scKey in new ShortcutKey[] { scAll, scAuto, scEditMode, scSelect, scSetting })
+            {
+                shortcuts[i].WPFKey = scKey.Key;
+
+                shortcuts[i].Control = scKey.Control;
+                shortcuts[i].Alt = scKey.Alt;
+                shortcuts[i].Shift = scKey.Shift;
+                i++;
+            }
         }
 
         CloseType SaveChangeAllow = CloseType.JustClose;
@@ -80,87 +103,6 @@ namespace AutoShot
                 }
             }
             if (SaveChangeAllow == CloseType.SaveAndClose) CurrentSetting = (Setting.Setting)TempSetting.Clone();
-        }
-
-        string NonUse = "(사용하지 않음)";
-        string[] names = { "BtnAutoSave", "BtnAllCapture", "BtnSelCapture", "BtnOpenSetting", "BtnChangeEditor" };
-        Shotcut[] keys;
-
-        private void Btn_Click(object sender, RoutedEventArgs e)
-        {
-            if (keys == null) keys = new Shotcut[] { TempSetting.AutoCaptureKey, TempSetting.AllCaptureKey,
-                TempSetting.SelectCaptureKey, TempSetting.OpenSettingKey, TempSetting.ChangeEditorModeKey };
-
-            Key key = ShowKeyInput((Key)(((Button)sender).Tag));
-
-            if (key == Key.None) ((Button)sender).Content = NonUse;
-            else ((Button)sender).Content = key + " Key";
-
-            ((Button)sender).Tag = (int)key;
-
-            string basename = ((Button)sender).Name.Substring(0, ((Button)sender).Name.Length - 1);
-            int basenum = int.Parse(((Button)sender).Name.Substring(((Button)sender).Name.Length - 1));
-            
-            
-
-            foreach (Shotcut k in keys)
-            {
-                k.IsDisabled = false;
-            }
-
-            for(int i = 0; i <= 4; i++)
-            {
-                Button Btn1 = (Button)FindName(names[i] + "1");
-                Button Btn2 = (Button)FindName(names[i] + "2");
-                TextBlock TB = (TextBlock)FindName(names[i] + "lbl");
-                if (Btn1.Content.ToString() == Btn2.Content.ToString()) TB.Foreground = Brushes.Green; else TB.Foreground = Brushes.Black;
-
-                if (Btn1.Content.ToString() == NonUse && Btn2.Content.ToString() == NonUse) TB.Foreground = Brushes.Red;
-            }
-
-            for(int i = 0; i <= 4; i++)
-            {
-                Button iBtn1, iBtn2,  jBtn1, jBtn2;
-                TextBlock ilbl, jlbl;
-
-                iBtn1 = (Button)FindName(names[i] + "1");
-                iBtn2 = (Button)FindName(names[i] + "2");
-                ilbl = (TextBlock)FindName(names[i] + "lbl");
-                for (int j= i + 1; j <= 4; j++)
-                {
-                    jBtn1 = (Button)FindName(names[j] + "1");
-                    jBtn2 = (Button)FindName(names[j] + "2");
-                    jlbl = (TextBlock)FindName(names[j] + "lbl");
-
-                    if ((iBtn1.Content.ToString() == jBtn1.Content.ToString() && iBtn2.Content.ToString() == jBtn2.Content.ToString()) ||
-                        (iBtn1.Content.ToString() == jBtn2.Content.ToString() && iBtn2.Content.ToString() == jBtn1.Content.ToString()))
-                    {
-                        keys[i].IsDisabled = true;
-                        keys[j].IsDisabled = true;
-                        ilbl.Foreground = Brushes.Red;
-                        jlbl.Foreground = Brushes.Red;
-                    }   
-                }
-            }
-            
-            //switch (basename)
-            //{
-            //    case "BtnAutoSave":
-            //        if (basenum == 1) TempSetting.AutoCaptureKey.FirstKey = key; else TempSetting.AutoCaptureKey.SecondKey = key;
-            //        break;
-            //    case "BtnAllCapture":
-            //        if (basenum == 1) TempSetting.AllCaptureKey.FirstKey = key; else TempSetting.AllCaptureKey.SecondKey = key;
-            //        break;
-            //    case "BtnSelCapture":
-            //        if (basenum == 1) TempSetting.SelectCaptureKey.FirstKey = key; else TempSetting.SelectCaptureKey.SecondKey = key;
-            //        break;
-            //    case "BtnOpenSetting":
-            //        if (basenum == 1) TempSetting.OpenSettingKey.FirstKey = key; else TempSetting.OpenSettingKey.SecondKey = key;
-            //        break;
-            //    case "BtnChangeEditor":
-            //        if (basenum == 1) TempSetting.ChangeEditorModeKey.FirstKey = key; else TempSetting.ChangeEditorModeKey.SecondKey = key;
-            //        break;
-            //}
         }
 
         public new void ShowDialog()
@@ -201,7 +143,7 @@ namespace AutoShot
 
         private void AuCaRing_Change(object sender, RoutedEventArgs e)
         {
-            ShowPopupGrid.IsEnabled = ((bool)AuCaRingType2.IsChecked || (bool)AuCaRingType3.IsChecked);
+            ShowPopupGrid.IsEnabled = ((bool)auCaRingType2.IsChecked || (bool)auCaRingType3.IsChecked);
 
             int Index = int.Parse(((RadioButton)sender).Tag.ToString());
 
@@ -544,26 +486,26 @@ namespace AutoShot
             TempSetting.DefaultPattern = ((PatternItem)listView.SelectedItem).pattern;
         }
 
-
+        Shortcut[] keys;
 
         #region [ Setting 설정에 맟추기 ]
         public void SettingSync(Setting.Setting setting)
         {
-            if (keys == null) keys = new Shotcut[] { //CurrentSetting.AutoCaptureKey,
+            if (keys == null) keys = new Shortcut[] { //CurrentSetting.AutoCaptureKey,
                 CurrentSetting.AllCaptureKey,
                 CurrentSetting.SelectCaptureKey, CurrentSetting.OpenSettingKey, CurrentSetting.ChangeEditorModeKey };
 
             #region [ 캡처 설정 ]
-            foreach (RadioButton rb in AuCaRingTypeRB)
+            foreach (RadioButton rb in auCaRingTypeRB)
                 if (int.Parse(rb.Tag.ToString()) + 1 == (int)setting.AutoCaptureEnableSelection) rb.IsChecked = true;
 
-            foreach (RadioButton rb in PopCountDownRB)
+            foreach (RadioButton rb in popCountDownRB)
                 if (int.Parse(rb.Tag.ToString()) == setting.PopupCountSecond) rb.IsChecked = true;
 
-            foreach (RadioButton rb in AllCaCountDownRB)
+            foreach (RadioButton rb in allCaCountDownRB)
                 if (int.Parse(rb.Tag.ToString()) == setting.AllCaptureCountDown) rb.IsChecked = true;
 
-            foreach (RadioButton rb in new RadioButton[] { GetURLImage1, GetURLImage2, GetURLImage3 })
+            foreach (RadioButton rb in new RadioButton[] { getURLImage1, getURLImage2, getURLImage3 })
                 if (int.Parse(rb.Tag.ToString()) + 1 == (int)setting.ImageFromURLSave) rb.IsChecked = true;
             
             #endregion
@@ -572,43 +514,20 @@ namespace AutoShot
             RecoHeight = CurrentSetting.RecoHeight;
             RecoWidth = CurrentSetting.RecoWidth;
 
-            
 
-                //for (int it = 0; it < 4; it++)
-                //{
-                //    Button Btn1 = (Button)FindName(names[it] + "1");
-                //    Button Btn2 = (Button)FindName(names[it] + "2");
-                //    TextBlock TB = (TextBlock)FindName(names[it] + "lbl");
-                //    if (Btn1.Content.ToString() == Btn2.Content.ToString()) TB.Foreground = Brushes.Green; else TB.Foreground = Brushes.Black;
 
-                //    if (Btn1.Content.ToString() == NonUse && Btn2.Content.ToString() == NonUse) TB.Foreground = Brushes.Red;
-                //}
+            Shortcut[] shortcuts = { setting.AllCaptureKey,
+                                     setting.AutoCaptureKey,
+                                     setting.ChangeEditorModeKey,
+                                     setting.SelectCaptureKey,
+                                     setting.OpenSettingKey };
 
-                //for (int it = 0; it < 4; it++)
-                //{
-                //    Button iBtn1, iBtn2, jBtn1, jBtn2;
-                //    TextBlock ilbl, jlbl;
-
-                //    iBtn1 = (Button)FindName(names[it] + "1");
-                //    iBtn2 = (Button)FindName(names[it] + "2");
-                //    ilbl = (TextBlock)FindName(names[it] + "lbl");
-                //    for (int j = it + 1; j < 5; j++)
-                //    {
-                //        jBtn1 = (Button)FindName(names[j] + "1");
-                //        jBtn2 = (Button)FindName(names[j] + "2");
-                //        jlbl = (TextBlock)FindName(names[j] + "lbl");
-
-                //        if ((iBtn1.Content.ToString() == jBtn1.Content.ToString() && iBtn2.Content.ToString() == jBtn2.Content.ToString()) ||
-                //            (iBtn1.Content.ToString() == jBtn2.Content.ToString() && iBtn2.Content.ToString() == jBtn1.Content.ToString()))
-                //        {
-                //            keys[it].IsDisabled = true;
-                //            keys[j].IsDisabled = true;
-                //            ilbl.Foreground = Brushes.Red;
-                //            jlbl.Foreground = Brushes.Red;
-                //        }
-
-                //    }
-                //}
+            int i = 0;
+            foreach (ShortcutKey scKey in new ShortcutKey[]{ scAll, scAuto, scEditMode, scSelect, scSetting })
+            {
+                scKey.InitalizeData(shortcuts[i].WPFKey, shortcuts[i].Control, shortcuts[i].Alt, shortcuts[i].Shift);
+                i++;
+            }
 
             swStartupProgram.IsChecked = setting.IsStartupProgram;
 

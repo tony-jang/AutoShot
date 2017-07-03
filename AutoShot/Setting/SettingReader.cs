@@ -53,9 +53,6 @@ namespace AutoShot.Setting
                 fs.Close();
                 return null;
             }
-            
-
-            
         }
     }
 }

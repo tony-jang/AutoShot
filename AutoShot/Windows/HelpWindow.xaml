@@ -228,7 +228,7 @@
             
         </TreeView>
         <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <Frame x:Name="frame"  NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="frame" Content="{StaticResource MainHelp}" NavigationUIVisibility="Hidden"/>
         </ScrollViewer>
         
     </Grid>

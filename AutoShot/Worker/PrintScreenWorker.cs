@@ -93,7 +93,20 @@ namespace AutoShot.Worker
                         ReadImage = false;
 
                         ImageWorkEventArgs ev = new ImageWorkEventArgs();
-                        ev.Data = Clipboard.GetImage();
+                        BitmapSource image = null;
+
+                        while (image == null)
+                        {
+                            try
+                            {
+                                image = Clipboard.GetImage();
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                        
+                        ev.Data = image;
                         OnFind(ev);
                     }
                 }

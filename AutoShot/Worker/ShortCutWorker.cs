@@ -11,16 +11,16 @@ namespace AutoShot.Worker
 {
     class ShortCutWorker : BaseWorker
     {
-        public List<Shotcut> Keys { get; set; }
-        private List<Shotcut> _DownKeys = new List<Shotcut>();
+        public List<Shortcut> Keys { get; set; }
+        private List<Shortcut> _DownKeys = new List<Shortcut>();
         static IKeyboardMouseEvents hook;
 
         public bool IsUsed = true;
 
-        public ShortCutWorker() : this(new List<Shotcut>()) { }
-        public ShortCutWorker(Shotcut key) : this(new List<Shotcut>(new Shotcut[] { key })) { }
-        public ShortCutWorker(Shotcut[] keys) : this(keys.ToList()) { }
-        public ShortCutWorker(List<Shotcut> keys)
+        public ShortCutWorker() : this(new List<Shortcut>()) { }
+        public ShortCutWorker(Shortcut key) : this(new List<Shortcut>(new Shortcut[] { key })) { }
+        public ShortCutWorker(Shortcut[] keys) : this(keys.ToList()) { }
+        public ShortCutWorker(List<Shortcut> keys)
         {
             this.Keys = keys;
 
@@ -57,7 +57,7 @@ namespace AutoShot.Worker
 
         private void ShortCutWorker_KeyDown(object sender, f.KeyEventArgs e)
         {
-            foreach (Shotcut s in Keys)
+            foreach (Shortcut s in Keys)
             {
                 if (s.WPFKey == Globals.Globals.WPFKeyFromWFormKey(e.KeyCode) &&
                     s.Control == e.Control &&
@@ -74,13 +74,13 @@ namespace AutoShot.Worker
 
     class ShortCutWorkEventArgs : WorkEventArgs
     {
-        public ShortCutWorkEventArgs(Shotcut data)
+        public ShortCutWorkEventArgs(Shortcut data)
         {
             _Data = data;
         }
-        Shotcut _Data;
+        Shortcut _Data;
 
-        public Shotcut Data
+        public Shortcut Data
         {
             get { return _Data; }
             set { _Data = value; }
@@ -88,7 +88,7 @@ namespace AutoShot.Worker
     }
 
     [Serializable]
-    public class Shotcut : ICloneable
+    public class Shortcut : ICloneable
     {
         public delegate void BlankEventHandler();
 
@@ -124,7 +124,7 @@ namespace AutoShot.Worker
 
         public object Clone()
         {
-            return new Shotcut(this.Name, this.WPFKey, this.Control, this.Alt, this.Shift);
+            return new Shortcut(this.Name, this.WPFKey, this.Control, this.Alt, this.Shift);
         }
 
         private bool _IsDisabled = false;
@@ -143,7 +143,7 @@ namespace AutoShot.Worker
             get { return _WPFKey; }
             set { _WPFKey = value; ValueChanged(); }
         }
-        public Shotcut(string name, Key key1, bool control, bool alt, bool shift)
+        public Shortcut(string name, Key key1, bool control, bool alt, bool shift)
         {
             this.Name = name;
             _WPFKey = key1;

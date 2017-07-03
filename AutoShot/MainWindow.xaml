@@ -30,7 +30,7 @@
                             <RowDefinition Height="4"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Button x:Name="BtnEnAutoSave" Grid.Row="0" Content="자동 저장 [ON]" Click="BtnEnAutoSave_Click"/>
+                        <Button x:Name="BtnEnAutoSave" Grid.Row="0" Content="자동 저장" Click="BtnEnAutoSave_Click"/>
                         <Button x:Name="BtnAllCapture" Grid.Row="2" Content="전체 캡처" Click="BtnAllCapture_Click"/>
                         <Button x:Name="BtnSelCapture" Grid.Row="4" Content="선택 캡처" Click="BtnSelCapture_Click"/>
                     </Grid>
@@ -39,7 +39,7 @@
                         <TextBlock x:Name="TBSpace" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White">
                             <TextBlock.ToolTip>
                                 <u:StoargySpaceToolTip x:Name="TBSpaceToolTip"/>
-                            </TextBlock.ToolTip><Run x:Name="RemainSpaceRun" FontSize="18" Foreground="#FF9800" FontWeight="Bold" Text="99999+"/>개 저장가능
+                            </TextBlock.ToolTip><Run x:Name="remainSpaceRun" FontSize="18" Foreground="#FF9800" FontWeight="Bold" Text="99999+"/>개 저장가능
                         </TextBlock>
                     </Grid>
                     <u:PathButton x:Name="CrossButt" Grid.Column="1" Width="30" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,75,5" Background="White" ToolTip="프로그램 종료"

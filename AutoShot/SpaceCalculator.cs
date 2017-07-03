@@ -10,9 +10,6 @@ namespace AutoShot
 {
     class SpaceCalculator
     {
-        /// <summary>
-        /// 생성자
-        /// </summary>
         /// <param name="volumeName">불륨 이름입니다.</param>
         /// <param name="expectsize">예상하는 사이즈입니다. MB단위로 계산됩니다.</param>
         /// <param name="maxShowNumber">보여줄 수 있는 최대 크기를 의미합니다. 초과시 +로 표시됩니다.</param>

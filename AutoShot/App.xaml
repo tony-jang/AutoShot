@@ -322,7 +322,7 @@
                                         <RowDefinition Height="1"/>
                                         <RowDefinition Height="20"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="남은 장 수" VerticalAlignment="Center" TextAlignment="Center"/>
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="저장 가능한 사진 갯수" VerticalAlignment="Center" TextAlignment="Center"/>
                                     <TextBlock Grid.Column="2" Grid.Row="0" FontSize="15" VerticalAlignment="Center" TextAlignment="Center">
                                         <Run Text="{TemplateBinding RemainPictureCount}"></Run>개
                                     </TextBlock>

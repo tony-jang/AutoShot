@@ -74,9 +74,9 @@
                             <StackPanel Margin="20">
                                 <TextBlock HorizontalAlignment="Left" Text="자동 캡처 활성화 시" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="12"/>
 
-                                <RadioButton x:Name="AuCaRingType1" Margin="0,12,0,0" Content="소리 재생" IsChecked="True" GroupName="AuCaRingType" FontSize="12" Tag="0"/>
-                                <RadioButton x:Name="AuCaRingType2" Margin="0,12,0,0" Content="팝업으로 띄우기" GroupName="AuCaRingType" FontSize="12" Tag="1"/>
-                                <RadioButton x:Name="AuCaRingType3" Margin="0,12,0,0" Content="팝업과 소리 동시에 띄우기" GroupName="AuCaRingType" FontSize="12" Tag="2"/>
+                                <RadioButton x:Name="auCaRingType1" Margin="0,12,0,0" Content="소리 재생" IsChecked="True" GroupName="AuCaRingType" FontSize="12" Tag="0"/>
+                                <RadioButton x:Name="auCaRingType2" Margin="0,12,0,0" Content="팝업으로 띄우기" GroupName="AuCaRingType" FontSize="12" Tag="1"/>
+                                <RadioButton x:Name="auCaRingType3" Margin="0,12,0,0" Content="팝업과 소리 동시에 띄우기" GroupName="AuCaRingType" FontSize="12" Tag="2"/>
                                 <Grid x:Name="ShowPopupGrid" Background="#FFF7F7F7" Margin="0,12,0,0">
                                     <Grid Margin="10" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
@@ -86,13 +86,13 @@
                                             <ColumnDefinition Width="10"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <RadioButton x:Name="PopCountDown1" Content="1초" Grid.Column="0" IsChecked="True" FontSize="12" Tag="1"/>
-                                        <RadioButton x:Name="PopCountDown2" Content="2초" Grid.Column="2" FontSize="12" Tag="2"/>
-                                        <RadioButton x:Name="PopCountDown3" Content="3초" Grid.Column="4" FontSize="12" Tag="3"/>
+                                        <RadioButton x:Name="popCountDown1" Content="1초" Grid.Column="0" IsChecked="True" FontSize="12" Tag="1"/>
+                                        <RadioButton x:Name="popCountDown2" Content="2초" Grid.Column="2" FontSize="12" Tag="2"/>
+                                        <RadioButton x:Name="popCountDown3" Content="3초" Grid.Column="4" FontSize="12" Tag="3"/>
                                     </Grid>
                                 </Grid>
 
-                                <RadioButton x:Name="AuCaRingType4" Margin="0,12,0,0" Content="알림 없음 (권장하지 않음)" GroupName="AuCaRingType" FontSize="12" Tag="3"/>
+                                <RadioButton x:Name="auCaRingType4" Margin="0,12,0,0" Content="알림 없음 (권장하지 않음)" GroupName="AuCaRingType" FontSize="12" Tag="3"/>
 
                                 <TextBlock Margin="0,36,0,0" Text="전체 캡처 시 카운트 다운" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="12"/>
                                 <Grid x:Name="AllCaCountDown" Background="#FFF7F7F7" Margin="0,12,0,0">
@@ -110,19 +110,19 @@
                                             <ColumnDefinition Width="10"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <RadioButton x:Name="AllCaCountDown1" Content="없음" GroupName="AllCaptureCountDown" Grid.Column="0" IsChecked="True" FontSize="12" Tag="0"/>
-                                        <RadioButton x:Name="AllCaCountDown2" Content="1초"  GroupName="AllCaptureCountDown" Grid.Column="2" FontSize="12" Tag="1"/>
-                                        <RadioButton x:Name="AllCaCountDown3" Content="2초"  GroupName="AllCaptureCountDown" Grid.Column="4" FontSize="12" Tag="2"/>
-                                        <RadioButton x:Name="AllCaCountDown4" Content="3초"  GroupName="AllCaptureCountDown" Grid.Column="6" FontSize="12" Tag="3"/>
-                                        <RadioButton x:Name="AllCaCountDown5" Content="4초"  GroupName="AllCaptureCountDown" Grid.Column="8" FontSize="12" Tag="4"/>
-                                        <RadioButton x:Name="AllCaCountDown6" Content="5초"  GroupName="AllCaptureCountDown"  Grid.Column="10" FontSize="12" Tag="5"/>
+                                        <RadioButton x:Name="allCaCountDown1" Content="없음" GroupName="AllCaptureCountDown" Grid.Column="0" IsChecked="True" FontSize="12" Tag="0"/>
+                                        <RadioButton x:Name="allCaCountDown2" Content="1초"  GroupName="AllCaptureCountDown" Grid.Column="2" FontSize="12" Tag="1"/>
+                                        <RadioButton x:Name="allCaCountDown3" Content="2초"  GroupName="AllCaptureCountDown" Grid.Column="4" FontSize="12" Tag="2"/>
+                                        <RadioButton x:Name="allCaCountDown4" Content="3초"  GroupName="AllCaptureCountDown" Grid.Column="6" FontSize="12" Tag="3"/>
+                                        <RadioButton x:Name="allCaCountDown5" Content="4초"  GroupName="AllCaptureCountDown" Grid.Column="8" FontSize="12" Tag="4"/>
+                                        <RadioButton x:Name="allCaCountDown6" Content="5초"  GroupName="AllCaptureCountDown"  Grid.Column="10" FontSize="12" Tag="5"/>
                                     </Grid>
                                 </Grid>
 
                                 <TextBlock Margin="0,36,0,0" Text="URL로 사진 가져올때 (자동 저장 활성화 시)" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" FontSize="12"/>
-                                <RadioButton x:Name="GetURLImage1" Margin="0,12,0,0" Content="바로 파일로 저장할지에 대해 물어보기" IsChecked="True" GroupName="GetURLImage" FontSize="12" Tag="0"/>
-                                <RadioButton x:Name="GetURLImage2" Margin="0,12,0,0" Content="패턴에 따라 파일로 저장하기" GroupName="GetURLImage" FontSize="12" Tag="1"/>
-                                <RadioButton x:Name="GetURLImage3" Margin="0,12,0,0" Content="해당 기능 사용하지 않음" GroupName="GetURLImage" FontSize="12" Tag="2"/>
+                                <RadioButton x:Name="getURLImage1" Margin="0,12,0,0" Content="바로 파일로 저장할지에 대해 물어보기" IsChecked="True" GroupName="GetURLImage" FontSize="12" Tag="0"/>
+                                <RadioButton x:Name="getURLImage2" Margin="0,12,0,0" Content="패턴에 따라 파일로 저장하기" GroupName="GetURLImage" FontSize="12" Tag="1"/>
+                                <RadioButton x:Name="getURLImage3" Margin="0,12,0,0" Content="해당 기능 사용하지 않음" GroupName="GetURLImage" FontSize="12" Tag="2"/>
 
                             </StackPanel>
                         </ScrollViewer>
@@ -374,15 +374,15 @@
                                 <Grid Margin="0,12,0,0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <!--<RowDefinition/>
+                                        <RowDefinition/>-->
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="130"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock TextTrimming="CharacterEllipsis" FontSize="12" Margin="5"><Run Text="사용자의 설정을 불러옵니다."/><LineBreak/><Run Text="해당 기능은 설정 위치가 변경되었을때 위치 변경을 위함입니다."/></TextBlock>
-                                    <Button x:Name="BtnImport" Content="설정 불러오기" FontSize="12" Grid.Column="1" Margin="5" Click="BtnImport_Click"/>
+                                    <!--<TextBlock TextTrimming="CharacterEllipsis" FontSize="12" Margin="5"><Run Text="사용자의 설정을 불러옵니다."/><LineBreak/><Run Text="해당 기능은 설정 위치가 변경되었을때 위치 변경을 위함입니다."/></TextBlock>
+                                    <Button x:Name="BtnImport" Content="설정 불러오기" FontSize="12" Grid.Column="1" Margin="5" Click="BtnImport_Click"/>-->
                                     <!--<TextBlock TextTrimming="CharacterEllipsis" FontSize="12" Margin="5" Grid.Row="1"><Run Text="현재 설정을 파일로 내보냅니다. 파일로 내보내진 설정은"/><LineBreak/><Run Text="설정 불러오기를 통해서 다시 불러와 사용할 수 있습니다."/></TextBlock>
                                     <Button x:Name="BtnExport" Content="설정 내보내기" FontSize="12" Grid.Row="1" Grid.Column="1" Margin="5" Click="BtnExport_Click"/>-->
                                     <TextBlock TextTrimming="CharacterEllipsis" FontSize="12" Margin="5" Grid.Row="2"><Run Text="모든 설정을 초기화하고 초기 상태로 되돌립니다."/><LineBreak/><Run Text="프로그램이 종료되며 다시 실행시 초기 상태로 변경됩니다."/></TextBlock>

@@ -49,18 +49,12 @@ namespace AutoShot
         
         private f.NotifyIcon notify;
 
-        int ExpectSize = 1000;
-
         public MainWindow()
         {
             InitializeComponent();
             
             try
             {
-                PngBitmapEncoder enc = new PngBitmapEncoder();
-                
-                ExpectSize = ImageSourceToBytes(enc, CopyScreen()).Length;
-
                 MainDispatcher = Dispatcher;
                 CurrentSetting = new SettingReader().ReadSetting();
                 
@@ -99,8 +93,6 @@ namespace AutoShot
                 this.Left = 0; this.Top = 0;
 
                 ImgWorker.Find += DetectPrintScreen;
-
-                spaceworker.Find += SpaceChange;
 
                 try
                 {
@@ -173,7 +165,22 @@ namespace AutoShot
                 MsgBox(ex.ToString());
             }
 
+            PngBitmapEncoder enc = new PngBitmapEncoder();
+            SyncSpace(ImageSourceToBytes(enc, CopyScreen()).Length);
+
             sw.Close();
+        }
+
+        public void SyncSpace(long size)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                SpaceCalculator cal = new SpaceCalculator(new DirectoryInfo(CurrentSetting.DefaultPattern.RealSaveLocation).Root.Name, size, 99999);
+
+                remainSpaceRun.Text = cal.RemainPicNumText;
+                TBSpaceToolTip.RemainPictureCount = cal.RemainPicNum.ToString();
+                TBSpaceToolTip.CalcFileSize = Math.Round((double)size / 1024 / 1024, 4) + "MB";
+            });
         }
 
         private void ComputerShutdown(object sender, SessionEndingEventArgs e)
@@ -283,28 +290,7 @@ namespace AutoShot
                 throw;
             }
         }
-
-        private void SpaceChange(object sender, WorkEventArgs e)
-        {
-            try
-            {
-                StorageSpaceWorkEventArgs ev = (StorageSpaceWorkEventArgs)e;
-
-                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-                {
-                    SpaceCalculator sc = new SpaceCalculator(ev.Driveinfo.Name, ExpectSize, 99999);
-                    RemainSpaceRun.Text = sc.RemainPicNumText;
-                    TBSpaceToolTip.RemainPictureCount = sc.RemainPicNum.ToString();
-                    TBSpaceToolTip.CalcFileSize = Math.Round((double)ExpectSize / 1024 / 1024, 4) + "MB";
-                }));
-            }
-            catch (Exception ex)
-            {
-                MsgBox(ex.ToString());
-            }
-
-        }
-
+        
         private void FrmAppear(object sender, MouseEventArgs e)
         {
             if (!Visibled)
@@ -448,14 +434,6 @@ namespace AutoShot
             MainGrid.Opacity = 1.0;
         }
 
-
-        void updateSpace(string DriveName)
-        {
-            SpaceCalculator sc = new SpaceCalculator(DriveName, 2, 99999);
-
-            RemainSpaceRun.Text = sc.RemainPicNumText;
-        }
-
         public bool GetImageFromImageEditor(ref BitmapSource image)
         {
             try
@@ -564,7 +542,10 @@ namespace AutoShot
                 encoder = new PngBitmapEncoder();
 
                 if (UpdateStoragy)
-                    ExpectSize = ImageSourceToBytes(encoder, image).Length;
+                {
+                    SyncSpace(ImageSourceToBytes(encoder, image).Length);
+                }
+                    
 
                 filestream.Dispose();
 
