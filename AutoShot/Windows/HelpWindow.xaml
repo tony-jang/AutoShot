@@ -1,235 +1,76 @@
-﻿<local:ChromeWindow x:Class="AutoShot.Windows.HelpWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AutoShot.Windows"
-        mc:Ignorable="d"
-        Title="AutoShot 도움말" Height="600" Width="900" AllowsTransparency="True" WindowStyle="None" Icon="/AutoShot;component/Resources/Icons/Icon.png">
+﻿<local:ChromeWindow
+    x:Class="AutoShot.Windows.HelpWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AutoShot.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="AutoShot 도움말"
+    Width="900"
+    Height="600"
+    AllowsTransparency="True"
+    Icon="/AutoShot;component/Resources/Icons/Icon.png"
+    WindowStyle="None"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
     <Window.Resources>
-        <Grid x:Key="MainHelp">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="AutoShot 도움말"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15">
-                    이 곳에서 <Run Text="AutoShot" FontWeight="Bold"/>를 사용하는 방법에 대해서 알 수 있습니다.<LineBreak/>
-                    해당 도움말에서는 다음과 같은 내용을 다루고 있습니다.<LineBreak/>
-                    <LineBreak/>
-                    -메인 UI <LineBreak/><LineBreak/>
-                    -캡처 방법 3가지<LineBreak/>
-                    　- 자동 캡처<LineBreak/>
-                    　- 전체 캡처<LineBreak/>
-                    　- 선택 캡처<LineBreak/><LineBreak/>
-                    지금 보고 계시는 도움말은 <Run Text="설정" FontWeight="Bold"/>의 <Run Text="제작자 정보" FontWeight="Bold" Foreground="CornflowerBlue"/>에서 보실 수 있습니다.<LineBreak/>
-                    메인 창은 왼쪽 위로 마우스를 올림으로써 볼 수 있습니다.
-                </TextBlock>
-            </StackPanel>
-        </Grid>
 
-        <Grid x:Key="AutoCapture">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="자동 캡처"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    자동 캡처 방법에 대해서 알려줍니다.<LineBreak/>
-                    <LineBreak/>
-                    <LineBreak/>
-                    자동 캡처는 비활성화/활성화가 가능한 캡처 방법입니다.<LineBreak/>
-                    　자동 캡처를 <Run Text="활성화" Foreground="Red" FontWeight="Bold"/> 시키게 된다면<LineBreak/>
-                    　프린트 스크린 (Print Screen) 키 또는 Alt + 프린트 스크린 (Print Screen)키에 반응합니다.<LineBreak/>
-                    　　- 프린트 스크린 키에는 다음과 같이 반응합니다.<LineBreak/>
-                    　　　프린트 스크린 키에 따른 클립보드에 저장된 내용이 인식됩니다.<LineBreak/>
-                    　　　따라서, 해당 내용이 이미지로 인식되며 이후에는 패턴의 설정대로 처리됩니다.<LineBreak/><LineBreak/>
-                    　　- Alt + 프린트 스크린 키에는 다음과 같이 반응합니다.<LineBreak/>
-                    　　　Alt + 프린트 스크린 키에 따른 클립보드에 저장된 내용이 인식됩니다.<LineBreak/>
-                    　　　일반 프린트 스크린 키와는 달리 선택중인 윈도우가 캡처됩니다.<LineBreak/>
-                    　　　따라서, 해당 내용이 이미지로 인식되며 이후에는 패턴의 설정대로 처리됩니다.<LineBreak/><LineBreak/>
-                    　자동 캡처를 <Run Text="비활성화" Foreground="Red" FontWeight="Bold"/> 시키게 된다면 모든 인식이 취소됩니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/AutoCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock Text="다음의 빨간색으로 표시된 버튼을 누름으로써 자동 캡처를 할 수 있습니다." FontSize="15"/>
-            </StackPanel>
-
-        </Grid>
-
-        <Grid x:Key="AllCapture">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="전체 캡처"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    전체 캡처 방법에 대해서 알려줍니다.<LineBreak/>
-                    <LineBreak/>
-                    <LineBreak/>
-                    전체 캡처는 자동으로 전체 화면을 캡처하는 방법입니다.<LineBreak/>
-                    　전체 캡처를 한다면 창이 띄워져 있을시 창이 들어간 다음에 캡처가 됩니다.<LineBreak/>
-                    　　- 해당 캡처법은 설정의 전체 캡처 카운트 다운에 의해 몇 초 뒤에 캡처가 가능합니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/AllCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock Text="다음의 빨간색으로 표시된 버튼을 누름으로써 전체 캡처를 할 수 있습니다." FontSize="15"/>
-            </StackPanel>
-
-        </Grid>
-
-        <Grid x:Key="SelectionCapture">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="선택 캡처"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    선택 캡처 방법에 대해서 알려줍니다.<LineBreak/>
-                    <LineBreak/>
-                    <LineBreak/>
-                    선택 캡처는 전체 화면에 반투명한 흰색이 뜹니다.<LineBreak/>
-                    　선택 캡처를 한다면 창이 띄워져 있을시 창이 들어간 다음에 캡처가 시작됩니다.<LineBreak/>
-                    　　- 해당 캡처법은 설정의 전체 캡처 카운트 다운에 의해 몇 초 뒤에 캡처가 가능합니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/SelectCaptureHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock Text="다음의 빨간색으로 표시된 버튼을 누름으로써 선택 캡처를 할 수 있습니다." FontSize="15"/>
-            </StackPanel>
-
-        </Grid>
-
-        <Grid x:Key="MainUI">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="메인 UI"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    UI에 대해서 알려줍니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/BasicPng.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    메인 UI는 다음과 같은 모양을 띄고 있습니다. 왼쪽에 3개는 캡처 방법에 대해서 알려드립니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    오른쪽 아래의 2개 버튼 중에 왼쪽 ?표를 누르게 되면 지금 보고 계시는 도움말이 뜹니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic2.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    오른쪽 아래의 2개 버튼 중에 오른쪽 톱니바퀴를 누르게 되면 설정을 변경시킬 수 있습니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic3.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    오른쪽 위쪽의 남은 장 수는 가장 마지막에 찍었던 사진을 기준으로 남은 장 수를 계산합니다.<LineBreak/>
-                    상당히 유동적이며 최대 표시되는 장 수는 99999개 이며 그 이상일 시 99999+로 표시됩니다.<LineBreak/>
-                    또한 마우스를 올리면 남은 장수(99999개 이상이더라도 정상적으로 표시됨)와 계산에 쓰인 용량 입니다.
-                </TextBlock>
-            </StackPanel>
-        </Grid>
-
-        <Grid x:Key="Setting_Capture">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="설정 - 캡처 설정"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    캡처 설정의 구성요소에 대해서 알려줍니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/Setting_CaptureHelpPic1.PNG" Stretch="Uniform" Width="600" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    이게 전체적인 캡처 설정창의 모습입니다.<LineBreak/>
-                </TextBlock>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    "자동 캡처 활성화 시" 부분은 <LineBreak/><Run Text="소리 재생" FontWeight="Bold"/><LineBreak/>
-                    <Run Text="팝업으로 띄우기" FontWeight="Bold"/><LineBreak/>
-                    <Run Text="팝업과 소리 동시에 띄우기" FontWeight="Bold"/><LineBreak/>
-                    <Run Text="알림 없음" FontWeight="Bold"/><LineBreak/>
-                    으로 구성이 되어 있습니다.<LineBreak/>
-                    
-                    그 중에서 "팝업"과 "팝업 + 소리"는 팝업을 띄울 시간을 설정 할 수 있습니다.<LineBreak/><LineBreak/>
-                    전체 캡처시 카운트 다운은 전체 캡처를 눌렀을때에 지연시간을 말합니다. 지연시간이 없을 경우 바로 캡처가 됩니다.<LineBreak/><LineBreak/>
-                    "URL로 사진 가져올때" 부분은<LineBreak/>
-                    <Run Text="바로 파일로 저장할지에 대해 물어보기" FontWeight="Bold"/><LineBreak/>
-                    <Run Text="패턴에 따라 파일로 저장하기" FontWeight="Bold"/><LineBreak/>
-                    <Run Text="해당 기능 사용하지 않음" FontWeight="Bold"/><LineBreak/>
-                    맨 위에 껀 메세지 박스로 물어봅니다.<LineBreak/>
-                    두번째 껀 패턴에 따라 저장하는거고<LineBreak/>
-                    세번째 껀 아예 해당 기능을 사용하지 않는 것입니다.<LineBreak/>
-                </TextBlock>
-            </StackPanel>
-        </Grid>
-        <Grid x:Key="Setting_Environ">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="설정 - 환경 설정"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    설정 중 환경 설정에 대해서 알려줍니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/Setting_EnvironHelpPic1.jpg" Stretch="Uniform" Width="500" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    인식 범위는 마우스를 왼쪽 위로 가져갔을때 폼이 뜨는 범위를 말합니다.<LineBreak/>
-                    만약 인식이 잘 안된다고 하면 값을 조금 늘려주면 됩니다<LineBreak/>
-                </TextBlock>
-                
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    단축키 설정은 기능들을 빠르게 사용할 수 있게 해주는 기능입니다.<LineBreak/>
-                    단, 두 캡처키가 동일하다면 하나의 키로 간주되고<LineBreak/>
-                    기능 두개가 같다면 두 기능 모두 비활성화 되면서 사용할 수 없게 됩니다.<LineBreak/><LineBreak/>
-                    마지막으로 컴퓨터가 켜질때 자동으로 시작하기 여부에 대해서 설정할 수 있습니다.
-                </TextBlock>
-            </StackPanel>
-        </Grid>
-        <Grid x:Key="Setting_Pattern">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="설정 - 패턴 설정"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    패턴 설정에 대해서 알려줍니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/Setting_PatternHelpPic1.jpg" Stretch="Uniform" Width="600" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    패턴 설정은 다음과 같은 구성입니다.<LineBreak/>
-                </TextBlock>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    패턴을 추가/삭제 할 수 있으며<LineBreak/>
-                    패턴을 사용할 때에 에디터 사용 여부, 파일 이름이 동일하면 덮어쓰기, 기본 패턴 설정등을 설정할 수 있습니다.<LineBreak/>
-                    변수도 사용 가능한데, 변수는 특정 문자를 해당 문자가 의미하는 위치또는 이름으로 바꾸어줍니다.<LineBreak/>
-                    변수는 패턴 이름/저장 경로 두개 모두 사용 가능합니다.
-                </TextBlock>
-            </StackPanel>
-        </Grid>
-        <Grid x:Key="Setting_Maker">
-            <StackPanel Margin="20">
-                <TextBlock FontSize="30" Text="메인 UI"/>
-                <TextBlock Margin="0,30,0,0" FontSize="15" TextWrapping="Wrap">
-                    UI에 대해서 알려줍니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/BasicPng.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    메인 UI는 다음과 같은 모양을 띄고 있습니다. 왼쪽에 3개는 캡처 방법에 대해서 알려드립니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic1.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    오른쪽 아래의 2개 버튼 중에 왼쪽 ?표를 누르게 되면 지금 보고 계시는 도움말이 뜹니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic2.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    오른쪽 아래의 2개 버튼 중에 오른쪽 톱니바퀴를 누르게 되면 설정을 변경시킬 수 있습니다.<LineBreak/>
-                </TextBlock>
-                <Image Source="/AutoShot;component/Resources/HelpImages/UIHelpPic3.png" Stretch="None" HorizontalAlignment="Left"/>
-                <TextBlock FontSize="15" TextWrapping="Wrap">
-                    오른쪽 위쪽의 남은 장 수는 가장 마지막에 찍었던 사진을 기준으로 남은 장 수를 계산합니다.<LineBreak/>
-                    상당히 유동적이며 최대 표시되는 장 수는 99999개 이며 그 이상일 시 99999+로 표시됩니다.<LineBreak/>
-                    또한 마우스를 올리면 남은 장수(99999개 이상이더라도 정상적으로 표시됨)와 계산에 쓰인 용량 입니다.
-                </TextBlock>
-            </StackPanel>
-        </Grid>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" MinWidth="200"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="200" MinWidth="200" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
         <TreeView x:Name="treeView">
-            <TreeViewItem FontSize="14" Header="AutoShot 도움말" Tag="{StaticResource MainHelp}"/>
-            <TreeViewItem FontSize="14" Header="Main UI" Tag="{StaticResource MainUI}"/>
+            <TreeViewItem
+                FontSize="14"
+                Header="AutoShot 도움말"
+                Tag="{StaticResource MainHelp}" />
+            <TreeViewItem
+                FontSize="14"
+                Header="Main UI"
+                Tag="{StaticResource MainUI}" />
             <TreeViewItem FontSize="14" Header="캡처 방법">
-                <TreeViewItem FontSize="14" Header="자동 캡처" Tag="{StaticResource AutoCapture}"/>
-                <TreeViewItem FontSize="14" Header="전체 캡처" Tag="{StaticResource AllCapture}"/>
-                <TreeViewItem FontSize="14" Header="선택 캡처" Tag="{StaticResource SelectionCapture}"/>
+                <TreeViewItem
+                    FontSize="14"
+                    Header="자동 캡처"
+                    Tag="{StaticResource AutoCapture}" />
+                <TreeViewItem
+                    FontSize="14"
+                    Header="전체 캡처"
+                    Tag="{StaticResource AllCapture}" />
+                <TreeViewItem
+                    FontSize="14"
+                    Header="선택 캡처"
+                    Tag="{StaticResource SelectionCapture}" />
             </TreeViewItem>
             <TreeViewItem FontSize="14" Header="설정 창">
-                <TreeViewItem FontSize="14" Header="캡처 설정" Tag="{StaticResource Setting_Capture}"/>
-                <TreeViewItem FontSize="14" Header="환경 설정" Tag="{StaticResource Setting_Environ}"/>
-                <TreeViewItem FontSize="14" Header="패턴 관리" Tag="{StaticResource Setting_Pattern}"/>
+                <TreeViewItem
+                    FontSize="14"
+                    Header="캡처 설정"
+                    Tag="{StaticResource Setting_Capture}" />
+                <TreeViewItem
+                    FontSize="14"
+                    Header="환경 설정"
+                    Tag="{StaticResource Setting_Environ}" />
+                <TreeViewItem
+                    FontSize="14"
+                    Header="패턴 관리"
+                    Tag="{StaticResource Setting_Pattern}" />
             </TreeViewItem>
-            
+
         </TreeView>
-        <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <Frame x:Name="frame" Content="{StaticResource MainHelp}" NavigationUIVisibility="Hidden"/>
+        <ScrollViewer
+            Grid.Column="2"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <Frame
+                x:Name="frame"
+                Content="{StaticResource MainHelp}"
+                NavigationUIVisibility="Hidden" />
         </ScrollViewer>
-        
+
     </Grid>
 </local:ChromeWindow>

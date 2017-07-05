@@ -11,6 +11,10 @@ namespace AutoShot.UserControls
 {
     class PathButton : Button
     {
+        public PathButton()
+        {
+            this.Style = FindResource("PathButtonStyle") as Style;
+        }
         public static DependencyProperty DataProperty =
             DependencyProperty.Register(nameof(Data), typeof(Geometry), typeof(PathButton));
         

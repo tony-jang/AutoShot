@@ -56,14 +56,26 @@ namespace AutoShot
             try
             {
                 MainDispatcher = Dispatcher;
-                CurrentSetting = new SettingReader().ReadSetting();
                 
-                SettingLocation = Registry.GetValue(Registry.CurrentUser.ToString() + "\\AutoCapturer", "SettingLocation", "NotFound").ToString();
+                
+                
+                CurrentSetting = new SettingReader().ReadSetting();
 
                 if (CurrentSetting == null)
                 {
                     CurrentSetting = (new InitSettingWindow()).ShowDialog();
                 }
+
+                var data = Registry.GetValue(Registry.CurrentUser.ToString() + "\\AutoCapturer", "SettingLocation", "NotFound");
+                if (data == null)
+                {
+                    SettingLocation = "";
+                }
+                else
+                {
+                    SettingLocation = data.ToString();
+                }
+                
 
                 CurrentSetting.AddHandler();
                 if (!CurrentSetting.TutorialProgress)

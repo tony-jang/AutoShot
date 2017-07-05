@@ -8,7 +8,7 @@
              d:DesignHeight="700" d:DesignWidth="700" Background="White">
     <Grid x:Name="BgGrid" MouseDown="BgGrid_MouseDown">
         <Grid.Background>
-            <ImageBrush ImageSource="/AutoCapturer;component/Resources/Icons/Tile.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,200,200"/>
+            <ImageBrush ImageSource="/AutoShot;component/Resources/Icons/Tile.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,200,200"/>
         </Grid.Background>
         <Grid x:Name="MainGrid" HorizontalAlignment="Left" Height="310"  VerticalAlignment="Top" Width="310" Margin="0">
 

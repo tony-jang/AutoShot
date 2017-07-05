@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using wf = System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using static AutoShot.Sounds.NotificationSounds;
-using static AutoShot.Globals.Globals;
+
+using wf = System.Windows.Forms;
 
 namespace AutoShot.Windows
 {
@@ -40,9 +29,9 @@ namespace AutoShot.Windows
             puw.Push(this);
             MainTB.Text = MainMsg;
             InnerTB.Text = InnerMsg;
-            
-            //ClickRect.MouseDown += Rect_MD;
-            //ClickRect.MouseUp += Rect_MU;
+
+            clickRect.MouseDown += Rect_MD;
+            clickRect.MouseUp += Rect_MU;
 
             this.Opacity = 0;
 

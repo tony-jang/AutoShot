@@ -1,31 +1,73 @@
-﻿<Window x:Class="AutoShot.Windows.PopUpWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AutoShot.Windows"
-        mc:Ignorable="d"
-        Title="PopUpWdw" Height="90" Width="320" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Background="{x:Null}" ShowInTaskbar="False"
-        Foreground="White">
-    
-    <Border  BorderBrush="#FF9800" Background="#263248" BorderThickness="4,0,0,0" Margin="10">
+﻿<Window
+    x:Class="AutoShot.Windows.PopUpWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AutoShot.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="PopUpWdw"
+    Width="320"
+    Height="90"
+    AllowsTransparency="True"
+    Background="{x:Null}"
+    Foreground="White"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Border
+        x:Name="clickRect"
+        Margin="10"
+        Background="#263248"
+        BorderBrush="#FF9800"
+        BorderThickness="4,0,0,0">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="4" ShadowDepth="2" Opacity="0.18" Direction="270"/>
+            <DropShadowEffect
+                BlurRadius="4"
+                Direction="270"
+                Opacity="0.18"
+                ShadowDepth="2" />
         </Border.Effect>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="8" Width="46" Height="46" Source="/AutoCapturer;component/Resources/Icons/AuCaOn.png" IsHitTestVisible="False"/>
-            
-            <TextBlock x:Name="MainTB" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="메인 안내 메시지" VerticalAlignment="Bottom" FontSize="18" IsHitTestVisible="False"/>
-            <TextBlock x:Name="InnerTB" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Top"  Margin="0,4,0,0" FontSize="12" Text="세부 안내 메시지" IsHitTestVisible="False"/>
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="46"
+                Height="46"
+                Margin="8"
+                IsHitTestVisible="False"
+                Source="/AutoShot;component/Resources/Icons/AuCaOn.png" />
+
+            <TextBlock
+                x:Name="MainTB"
+                Grid.Row="0"
+                Grid.Column="1"
+                VerticalAlignment="Bottom"
+                FontSize="18"
+                IsHitTestVisible="False"
+                Text="메인 안내 메시지"
+                TextWrapping="Wrap" />
+            <TextBlock
+                x:Name="InnerTB"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,4,0,0"
+                VerticalAlignment="Top"
+                FontSize="12"
+                IsHitTestVisible="False"
+                Text="세부 안내 메시지"
+                TextWrapping="Wrap" />
 
         </Grid>
     </Border>
