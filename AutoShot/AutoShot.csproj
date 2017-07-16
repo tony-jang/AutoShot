@@ -156,7 +156,6 @@
     <Compile Include="Worker\BaseWorker.cs" />
     <Compile Include="Worker\ImageWorker.cs" />
     <Compile Include="Worker\ShortCutWorker.cs" />
-    <Compile Include="Worker\StorageSpaceWorker.cs" />
     <Compile Include="Worker\WorkEventArgs.cs" />
     <Compile Include="Interop\Constats.cs" />
     <Compile Include="Interop\ExternDll.cs" />

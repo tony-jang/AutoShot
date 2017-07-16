@@ -16,6 +16,7 @@ using static AutoShot.Interop.UnsafeNativeMethods;
 using AutoShot.Windows;
 using Gma.System.MouseKeyHook;
 using AutoShot.Utils;
+using System.IO;
 
 namespace AutoShot.Worker
 {
@@ -27,54 +28,6 @@ namespace AutoShot.Worker
 
         public PrintScreenWorker()
         {
-            //hr = new Thread(new ThreadStart(() =>
-            //{
-            //    do
-            //    {
-            //        if (GetAsyncKeyState((int)f.Keys.PrintScreen) == -32767)
-            //        {
-            //            do
-            //            {
-            //                if (Clipboard.ContainsImage())
-            //                {
-            //                    Thread.Sleep(200);
-            //                    BitmapSource bmp = null;
-
-            //                    do { } while (!GetClipboardImage(ref bmp));
-
-            //                    f.IDataObject clipboardData = f.Clipboard.GetDataObject();
-            //                    if (clipboardData != null)
-            //                    {
-            //                        if (clipboardData.GetDataPresent(f.DataFormats.Bitmap))
-            //                        {
-            //                            Bitmap bitmap = (Bitmap)clipboardData.GetData(f.DataFormats.Bitmap);
-
-            //                            try
-            //                            {
-            //                                ImageWorkEventArgs ev = new ImageWorkEventArgs();
-            //                                ev.Data = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            //                                OnFind(ev);
-            //                            }
-            //                            catch (NullReferenceException)
-            //                            {
-
-            //                                Globals.Globals.MainDispatcher.Invoke(new Action(() =>
-            //                                {
-            //                                    PopUps.PopUpWdw wdw = new PopUps.PopUpWdw("예외(오류) 발생", "NullReferenceException 예외가 발생했습니다.");
-            //                                    wdw.ShowTime(1000);
-            //                                }));
-            //                            }
-            //                            break;
-            //                        }
-            //                    }
-            //                }
-            //                Thread.Sleep(1);
-            //            } while (true);
-
-            //        }
-            //        Thread.Sleep(1);
-            //    } while (true);
-            //}));
             hook = Hook.GlobalEvents();
             hook.KeyDown += Hook_KeyDown;
             ClipboardMonitor.OnClipboardChange += ClipboardMonitor_OnClipboardChange;
@@ -99,7 +52,21 @@ namespace AutoShot.Worker
                         {
                             try
                             {
-                                image = Clipboard.GetImage();
+                                Bitmap bmp = new Bitmap(img);
+                                using (var ms = new MemoryStream())
+                                {
+                                    bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                                    ms.Position = 0;
+
+                                    var bi = new BitmapImage();
+                                    bi.BeginInit();
+                                    bi.CacheOption = BitmapCacheOption.OnLoad;
+                                    bi.StreamSource = ms;
+                                    bi.EndInit();
+
+                                    image = bi;
+                                    bmp.Dispose();
+                                }
                             }
                             catch (Exception)
                             {

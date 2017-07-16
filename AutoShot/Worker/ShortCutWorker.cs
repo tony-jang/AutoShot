@@ -26,33 +26,6 @@ namespace AutoShot.Worker
 
             hook = Hook.GlobalEvents();
             hook.KeyDown += ShortCutWorker_KeyDown;
-
-            //thr = new Thread(() =>
-            //{
-            //    do
-            //    {
-            //        if (IsUsed)
-            //        {
-            //            foreach (ShortCutKey key in keys)
-            //            {
-            //                if (key.IsDisabled || IsAllNone(key.FirstKey, key.SecondKey)) continue;
-            //                if (_DownKeys.Contains(key))
-            //                {
-            //                    if (IsKeyUp(key.FirstKey) || IsKeyUp(key.SecondKey))
-            //                        _DownKeys.Remove(key);
-
-            //                    continue;
-            //                }
-            //                if (IsKeyDown(key.FirstKey) && IsKeyDown(key.SecondKey))
-            //                {
-            //                    _DownKeys.Add(key);
-            //                    OnFind(new ShortCutWorkEventArgs(key));
-            //                }
-            //            }
-            //        }
-            //        Thread.Sleep(10);
-            //    } while (true);
-            //});
         }
 
         private void ShortCutWorker_KeyDown(object sender, f.KeyEventArgs e)

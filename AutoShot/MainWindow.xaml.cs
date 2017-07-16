@@ -43,7 +43,6 @@ namespace AutoShot
         SettingWindow sw = new SettingWindow();
 
         PrintScreenWorker ImgWorker = new PrintScreenWorker();
-        StorageSpaceWorker spaceworker = new StorageSpaceWorker();
         ShortCutWorker scworker = new ShortCutWorker();
         ImageWorker urlworker = new ImageWorker();
         
@@ -367,7 +366,7 @@ namespace AutoShot
                     if (CurrentSetting.AutoCaptureEnableSelection == Setting.CaptureNotifionMode.SoundPlay ||
                         CurrentSetting.AutoCaptureEnableSelection == Setting.CaptureNotifionMode.SoundAndPopUp)
                         PlayNotificationSound(SoundType.AuCaModeOn);
-
+                    BtnEnAutoSave.Content = "자동 저장 해제";
                 }
                 else
                 {
@@ -375,7 +374,7 @@ namespace AutoShot
                     if (CurrentSetting.AutoCaptureEnableSelection == Setting.CaptureNotifionMode.SoundPlay ||
                         CurrentSetting.AutoCaptureEnableSelection == Setting.CaptureNotifionMode.SoundAndPopUp)
                         PlayNotificationSound(SoundType.AuCaModeOff);
-
+                    BtnEnAutoSave.Content = "자동 저장";
                 }
                 if (CurrentSetting.AutoCaptureEnableSelection == Setting.CaptureNotifionMode.OpenPopup ||
                         CurrentSetting.AutoCaptureEnableSelection == Setting.CaptureNotifionMode.SoundAndPopUp)
@@ -669,6 +668,11 @@ namespace AutoShot
         private void CrossButt_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void EditorButt_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeEditorMode();
         }
     }
 }

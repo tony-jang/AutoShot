@@ -144,3 +144,5 @@ D:\YT's Files\C# Files\AutoCapturer_Second\AutoShot\obj\Debug\AutoShot.pdb
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoShot\obj\Debug\Windows\HelpDictionary.baml
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoShot\obj\Debug\AutoShot.csprojResolveAssemblyReference.cache
 D:\YT's Files\C# Files\AutoCapturer_Second\AutoShot\obj\Debug\ControlStyle.baml
+H:\장유탁 파일\Github Project\AutoShot\AutoShot\obj\Debug\ControlStyle.baml
+H:\장유탁 파일\Github Project\AutoShot\AutoShot\obj\Debug\Windows\HelpDictionary.baml
